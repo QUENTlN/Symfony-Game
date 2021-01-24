@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\AnswerRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass=AnswerRepository::class)
+ */
+class Answer
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $idAnswer;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $textAnswer;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getIdAnswer(): ?int
+    {
+        return $this->idAnswer;
+    }
+
+    public function setIdAnswer(int $idAnswer): self
+    {
+        $this->idAnswer = $idAnswer;
+
+        return $this;
+    }
+
+    public function getTextAnswer(): ?string
+    {
+        return $this->textAnswer;
+    }
+
+    public function setTextAnswer(?string $textAnswer): self
+    {
+        $this->textAnswer = $textAnswer;
+
+        return $this;
+    }
+}
