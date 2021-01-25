@@ -1,20 +1,167 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello GlobalController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/game/src/Controller/GlobalController.php'|file_link(0) }}">src/Controller/GlobalController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/game/templates/global/index.html.twig'|file_link(0) }}">templates/global/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="highlight-blue" style="padding-top: 7em;">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center">Créer un salon</h2>
+                <p class="text-center">Vous pouvez créer un salon en public pour jouer avec des inconnus ou un
+                    salon privée et inviter vos amis.</p>
+            </div>
+            <div class="buttons">
+                <a class="btn btn-primary" role="button" href="{{ path('createRoom') }}">Public</a>
+                <a class="btn btn-primary" role="button" href="{{ path('createRoom') }}">Privée</a>
+            </div>
+        </div>
+    </div>
+    <main class="page projets-page">
+        <section class="portfolio-block project-no-images">
+            <div class="container">
+                <div class="heading">
+                    <h2><br><strong>Jouez dans un salons publics</strong><br></h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card-no-image">
+                            <h3>Nom de salle</h3>
+                            <h4>Créé par Pseudo</h4>
+                            <ul>
+                                <li>Quiz (Film, Série, Musique)</li>
+                                <li>Guess the (Film)</li>
+                            </ul>
+                            <div class="row justify-content-between">
+                                <div class="col col-4"><span class="nbplayer">8 / 10</span></div>
+                                <div class="col col-6"><a class="btn btn-outline-primary btn-sm" role="button" href="#">REJOINDRE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card-no-image">
+                            <h3>Nom de salle</h3>
+                            <h4>Créé par Pseudo</h4>
+                            <ul>
+                                <li>Quiz (Film, Série, Musique)</li>
+                                <li>Guess the (Film)</li>
+                            </ul>
+                            <div class="row justify-content-between">
+                                <div class="col col-4"><span class="nbplayer">8 / 10</span></div>
+                                <div class="col col-6"><a class="btn btn-outline-primary btn-sm" role="button" href="#">REJOINDRE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card-no-image">
+                            <h3>Nom de salle</h3>
+                            <h4>Créé par Pseudo</h4>
+                            <ul>
+                                <li>Quiz (Film, Série, Musique)</li>
+                                <li>Guess the (Film)</li>
+                            </ul>
+                            <div class="row justify-content-between">
+                                <div class="col col-4"><span class="nbplayer">8 / 10</span></div>
+                                <div class="col col-6"><a class="btn btn-outline-primary btn-sm" role="button" href="#">REJOINDRE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card-no-image">
+                            <h3>Nom de salle</h3>
+                            <h4>Créé par Pseudo</h4>
+                            <ul>
+                                <li>Quiz (Film, Série, Musique)</li>
+                                <li>Guess the (Film)</li>
+                            </ul>
+                            <div class="row justify-content-between">
+                                <div class="col col-4"><span class="nbplayer">8 / 10</span></div>
+                                <div class="col col-6"><a class="btn btn-outline-primary btn-sm" role="button" href="#">REJOINDRE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card-no-image">
+                            <h3>Nom de salle</h3>
+                            <h4>Créé par Pseudo</h4>
+                            <ul>
+                                <li>Quiz (Film, Série, Musique)</li>
+                                <li>Guess the (Film)</li>
+                            </ul>
+                            <div class="row justify-content-between">
+                                <div class="col col-4"><span class="nbplayer">8 / 10</span></div>
+                                <div class="col col-6"><a class="btn btn-outline-primary btn-sm" role="button" href="#">REJOINDRE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card-no-image">
+                            <h3>Nom de salle</h3>
+                            <h4>Créé par Pseudo</h4>
+                            <ul>
+                                <li>Quiz (Film, Série, Musique)</li>
+                                <li>Guess the (Film)</li>
+                            </ul>
+                            <div class="row justify-content-between">
+                                <div class="col col-4"><span class="nbplayer">8 / 10</span></div>
+                                <div class="col col-6"><a class="btn btn-outline-primary btn-sm" role="button" href="#">REJOINDRE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card-no-image">
+                            <h3>Nom de salle</h3>
+                            <h4>Créé par Pseudo</h4>
+                            <ul>
+                                <li>Quiz (Film, Série, Musique)</li>
+                                <li>Guess the (Film)</li>
+                            </ul>
+                            <div class="row justify-content-between">
+                                <div class="col col-4"><span class="nbplayer">8 / 10</span></div>
+                                <div class="col col-6"><a class="btn btn-outline-primary btn-sm" role="button" href="#">REJOINDRE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card-no-image">
+                            <h3>Nom de salle</h3>
+                            <h4>Créé par Pseudo</h4>
+                            <ul>
+                                <li>Quiz (Film, Série, Musique)</li>
+                                <li>Guess the (Film)</li>
+                            </ul>
+                            <div class="row justify-content-between">
+                                <div class="col col-4"><span class="nbplayer">8 / 10</span></div>
+                                <div class="col col-6"><a class="btn btn-outline-primary btn-sm" role="button" href="#">REJOINDRE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card-no-image">
+                            <h3>Nom de salle</h3>
+                            <h4>Créé par Pseudo</h4>
+                            <ul>
+                                <li>Quiz (Film, Série, Musique)</li>
+                                <li>Guess the (Film)</li>
+                            </ul>
+                            <div class="row justify-content-between">
+                                <div class="col col-4"><span class="nbplayer">8 / 10</span></div>
+                                <div class="col col-6"><a class="btn btn-outline-primary btn-sm" role="button" href="#">REJOINDRE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'fragments/footer.html.twig' %}
 {% endblock %}
+

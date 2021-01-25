@@ -5,5 +5,14 @@
 {% endblock %}
 
 {% block body %}
-    <p>Hello !</p>
+    <div class="login-dark">
+        <form class="gradient" method="post" style="margin-top: 5vh;">
+            <h2 class="sr-only">Login Form</h2>
+            <div class="illustration"><i class="icon ion-android-mail"></i></div>
+            <div class="form-group"><input class="form-control form-sign" type="email" name="email" placeholder="Email"></div>
+            <div class="form-group"><input class="form-control form-sign" type="email" name="pseudo" placeholder="Pseudo"></div>
+            <div class="form-group"><input class="form-control form-sign" type="password" name="password" placeholder="Mot de passe"></div>
+            <div class="form-group"><input class="form-control form-sign" type="password" id="conf-password" name="conf-password" placeholder="Confirmer mot de passe"></div>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">S'inscrire</button></div><a class="forgot" href="{{ path('signIn') }}">vous avez déjà un compte?</a></form>
+    </div>
 {% endblock %}
