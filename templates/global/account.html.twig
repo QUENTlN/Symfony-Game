@@ -1,0 +1,448 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Inscription
+{% endblock %}
+
+{% block body %}
+    <main class="page project-page">
+        <section class="portfolio-block project">
+            <div class="container">
+                <div class="heading">
+                    <h2>Profil</h2>
+                </div>
+                <div class="row">
+                    <div class="col"><strong class="float-right">Email</strong></div>
+                    <div class="col">
+                        <p>test@test.com</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col"><strong class="float-right">Pseudo</strong></div>
+                    <div class="col">
+                        <p>pseudo</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col"><strong class="float-right">Mot de passe</strong></div>
+                    <div class="col">
+                        <p class="blur">Mot de passe</p>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 30px;">
+                    <div class="col"><button class="btn btn-primary float-right" type="button" data-toggle="modal" data-target="#modalChangeInfo">Modifier informations</button>
+                        <div class="modal fade" role="dialog" tabindex="-1" id="modalChangeInfo">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Modifier mes informations</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                                    <div class="modal-body" style="padding: 0;">
+                                        <form style="padding: 20px;">
+                                            <div class="form-group"><label for="email">Adresse mail</label><input class="form-control" type="email" placeholder="test@test.com"></div>
+                                            <div class="form-group"><label for="email">Pseudo</label><input class="form-control" type="email" id="email-10" placeholder="Pseudo"></div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Annuler</button><button class="btn btn-primary btn-success" type="button">Modifier</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col"><button class="btn btn-primary float-left" type="button" data-toggle="modal" data-target="#modalChangePassword">Modifier mot de passe</button>
+                        <div class="modal fade" role="dialog" tabindex="-1" id="modalChangePassword">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Modifier mes informations</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                                    <div class="modal-body" style="padding: 0;">
+                                        <form style="padding: 20px;">
+                                            <div class="form-group"><label for="email">Mot de passe</label><input class="form-control" type="email" placeholder="Mot de passe"></div>
+                                            <div class="form-group"><label for="email">Nouveau mot de passe</label><input class="form-control" type="email" id="email-11" placeholder="Nouveau mot de passe"></div>
+                                            <div class="form-group"><label for="email">Confirmer nouveau mot de passe</label><input class="form-control" type="email" id="email-12" placeholder="Nouveau mot de passe"></div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Annuler</button><button class="btn btn-primary btn-success" type="button">Modifier</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" style="margin-top: 30px;"><button class="btn btn-primary btn-danger" type="button" data-toggle="modal" data-target="#modalCreateSettings">Déconnexion</button></div>
+                <div class="more-projects">
+                    <h3 class="text-center">Mes Paramètres de salon enregistrés</h3>
+                    <div class="modal fade" role="dialog" tabindex="-1" id="modalCreateSettings">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Edition des paramètres</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                                <div class="modal-body" style="padding: 0;">
+                                    <form style="padding: 20px;">
+                                        <div class="form-group"><label for="email">Nom du profil de paramètres</label><input class="form-control" type="email" id="name-3"></div>
+                                        <div class="form-group"><label for="email">Nombre de joueurs maximum</label><input class="form-control" type="email" id="email-6"></div>
+                                        <div class="form-group"><label for="email">Nombre de tours</label><input class="form-control" type="email" id="email-7"></div>
+                                        <div class="form-group">
+                                            <div class="form-row">
+                                                <div class="col-md-6">
+                                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-58"><label class="form-check-label" for="formCheck-1">QUIZ</label></div>
+                                                    <div class="souscheck">
+                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-59"><label class="form-check-label" for="formCheck-1">Culture</label></div>
+                                                        <div class="souscheck">
+                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-60"><label class="form-check-label" for="formCheck-1">Histoire</label></div>
+                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-61"><label class="form-check-label" for="formCheck-1">Géographie</label></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="souscheck">
+                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-62"><label class="form-check-label" for="formCheck-1">Divertissement</label></div>
+                                                        <div class="souscheck">
+                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-63"><label class="form-check-label" for="formCheck-1">Cinéma</label></div>
+                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-64"><label class="form-check-label" for="formCheck-1">Serie</label></div>
+                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-65"><label class="form-check-label" for="formCheck-1">Jeux vidéo</label></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="souscheck">
+                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-66"><label class="form-check-label" for="formCheck-1">Sport</label></div>
+                                                        <div class="souscheck">
+                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-67"><label class="form-check-label" for="formCheck-1">Basket</label></div>
+                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-68"><label class="form-check-label" for="formCheck-1">Foot</label></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-69"><label class="form-check-label" for="formCheck-1">GUESS THE</label></div>
+                                                    <div class="souscheck">
+                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-70"><label class="form-check-label" for="formCheck-1">Film</label></div>
+                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-71"><label class="form-check-label" for="formCheck-1">Série</label></div>
+                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-72"><label class="form-check-label" for="formCheck-1">Jeux vidéo</label></div>
+                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-73"><label class="form-check-label" for="formCheck-1">Album</label></div>
+                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-74"><label class="form-check-label" for="formCheck-1">Anime</label></div>
+                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-75"><label class="form-check-label" for="formCheck-1">Acteur</label></div>
+                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-76"><label class="form-check-label" for="formCheck-1">Artiste musical</label></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Annuler</button><button class="btn btn-primary btn-success" type="button">Créer</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center"><button class="btn btn-primary btn-success" type="button" data-toggle="modal" data-target="#modalCreateSettings">Ajouter&nbsp;&nbsp;<i class="fa fa-plus"></i></button></div>
+                    <div class="row gallery">
+                        <div class="col-md-4 col-lg-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Setting1</h4>
+                                    <p class="card-text">joueurs : 10<br>tours : 30</p>
+                                    <ul style="margin-bottom: 2em;">
+                                        <li>Quiz (Film, Série, Musique)</li>
+                                        <li>Guess the (Film)</li>
+                                    </ul>
+                                    <div class="modal fade" role="dialog" tabindex="-1" id="modalSupSettings">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Êtes vous sûr de vouloir supprimer ?</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                                                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Non</button><button class="btn btn-primary btn-danger" type="button">Oui</button></div>
+                                            </div>
+                                        </div>
+                                    </div><button class="btn btn-primary btn-danger" type="button" style="margin-right: 0.25em;margin-bottom: 4px;" data-toggle="modal" data-target="#modalSupSettings">Supprimer</button>
+                                    <div class="modal fade" role="dialog" tabindex="-1"
+                                         id="modalEditSettings">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Edition des paramètres</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                                                <div class="modal-body" style="padding: 0;">
+                                                    <form style="padding: 20px;">
+                                                        <div class="form-group"><label for="email">Nom du profil de paramètres</label><input class="form-control" type="email" id="name"></div>
+                                                        <div class="form-group"><label for="email">Nombre de joueurs maximum</label><input class="form-control" type="email" id="email"></div>
+                                                        <div class="form-group"><label for="email">Nombre de tours</label><input class="form-control" type="email" id="email-1"></div>
+                                                        <div class="form-group">
+                                                            <div class="form-row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">QUIZ</label></div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-1">Culture</label></div>
+                                                                        <div class="souscheck">
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-4"><label class="form-check-label" for="formCheck-1">Histoire</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-5"><label class="form-check-label" for="formCheck-1">Géographie</label></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-8"><label class="form-check-label" for="formCheck-1">Divertissement</label></div>
+                                                                        <div class="souscheck">
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-9"><label class="form-check-label" for="formCheck-1">Cinéma</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-10"><label class="form-check-label" for="formCheck-1">Serie</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-21"><label class="form-check-label" for="formCheck-1">Jeux vidéo</label></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-1">Sport</label></div>
+                                                                        <div class="souscheck">
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-6"><label class="form-check-label" for="formCheck-1">Basket</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-7"><label class="form-check-label" for="formCheck-1">Foot</label></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-11"><label class="form-check-label" for="formCheck-1">GUESS THE</label></div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-12"><label class="form-check-label" for="formCheck-1">Film</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-16"><label class="form-check-label" for="formCheck-1">Série</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-15"><label class="form-check-label" for="formCheck-1">Jeux vidéo</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-14"><label class="form-check-label" for="formCheck-1">Album</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-18"><label class="form-check-label" for="formCheck-1">Anime</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-13"><label class="form-check-label" for="formCheck-1">Acteur</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-17"><label class="form-check-label" for="formCheck-1">Artiste musical</label></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Annuler</button><button class="btn btn-primary" type="button">Enregistrer</button></div>
+                                            </div>
+                                        </div>
+                                    </div><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalEditSettings" style="margin-bottom: 4px;">Modifier</button></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Setting2</h4>
+                                    <p class="card-text">joueurs : 10<br>tours : 30</p>
+                                    <ul style="margin-bottom: 2em;">
+                                        <li>Quiz (Film, Série, Musique)</li>
+                                        <li>Guess the (Film)</li>
+                                    </ul>
+                                    <div class="modal fade" role="dialog" tabindex="-1" id="modalSupSettings-2">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Êtes vous sûr de vouloir supprimer ?</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                                                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Non</button><button class="btn btn-primary btn-danger" type="button">Oui</button></div>
+                                            </div>
+                                        </div>
+                                    </div><button class="btn btn-primary btn-danger" type="button" style="margin-right: 0.25em;margin-bottom: 4px;" data-toggle="modal" data-target="#modalSupSettings">Supprimer</button>
+                                    <div class="modal fade" role="dialog" tabindex="-1"
+                                         id="modalEditSettings-2">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Edition des paramètres</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                                                <div class="modal-body" style="padding: 0;">
+                                                    <form style="padding: 20px;">
+                                                        <div class="form-group"><label for="email">Nom du profil de paramètres</label><input class="form-control" type="email" id="name-2"></div>
+                                                        <div class="form-group"><label for="email">Nombre de joueurs maximum</label><input class="form-control" type="email" id="email-4"></div>
+                                                        <div class="form-group"><label for="email">Nombre de tours</label><input class="form-control" type="email" id="email-5"></div>
+                                                        <div class="form-group">
+                                                            <div class="form-row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-39"><label class="form-check-label" for="formCheck-1">QUIZ</label></div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-40"><label class="form-check-label" for="formCheck-1">Culture</label></div>
+                                                                        <div class="souscheck">
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-41"><label class="form-check-label" for="formCheck-1">Histoire</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-42"><label class="form-check-label" for="formCheck-1">Géographie</label></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-43"><label class="form-check-label" for="formCheck-1">Divertissement</label></div>
+                                                                        <div class="souscheck">
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-44"><label class="form-check-label" for="formCheck-1">Cinéma</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-45"><label class="form-check-label" for="formCheck-1">Serie</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-46"><label class="form-check-label" for="formCheck-1">Jeux vidéo</label></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-47"><label class="form-check-label" for="formCheck-1">Sport</label></div>
+                                                                        <div class="souscheck">
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-48"><label class="form-check-label" for="formCheck-1">Basket</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-49"><label class="form-check-label" for="formCheck-1">Foot</label></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-50"><label class="form-check-label" for="formCheck-1">GUESS THE</label></div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-51"><label class="form-check-label" for="formCheck-1">Film</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-52"><label class="form-check-label" for="formCheck-1">Série</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-53"><label class="form-check-label" for="formCheck-1">Jeux vidéo</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-54"><label class="form-check-label" for="formCheck-1">Album</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-55"><label class="form-check-label" for="formCheck-1">Anime</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-56"><label class="form-check-label" for="formCheck-1">Acteur</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-57"><label class="form-check-label" for="formCheck-1">Artiste musical</label></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Annuler</button><button class="btn btn-primary" type="button">Enregistrer</button></div>
+                                            </div>
+                                        </div>
+                                    </div><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalEditSettings" style="margin-bottom: 4px;">Modifier</button></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Setting3</h4>
+                                    <p class="card-text">joueurs : 10<br>tours : 30</p>
+                                    <ul style="margin-bottom: 2em;">
+                                        <li>Quiz (Film, Série, Musique)</li>
+                                        <li>Guess the (Film)</li>
+                                    </ul>
+                                    <div class="modal fade" role="dialog" tabindex="-1" id="modalSupSettings-1">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Êtes vous sûr de vouloir supprimer ?</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                                                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Non</button><button class="btn btn-primary btn-danger" type="button">Oui</button></div>
+                                            </div>
+                                        </div>
+                                    </div><button class="btn btn-primary btn-danger" type="button" style="margin-right: 0.25em;margin-bottom: 4px;" data-toggle="modal" data-target="#modalSupSettings">Supprimer</button>
+                                    <div class="modal fade" role="dialog" tabindex="-1"
+                                         id="modalEditSettings-1">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Edition des paramètres</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                                                <div class="modal-body" style="padding: 0;">
+                                                    <form style="padding: 20px;">
+                                                        <div class="form-group"><label for="email">Nom du profil de paramètres</label><input class="form-control" type="email" id="name-1"></div>
+                                                        <div class="form-group"><label for="email">Nombre de joueurs maximum</label><input class="form-control" type="email" id="email-2"></div>
+                                                        <div class="form-group"><label for="email">Nombre de tours</label><input class="form-control" type="email" id="email-3"></div>
+                                                        <div class="form-group">
+                                                            <div class="form-row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-19"><label class="form-check-label" for="formCheck-1">QUIZ</label></div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-20"><label class="form-check-label" for="formCheck-1">Culture</label></div>
+                                                                        <div class="souscheck">
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-22"><label class="form-check-label" for="formCheck-1">Histoire</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-23"><label class="form-check-label" for="formCheck-1">Géographie</label></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-24"><label class="form-check-label" for="formCheck-1">Divertissement</label></div>
+                                                                        <div class="souscheck">
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-25"><label class="form-check-label" for="formCheck-1">Cinéma</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-26"><label class="form-check-label" for="formCheck-1">Serie</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-27"><label class="form-check-label" for="formCheck-1">Jeux vidéo</label></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-28"><label class="form-check-label" for="formCheck-1">Sport</label></div>
+                                                                        <div class="souscheck">
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-29"><label class="form-check-label" for="formCheck-1">Basket</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-30"><label class="form-check-label" for="formCheck-1">Foot</label></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-31"><label class="form-check-label" for="formCheck-1">GUESS THE</label></div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-32"><label class="form-check-label" for="formCheck-1">Film</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-33"><label class="form-check-label" for="formCheck-1">Série</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-34"><label class="form-check-label" for="formCheck-1">Jeux vidéo</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-35"><label class="form-check-label" for="formCheck-1">Album</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-36"><label class="form-check-label" for="formCheck-1">Anime</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-37"><label class="form-check-label" for="formCheck-1">Acteur</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-38"><label class="form-check-label" for="formCheck-1">Artiste musical</label></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Annuler</button><button class="btn btn-primary" type="button">Enregistrer</button></div>
+                                            </div>
+                                        </div>
+                                    </div><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalEditSettings" style="margin-bottom: 4px;">Modifier</button></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Setting4</h4>
+                                    <p class="card-text">joueurs : 10<br>tours : 30</p>
+                                    <ul style="margin-bottom: 2em;">
+                                        <li>Quiz (Film, Série, Musique)</li>
+                                        <li>Guess the (Film)</li>
+                                    </ul>
+                                    <div class="modal fade" role="dialog" tabindex="-1" id="modalSupSettings-3">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Êtes vous sûr de vouloir supprimer ?</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                                                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Non</button><button class="btn btn-primary btn-danger" type="button">Oui</button></div>
+                                            </div>
+                                        </div>
+                                    </div><button class="btn btn-primary btn-danger" type="button" style="margin-right: 0.25em;margin-bottom: 4px;" data-toggle="modal" data-target="#modalSupSettings">Supprimer</button>
+                                    <div class="modal fade" role="dialog" tabindex="-1"
+                                         id="modalEditSettings-3">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Edition des paramètres</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                                                <div class="modal-body" style="padding: 0;">
+                                                    <form style="padding: 20px;">
+                                                        <div class="form-group"><label for="email">Nom du profil de paramètres</label><input class="form-control" type="email" id="name-4"></div>
+                                                        <div class="form-group"><label for="email">Nombre de joueurs maximum</label><input class="form-control" type="email" id="email-8"></div>
+                                                        <div class="form-group"><label for="email">Nombre de tours</label><input class="form-control" type="email" id="email-9"></div>
+                                                        <div class="form-group">
+                                                            <div class="form-row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-77"><label class="form-check-label" for="formCheck-1">QUIZ</label></div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-78"><label class="form-check-label" for="formCheck-1">Culture</label></div>
+                                                                        <div class="souscheck">
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-79"><label class="form-check-label" for="formCheck-1">Histoire</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-80"><label class="form-check-label" for="formCheck-1">Géographie</label></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-81"><label class="form-check-label" for="formCheck-1">Divertissement</label></div>
+                                                                        <div class="souscheck">
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-82"><label class="form-check-label" for="formCheck-1">Cinéma</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-83"><label class="form-check-label" for="formCheck-1">Serie</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-84"><label class="form-check-label" for="formCheck-1">Jeux vidéo</label></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-85"><label class="form-check-label" for="formCheck-1">Sport</label></div>
+                                                                        <div class="souscheck">
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-86"><label class="form-check-label" for="formCheck-1">Basket</label></div>
+                                                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-87"><label class="form-check-label" for="formCheck-1">Foot</label></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-88"><label class="form-check-label" for="formCheck-1">GUESS THE</label></div>
+                                                                    <div class="souscheck">
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-89"><label class="form-check-label" for="formCheck-1">Film</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-90"><label class="form-check-label" for="formCheck-1">Série</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-91"><label class="form-check-label" for="formCheck-1">Jeux vidéo</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-92"><label class="form-check-label" for="formCheck-1">Album</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-93"><label class="form-check-label" for="formCheck-1">Anime</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-94"><label class="form-check-label" for="formCheck-1">Acteur</label></div>
+                                                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-95"><label class="form-check-label" for="formCheck-1">Artiste musical</label></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Annuler</button><button class="btn btn-primary" type="button">Enregistrer</button></div>
+                                            </div>
+                                        </div>
+                                    </div><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalEditSettings" style="margin-bottom: 4px;">Modifier</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

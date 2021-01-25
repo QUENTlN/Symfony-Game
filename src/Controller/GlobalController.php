@@ -9,8 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GlobalController extends AbstractController
 {
     /**
-     * @Route("/", name="room")
-     * @Route("/home", name="home")
+     * @Route("/", name="home")
      */
     public function index(): Response
     {
@@ -35,6 +34,26 @@ class GlobalController extends AbstractController
     public function signUp(): Response
     {
         return $this->render('global/signUp.html.twig', [
+            'controller_name' => 'GlobalController',
+        ]);
+    }
+
+    /**
+     * @Route("/account", name="account")
+     */
+    public function account(): Response
+    {
+        return $this->render('global/account.html.twig', [
+            'controller_name' => 'GlobalController',
+        ]);
+    }
+
+    /**
+     * @Route("/create_room", name="createRoom")
+     */
+    public function createRoom(): Response
+    {
+        return $this->render('global/createRoom.html.twig', [
             'controller_name' => 'GlobalController',
         ]);
     }
