@@ -22,6 +22,12 @@ class Game
      */
     private $idGame;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=RoomSettings::class, inversedBy="Game")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $roomSettings;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +41,18 @@ class Game
     public function setIdGame(int $idGame): self
     {
         $this->idGame = $idGame;
+
+        return $this;
+    }
+
+    public function getRoomSettings(): ?RoomSettings
+    {
+        return $this->roomSettings;
+    }
+
+    public function setRoomSettings(?RoomSettings $roomSettings): self
+    {
+        $this->roomSettings = $roomSettings;
 
         return $this;
     }

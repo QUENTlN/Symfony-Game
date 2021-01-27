@@ -27,6 +27,18 @@ class Answer
      */
     private $textAnswer;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="Answer")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $player;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="relation")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $question;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +64,30 @@ class Answer
     public function setTextAnswer(?string $textAnswer): self
     {
         $this->textAnswer = $textAnswer;
+
+        return $this;
+    }
+
+    public function getPlayer(): ?Player
+    {
+        return $this->player;
+    }
+
+    public function setPlayer(?Player $player): self
+    {
+        $this->player = $player;
+
+        return $this;
+    }
+
+    public function getQuestion(): ?Question
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(?Question $question): self
+    {
+        $this->question = $question;
 
         return $this;
     }

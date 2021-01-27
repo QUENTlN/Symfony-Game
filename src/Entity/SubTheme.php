@@ -22,6 +22,12 @@ class SubTheme
      */
     private $libSubTheme;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="SubTheme")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +41,18 @@ class SubTheme
     public function setLibSubTheme(string $libSubTheme): self
     {
         $this->libSubTheme = $libSubTheme;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

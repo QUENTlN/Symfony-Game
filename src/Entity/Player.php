@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PlayerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,7 +17,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *  message= "Email déjà utilisé, veuillez réessayer"
  * )
  */
-class Player implements UserInterface
+class Player extends Guest implements UserInterface
 {
     /**
      * @ORM\Id
@@ -40,6 +42,28 @@ class Player implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isAdmin;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="player")
+     */
+    private $Room;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="player")
+     */
+    private $Question;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="player")
+     */
+    private $Answer;
+
+    public function __construct()
+    {
+        $this->Room = new ArrayCollection();
+        $this->Question = new ArrayCollection();
+        $this->Answer = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -99,5 +123,95 @@ class Player implements UserInterface
 
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * @return Collection|Room[]
+     */
+    public function getRoom(): Collection
+    {
+        return $this->Room;
+    }
+
+    public function addRoom(Room $room): self
+    {
+        if (!$this->Room->contains($room)) {
+            $this->Room[] = $room;
+            $room->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRoom(Room $room): self
+    {
+        if ($this->Room->removeElement($room)) {
+            // set the owning side to null (unless already changed)
+            if ($room->getPlayer() === $this) {
+                $room->setPlayer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Question[]
+     */
+    public function getQuestion(): Collection
+    {
+        return $this->Question;
+    }
+
+    public function addQuestion(Question $question): self
+    {
+        if (!$this->Question->contains($question)) {
+            $this->Question[] = $question;
+            $question->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): self
+    {
+        if ($this->Question->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getPlayer() === $this) {
+                $question->setPlayer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Answer[]
+     */
+    public function getAnswer(): Collection
+    {
+        return $this->Answer;
+    }
+
+    public function addAnswer(Answer $answer): self
+    {
+        if (!$this->Answer->contains($answer)) {
+            $this->Answer[] = $answer;
+            $answer->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): self
+    {
+        if ($this->Answer->removeElement($answer)) {
+            // set the owning side to null (unless already changed)
+            if ($answer->getPlayer() === $this) {
+                $answer->setPlayer(null);
+            }
+        }
+
+        return $this;
     }
 }

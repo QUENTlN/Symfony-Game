@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RoomRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +48,22 @@ class Room
      * @ORM\Column(type="boolean")
      */
     private $isPrivate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="Room")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $player;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Guest::class)
+     */
+    private $Guest;
+
+    public function __construct()
+    {
+        $this->Guest = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +138,42 @@ class Room
     public function setIsPrivate(bool $isPrivate): self
     {
         $this->isPrivate = $isPrivate;
+
+        return $this;
+    }
+
+    public function getPlayer(): ?Player
+    {
+        return $this->player;
+    }
+
+    public function setPlayer(?Player $player): self
+    {
+        $this->player = $player;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Guest[]
+     */
+    public function getGuest(): Collection
+    {
+        return $this->Guest;
+    }
+
+    public function addGuest(Guest $guest): self
+    {
+        if (!$this->Guest->contains($guest)) {
+            $this->Guest[] = $guest;
+        }
+
+        return $this;
+    }
+
+    public function removeGuest(Guest $guest): self
+    {
+        $this->Guest->removeElement($guest);
 
         return $this;
     }
