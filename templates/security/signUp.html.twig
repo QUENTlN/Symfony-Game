@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Inscription
+{% endblock %}
+
+{% block body %}
+    <div class="login-dark">
+        {{ form_start(form,{'attr':{'class':'gradient','style': 'margin-top: 5vh;'}}) }}
+            {{ form_row(form._token) }}
+            <h2 class="sr-only">Login Form</h2>
+            <div class="illustration"><i class="icon ion-android-mail"></i></div>
+            <div class="form-group">
+                {{ form_row(form.login, {'label':false, 'attr':{'class':'form-control form-sign', 'placeholder':'Email'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.password.first, {'attr':{'placeholder':'Mot de passe'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.password.second, {'attr':{'placeholder':'Confirmer le mot de passe'}}) }}
+            </div>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">S'inscrire</button></div><a class="forgot" href="{{ path('signIn') }}">vous avez déjà un compte?</a></form>
+    </div>
+        {{ form_end(form) }}
+
+{% endblock %}

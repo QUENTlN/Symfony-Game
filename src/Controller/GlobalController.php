@@ -19,26 +19,6 @@ class GlobalController extends AbstractController
     }
 
     /**
-     * @Route("/sign_in", name="signIn")
-     */
-    public function signIn(): Response
-    {
-        return $this->render('global/signIn.html.twig', [
-            'controller_name' => 'GlobalController',
-        ]);
-    }
-
-    /**
-     * @Route("/sign_up", name="signUp")
-     */
-    public function signUp(): Response
-    {
-        return $this->render('global/signUp.html.twig', [
-            'controller_name' => 'GlobalController',
-        ]);
-    }
-
-    /**
      * @Route("/account", name="account")
      */
     public function account(): Response
