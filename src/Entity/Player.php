@@ -4,11 +4,18 @@ namespace App\Entity;
 
 use App\Repository\PlayerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=PlayerRepository::class)
+ * @UniqueEntity(
+ *  fields= {"login"},
+ *  message= "Email déjà utilisé, veuillez réessayer"
+ * )
  */
-class Player
+class Player implements UserInterface
 {
     /**
      * @ORM\Id
@@ -19,11 +26,13 @@ class Player
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email()
      */
     private $login;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\Length(min="8", minMessage="Votre mot de passe doit comporter 8 caractères minimum")
      */
     private $password;
 
@@ -71,5 +80,24 @@ class Player
         $this->isAdmin = $isAdmin;
 
         return $this;
+    }
+
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getUsername()
+    {
+        return $this->login;
+    }
+
+    public function eraseCredentials()
+    {
     }
 }
