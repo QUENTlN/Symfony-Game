@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RoomSettingsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,22 @@ class RoomSettings
      * @ORM\Column(type="string", length=1000, nullable=true)
      */
     private $idGameSettings;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Game::class, mappedBy="roomSettings")
+     */
+    private $Game;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=SubTheme::class)
+     */
+    private $RoomSettings;
+
+    public function __construct()
+    {
+        $this->Game = new ArrayCollection();
+        $this->RoomSettings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +121,60 @@ class RoomSettings
     public function setIdGameSettings(?string $idGameSettings): self
     {
         $this->idGameSettings = $idGameSettings;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Game[]
+     */
+    public function getGame(): Collection
+    {
+        return $this->Game;
+    }
+
+    public function addGame(Game $game): self
+    {
+        if (!$this->Game->contains($game)) {
+            $this->Game[] = $game;
+            $game->setRoomSettings($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGame(Game $game): self
+    {
+        if ($this->Game->removeElement($game)) {
+            // set the owning side to null (unless already changed)
+            if ($game->getRoomSettings() === $this) {
+                $game->setRoomSettings(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SubTheme[]
+     */
+    public function getRoomSettings(): Collection
+    {
+        return $this->RoomSettings;
+    }
+
+    public function addRoomSetting(SubTheme $roomSetting): self
+    {
+        if (!$this->RoomSettings->contains($roomSetting)) {
+            $this->RoomSettings[] = $roomSetting;
+        }
+
+        return $this;
+    }
+
+    public function removeRoomSetting(SubTheme $roomSetting): self
+    {
+        $this->RoomSettings->removeElement($roomSetting);
 
         return $this;
     }
