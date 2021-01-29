@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Question
 {
+    const STATUS = [
+        "pending"=>"pending",
+        "rejected"=>"rejected",
+        "accepted"=>"accepted",
+    ];
+
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -29,10 +36,6 @@ class Question
      */
     private $textQuestion;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $statusQuestion;
 
     /**
      * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="Question")
@@ -51,9 +54,26 @@ class Question
      */
     private $Category;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Room::class, mappedBy="Question")
+     */
+    private $rooms;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=SubCategory::class, inversedBy="Question")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $subCategory;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $status;
+
     public function __construct()
     {
         $this->relation = new ArrayCollection();
+        $this->rooms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -85,17 +105,6 @@ class Question
         return $this;
     }
 
-    public function getStatusQuestion(): ?bool
-    {
-        return $this->statusQuestion;
-    }
-
-    public function setStatusQuestion(bool $statusQuestion): self
-    {
-        $this->statusQuestion = $statusQuestion;
-
-        return $this;
-    }
 
     public function getPlayer(): ?Player
     {
@@ -147,6 +156,57 @@ class Question
     public function setCategory(Category $Category): self
     {
         $this->Category = $Category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Room[]
+     */
+    public function getRooms(): Collection
+    {
+        return $this->rooms;
+    }
+
+    public function addRoom(Room $room): self
+    {
+        if (!$this->rooms->contains($room)) {
+            $this->rooms[] = $room;
+            $room->addQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRoom(Room $room): self
+    {
+        if ($this->rooms->removeElement($room)) {
+            $room->removeQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function getSubCategory(): ?SubCategory
+    {
+        return $this->subCategory;
+    }
+
+    public function setSubCategory(?SubCategory $subCategory): self
+    {
+        $this->subCategory = $subCategory;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

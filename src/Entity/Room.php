@@ -55,14 +55,29 @@ class Room
      */
     private $player;
 
+
+
     /**
-     * @ORM\ManyToMany(targetEntity=Guest::class)
+     * @ORM\ManyToOne(targetEntity=RoomSettings::class, inversedBy="Room")
+     */
+    private $roomSettings;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Guest::class, inversedBy="rooms")
      */
     private $Guest;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Question::class, inversedBy="rooms")
+     */
+    private $Question;
+
+
 
     public function __construct()
     {
         $this->Guest = new ArrayCollection();
+        $this->Question = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,6 +172,22 @@ class Room
     /**
      * @return Collection|Guest[]
      */
+
+    public function getRoomSettings(): ?RoomSettings
+    {
+        return $this->roomSettings;
+    }
+
+    public function setRoomSettings(?RoomSettings $roomSettings): self
+    {
+        $this->roomSettings = $roomSettings;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Guest[]
+     */
     public function getGuest(): Collection
     {
         return $this->Guest;
@@ -177,4 +208,30 @@ class Room
 
         return $this;
     }
+
+    /**
+     * @return Collection|Question[]
+     */
+    public function getQuestion(): Collection
+    {
+        return $this->Question;
+    }
+
+    public function addQuestion(Question $question): self
+    {
+        if (!$this->Question->contains($question)) {
+            $this->Question[] = $question;
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): self
+    {
+        $this->Question->removeElement($question);
+
+        return $this;
+    }
+
+
 }

@@ -19,10 +19,6 @@ class GuessThe extends Game
      */
     private $id;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Category::class, mappedBy="guessThe")
-     */
-    private $Category;
 
     public function __construct()
     {
@@ -34,33 +30,6 @@ class GuessThe extends Game
         return $this->id;
     }
 
-    /**
-     * @return Collection|Category[]
-     */
-    public function getCategory(): Collection
-    {
-        return $this->Category;
-    }
 
-    public function addCategory(Category $category): self
-    {
-        if (!$this->Category->contains($category)) {
-            $this->Category[] = $category;
-            $category->setGuessThe($this);
-        }
 
-        return $this;
-    }
-
-    public function removeCategory(Category $category): self
-    {
-        if ($this->Category->removeElement($category)) {
-            // set the owning side to null (unless already changed)
-            if ($category->getGuessThe() === $this) {
-                $category->setGuessThe(null);
-            }
-        }
-
-        return $this;
-    }
 }
