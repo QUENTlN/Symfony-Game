@@ -44,20 +44,34 @@ class RoomSettings
      */
     private $idGameSettings;
 
+
     /**
-     * @ORM\OneToMany(targetEntity=Game::class, mappedBy="roomSettings")
+     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="roomSettings")
+     */
+    private $Room;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=SubCategory::class, mappedBy="RoomSettings")
+     */
+    private $subCategories;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Game::class, inversedBy="ManyToMany")
      */
     private $Game;
 
     /**
-     * @ORM\ManyToMany(targetEntity=SubTheme::class)
+     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="RoomSettings")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $RoomSettings;
+    private $OneToMany;
 
     public function __construct()
     {
         $this->Game = new ArrayCollection();
         $this->RoomSettings = new ArrayCollection();
+        $this->Room = new ArrayCollection();
+        $this->subCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -175,6 +189,77 @@ class RoomSettings
     public function removeRoomSetting(SubTheme $roomSetting): self
     {
         $this->RoomSettings->removeElement($roomSetting);
+
+        return $this;
+    }
+
+
+
+    /**
+     * @return Collection|Room[]
+     */
+    public function getRoom(): Collection
+    {
+        return $this->Room;
+    }
+
+    public function addRoom(Room $room): self
+    {
+        if (!$this->Room->contains($room)) {
+            $this->Room[] = $room;
+            $room->setRoomSettings($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRoom(Room $room): self
+    {
+        if ($this->Room->removeElement($room)) {
+            // set the owning side to null (unless already changed)
+            if ($room->getRoomSettings() === $this) {
+                $room->setRoomSettings(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SubCategory[]
+     */
+    public function getSubCategories(): Collection
+    {
+        return $this->subCategories;
+    }
+
+    public function addSubCategory(SubCategory $subCategory): self
+    {
+        if (!$this->subCategories->contains($subCategory)) {
+            $this->subCategories[] = $subCategory;
+            $subCategory->addRoomSetting($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubCategory(SubCategory $subCategory): self
+    {
+        if ($this->subCategories->removeElement($subCategory)) {
+            $subCategory->removeRoomSetting($this);
+        }
+
+        return $this;
+    }
+
+    public function getOneToMany(): ?Player
+    {
+        return $this->OneToMany;
+    }
+
+    public function setOneToMany(?Player $OneToMany): self
+    {
+        $this->OneToMany = $OneToMany;
 
         return $this;
     }

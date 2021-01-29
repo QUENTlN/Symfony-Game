@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\SubTheme;
+use App\Entity\StatusQuestion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method SubTheme|null find($id, $lockMode = null, $lockVersion = null)
- * @method SubTheme|null findOneBy(array $criteria, array $orderBy = null)
- * @method SubTheme[]    findAll()
- * @method SubTheme[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method StatusQuestion|null find($id, $lockMode = null, $lockVersion = null)
+ * @method StatusQuestion|null findOneBy(array $criteria, array $orderBy = null)
+ * @method StatusQuestion[]    findAll()
+ * @method StatusQuestion[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SubThemeRepository extends ServiceEntityRepository
+class StatusQuestionRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, SubTheme::class);
+        parent::__construct($registry, StatusQuestion::class);
     }
 
     // /**
-    //  * @return SubTheme[] Returns an array of SubTheme objects
+    //  * @return StatusQuestion[] Returns an array of StatusQuestion objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class SubThemeRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?SubTheme
+    public function findOneBySomeField($value): ?StatusQuestion
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')
