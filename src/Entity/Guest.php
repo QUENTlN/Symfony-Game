@@ -19,10 +19,6 @@ class Guest
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $idGuest;
 
     /**
      * @ORM\ManyToMany(targetEntity=Room::class, mappedBy="Guest")
@@ -39,17 +35,6 @@ class Guest
         return $this->id;
     }
 
-    public function getIdGuest(): ?int
-    {
-        return $this->idGuest;
-    }
-
-    public function setIdGuest(int $idGuest): self
-    {
-        $this->idGuest = $idGuest;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Room[]

@@ -4,6 +4,10 @@ namespace App\Entity;
 
 use App\Repository\ScoreRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\GuestRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use App\Repository\RoomRepository;
 
 /**
  * @ORM\Entity(repositoryClass=ScoreRepository::class)

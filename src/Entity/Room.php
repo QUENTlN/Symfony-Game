@@ -20,11 +20,6 @@ class Room
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $idRoom;
-
-    /**
      * @ORM\Column(type="string", length=400)
      */
     private $linkRoom;
@@ -85,17 +80,6 @@ class Room
         return $this->id;
     }
 
-    public function getIdRoom(): ?int
-    {
-        return $this->idRoom;
-    }
-
-    public function setIdRoom(int $idRoom): self
-    {
-        $this->idRoom = $idRoom;
-
-        return $this;
-    }
 
     public function getLinkRoom(): ?string
     {

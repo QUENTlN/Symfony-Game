@@ -27,11 +27,6 @@ class Question
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $idQuestion;
-
-    /**
      * @ORM\Column(type="text")
      */
     private $textQuestion;
@@ -81,17 +76,6 @@ class Question
         return $this->id;
     }
 
-    public function getIdQuestion(): ?int
-    {
-        return $this->idQuestion;
-    }
-
-    public function setIdQuestion(int $idQuestion): self
-    {
-        $this->idQuestion = $idQuestion;
-
-        return $this;
-    }
 
     public function getTextQuestion(): ?string
     {
