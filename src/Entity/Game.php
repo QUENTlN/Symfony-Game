@@ -19,10 +19,6 @@ class Game
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $idGame;
 
     /**
      * @ORM\OneToMany(targetEntity=SubCategory::class, mappedBy="Game")
@@ -45,17 +41,6 @@ class Game
         return $this->id;
     }
 
-    public function getIdGame(): ?int
-    {
-        return $this->idGame;
-    }
-
-    public function setIdGame(int $idGame): self
-    {
-        $this->idGame = $idGame;
-
-        return $this;
-    }
 
 
 
