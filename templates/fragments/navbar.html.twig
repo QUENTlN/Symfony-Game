@@ -9,6 +9,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ path('signIn') }}">Se connecter</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('signUp') }}">S'inscrire</a></li>
                 {%  else %}
+                    <li class="nav-item"><a class="nav-link" href="{{ path('suggestQuestion') }}">Proposer une question</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('logOut') }}">Se déconnecter</a></li>
                     <li class="nav-item"><a class="nav-link active" href="{{ path('account') }}"><i class="fa fa-user-circle"></i></a>
                     </li>
