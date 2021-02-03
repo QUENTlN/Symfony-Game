@@ -17,10 +17,6 @@ class Answer
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $idAnswer;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -39,17 +35,6 @@ class Answer
         return $this->id;
     }
 
-    public function getIdAnswer(): ?int
-    {
-        return $this->idAnswer;
-    }
-
-    public function setIdAnswer(int $idAnswer): self
-    {
-        $this->idAnswer = $idAnswer;
-
-        return $this;
-    }
 
     public function getTextAnswer(): ?string
     {
