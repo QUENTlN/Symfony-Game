@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=PlayerRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(
  *  fields= {"login"},
  *  message= "Email déjà utilisé, veuillez réessayer"
@@ -187,5 +188,13 @@ class Player extends Guest implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setIsAdminValue(): void
+    {
+        $this->isAdmin = false;
     }
 }
