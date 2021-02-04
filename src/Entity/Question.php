@@ -41,18 +41,7 @@ class Question
     /**
      * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="question")
      */
-    private $relation;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Category::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $Category;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Room::class, mappedBy="Question")
-     */
-    private $rooms;
+    private $answer;
 
     /**
      * @ORM\ManyToOne(targetEntity=SubCategory::class, inversedBy="Question")
@@ -65,10 +54,15 @@ class Question
      */
     private $status;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Round::class, mappedBy="question", orphanRemoval=true)
+     */
+    private $rounds;
+
     public function __construct()
     {
-        $this->relation = new ArrayCollection();
-        $this->rooms = new ArrayCollection();
+        $this->answer = new ArrayCollection();
+        $this->rounds = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,67 +99,28 @@ class Question
     /**
      * @return Collection|Answer[]
      */
-    public function getRelation(): Collection
+    public function getAnswer(): Collection
     {
-        return $this->relation;
+        return $this->answer;
     }
 
-    public function addRelation(Answer $relation): self
+    public function addRelation(Answer $answer): self
     {
-        if (!$this->relation->contains($relation)) {
-            $this->relation[] = $relation;
-            $relation->setQuestion($this);
+        if (!$this->answer->contains($answer)) {
+            $this->answer[] = $answer;
+            $answer->setQuestion($this);
         }
 
         return $this;
     }
 
-    public function removeRelation(Answer $relation): self
+    public function removeAnswer(Answer $answer): self
     {
-        if ($this->relation->removeElement($relation)) {
+        if ($this->answer->removeElement($answer)) {
             // set the owning side to null (unless already changed)
-            if ($relation->getQuestion() === $this) {
-                $relation->setQuestion(null);
+            if ($answer->getQuestion() === $this) {
+                $answer->setQuestion(null);
             }
-        }
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->Category;
-    }
-
-    public function setCategory(Category $Category): self
-    {
-        $this->Category = $Category;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Room[]
-     */
-    public function getRooms(): Collection
-    {
-        return $this->rooms;
-    }
-
-    public function addRoom(Room $room): self
-    {
-        if (!$this->rooms->contains($room)) {
-            $this->rooms[] = $room;
-            $room->addQuestion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRoom(Room $room): self
-    {
-        if ($this->rooms->removeElement($room)) {
-            $room->removeQuestion($this);
         }
 
         return $this;
@@ -191,6 +146,36 @@ class Question
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Round[]
+     */
+    public function getRounds(): Collection
+    {
+        return $this->rounds;
+    }
+
+    public function addRound(Round $round): self
+    {
+        if (!$this->rounds->contains($round)) {
+            $this->rounds[] = $round;
+            $round->setQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRound(Round $round): self
+    {
+        if ($this->rounds->removeElement($round)) {
+            // set the owning side to null (unless already changed)
+            if ($round->getQuestion() === $this) {
+                $round->setQuestion(null);
+            }
+        }
 
         return $this;
     }

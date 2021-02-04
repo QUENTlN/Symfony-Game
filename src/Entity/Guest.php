@@ -19,45 +19,59 @@ class Guest
      */
     private $id;
 
+    /**
+     * @ORM\Column(type="string", length=25)
+     */
+    private $pseudo;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Room::class, mappedBy="Guest")
+     * @ORM\OneToMany(targetEntity=Score::class, mappedBy="guest", orphanRemoval=true)
      */
-    private $rooms;
+    private $scores;
 
-    public function __construct()
-    {
-        $this->rooms = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
 
     /**
-     * @return Collection|Room[]
+     * @return Collection|Score[]
      */
     public function getRooms(): Collection
     {
         return $this->rooms;
     }
 
-    private function addRoom(Room $room): self
+    public function addRoom(Score $room): self
     {
         if (!$this->rooms->contains($room)) {
             $this->rooms[] = $room;
-            $room->addGuest($this);
+            $room->setGuest($this);
         }
 
         return $this;
     }
 
-    private function removeRoom(Room $room): self
+    public function removeRoom(Score $room): self
     {
         if ($this->rooms->removeElement($room)) {
-            $room->removeGuest($this);
+            // set the owning side to null (unless already changed)
+            if ($room->getGuest() === $this) {
+                $room->setGuest(null);
+            }
         }
 
         return $this;
