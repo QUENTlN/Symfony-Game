@@ -30,14 +30,9 @@ class Room
     private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $finishedAt;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $idHostedPlayer;
 
     /**
      * @ORM\Column(type="boolean")
@@ -58,21 +53,21 @@ class Room
     private $roomSettings;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Guest::class, inversedBy="rooms")
+     * @ORM\OneToMany(targetEntity=Score::class, mappedBy="room", orphanRemoval=true)
      */
-    private $Guest;
+    private $scores;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Question::class, inversedBy="rooms")
+     * @ORM\OneToMany(targetEntity=Round::class, mappedBy="room", orphanRemoval=true)
      */
-    private $Question;
+    private $rounds;
 
 
 
     public function __construct()
     {
-        $this->Guest = new ArrayCollection();
-        $this->Question = new ArrayCollection();
+        $this->scores = new ArrayCollection();
+        $this->rounds = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,18 +112,6 @@ class Room
         return $this;
     }
 
-    public function getIdHostedPlayer(): ?int
-    {
-        return $this->idHostedPlayer;
-    }
-
-    public function setIdHostedPlayer(int $idHostedPlayer): self
-    {
-        $this->idHostedPlayer = $idHostedPlayer;
-
-        return $this;
-    }
-
     public function getIsPrivate(): ?bool
     {
         return $this->isPrivate;
@@ -153,10 +136,6 @@ class Room
         return $this;
     }
 
-    /**
-     * @return Collection|Guest[]
-     */
-
     public function getRoomSettings(): ?RoomSettings
     {
         return $this->roomSettings;
@@ -170,49 +149,61 @@ class Room
     }
 
     /**
-     * @return Collection|Guest[]
+     * @return Collection|Score[]
      */
-    public function getGuest(): Collection
+    public function getScores(): Collection
     {
-        return $this->Guest;
+        return $this->scores;
     }
 
-    public function addGuest(Guest $guest): self
+    public function addScore(Score $score): self
     {
-        if (!$this->Guest->contains($guest)) {
-            $this->Guest[] = $guest;
+        if (!$this->scores->contains($score)) {
+            $this->scores[] = $score;
+            $score->setRoom($this);
         }
 
         return $this;
     }
 
-    public function removeGuest(Guest $guest): self
+    public function removeScore(Score $score): self
     {
-        $this->Guest->removeElement($guest);
+        if ($this->scores->removeElement($score)) {
+            // set the owning side to null (unless already changed)
+            if ($score->getRoom() === $this) {
+                $score->setRoom(null);
+            }
+        }
 
         return $this;
     }
 
     /**
-     * @return Collection|Question[]
+     * @return Collection|Round[]
      */
-    public function getQuestion(): Collection
+    public function getRounds(): Collection
     {
-        return $this->Question;
+        return $this->rounds;
     }
 
-    public function addQuestion(Question $question): self
+    public function addRound(Round $round): self
     {
-        if (!$this->Question->contains($question)) {
-            $this->Question[] = $question;
+        if (!$this->rounds->contains($round)) {
+            $this->rounds[] = $round;
+            $round->setRoom($this);
         }
 
         return $this;
     }
 
-    public function removeQuestion(Question $question): self
+    public function removeRound(Round $round): self
     {
-        $this->Question->removeElement($question);
+        if ($this->rounds->removeElement($round)) {
+            // set the owning side to null (unless already changed)
+            if ($round->getRoom() === $this) {
+                $round->setRoom(null);
+            }
+        }
 
         return $this;
     }
