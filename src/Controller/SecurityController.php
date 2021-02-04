@@ -33,7 +33,6 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $player->setIsAdmin(false);
             $hash = $encoder->encodePassword($player, $player->getPassword());
             $player->setPassword($hash);
             $manager->persist($player);

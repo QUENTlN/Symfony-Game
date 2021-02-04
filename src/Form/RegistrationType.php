@@ -16,6 +16,7 @@ class RegistrationType extends AbstractType
     {
         $builder
             ->add('login')
+            ->add('pseudo')
             ->add('password', RepeatedType::class, [
             'type' => PasswordType::class,
             'invalid_message' => 'Les mots de passe doivent correspondre',
