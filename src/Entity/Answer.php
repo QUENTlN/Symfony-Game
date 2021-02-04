@@ -25,7 +25,7 @@ class Answer
 
 
     /**
-     * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="relation")
+     * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="answer")
      * @ORM\JoinColumn(nullable=false)
      */
     private $question;
