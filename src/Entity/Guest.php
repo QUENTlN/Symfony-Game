@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=GuestRepository::class)
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({"guest" = "Guest", "player" = "Player"})
  */
 class Guest
 {
@@ -17,17 +20,17 @@ class Guest
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=25)
      */
-    private $pseudo;
+    protected $pseudo;
 
     /**
      * @ORM\OneToMany(targetEntity=Score::class, mappedBy="guest", orphanRemoval=true)
      */
-    private $scores;
+    protected $scores;
 
 
     public function getId(): ?int

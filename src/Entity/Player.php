@@ -25,7 +25,7 @@ class Player extends Guest implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -53,14 +53,15 @@ class Player extends Guest implements UserInterface
     private $Answer;
 
     /**
-     * @ORM\OneToMany(targetEntity=RoomSettings::class, mappedBy="OneToMany")
-     */
-    private $RoomSettings;
-
-    /**
-     * @ORM\OneToMany(targetEntity=RoomSettings::class, mappedBy="host", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=RoomSettings::class, mappedBy="idPlayer")
      */
     private $roomSettings;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="idHost", orphanRemoval=true)
+     */
+    private $hostedRooms;
+
 
     public function __construct()
     {
@@ -68,6 +69,7 @@ class Player extends Guest implements UserInterface
         $this->Answer = new ArrayCollection();
         $this->RoomSettings = new ArrayCollection();
         $this->roomSettings = new ArrayCollection();
+        $this->hostedRooms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -196,5 +198,35 @@ class Player extends Guest implements UserInterface
     public function setIsAdminValue(): void
     {
         $this->isAdmin = false;
+    }
+
+    /**
+     * @return Collection|Room[]
+     */
+    public function getHostedRooms(): Collection
+    {
+        return $this->hostedRooms;
+    }
+
+    public function addHostedRoom(Room $hostedRoom): self
+    {
+        if (!$this->hostedRooms->contains($hostedRoom)) {
+            $this->hostedRooms[] = $hostedRoom;
+            $hostedRoom->setIdHost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHostedRoom(Room $hostedRoom): self
+    {
+        if ($this->hostedRooms->removeElement($hostedRoom)) {
+            // set the owning side to null (unless already changed)
+            if ($hostedRoom->getIdHost() === $this) {
+                $hostedRoom->setIdHost(null);
+            }
+        }
+
+        return $this;
     }
 }
