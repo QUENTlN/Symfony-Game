@@ -40,14 +40,6 @@ class Room
     private $isPrivate;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="Room")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $player;
-
-
-
-    /**
      * @ORM\ManyToOne(targetEntity=RoomSettings::class, inversedBy="Room")
      */
     private $roomSettings;
@@ -61,6 +53,12 @@ class Room
      * @ORM\OneToMany(targetEntity=Round::class, mappedBy="room", orphanRemoval=true)
      */
     private $rounds;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="hostedRooms")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $idHost;
 
 
 
@@ -204,6 +202,18 @@ class Room
                 $round->setRoom(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIdHost(): ?Player
+    {
+        return $this->idHost;
+    }
+
+    public function setIdHost(?Player $idHost): self
+    {
+        $this->idHost = $idHost;
 
         return $this;
     }
