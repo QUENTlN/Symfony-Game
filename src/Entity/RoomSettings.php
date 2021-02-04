@@ -40,12 +40,6 @@ class RoomSettings
     private $oneAnswerOnly;
 
     /**
-     * @ORM\Column(type="string", length=1000, nullable=true)
-     */
-    private $idGameSettings;
-
-
-    /**
      * @ORM\OneToMany(targetEntity=Room::class, mappedBy="roomSettings")
      */
     private $Room;
@@ -61,15 +55,19 @@ class RoomSettings
     private $Game;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="RoomSettings")
+     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="roomSettings")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $OneToMany;
+    private $host;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $deletedAt;
 
     public function __construct()
     {
         $this->Game = new ArrayCollection();
-        $this->RoomSettings = new ArrayCollection();
         $this->Room = new ArrayCollection();
         $this->subCategories = new ArrayCollection();
     }
@@ -127,75 +125,7 @@ class RoomSettings
         return $this;
     }
 
-    public function getIdGameSettings(): ?string
-    {
-        return $this->idGameSettings;
-    }
-
-    public function setIdGameSettings(?string $idGameSettings): self
-    {
-        $this->idGameSettings = $idGameSettings;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Game[]
-     */
-    public function getGame(): Collection
-    {
-        return $this->Game;
-    }
-
-    public function addGame(Game $game): self
-    {
-        if (!$this->Game->contains($game)) {
-            $this->Game[] = $game;
-            $game->setRoomSettings($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGame(Game $game): self
-    {
-        if ($this->Game->removeElement($game)) {
-            // set the owning side to null (unless already changed)
-            if ($game->getRoomSettings() === $this) {
-                $game->setRoomSettings(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SubTheme[]
-     */
-    public function getRoomSettings(): Collection
-    {
-        return $this->RoomSettings;
-    }
-
-    public function addRoomSetting(SubTheme $roomSetting): self
-    {
-        if (!$this->RoomSettings->contains($roomSetting)) {
-            $this->RoomSettings[] = $roomSetting;
-        }
-
-        return $this;
-    }
-
-    public function removeRoomSetting(SubTheme $roomSetting): self
-    {
-        $this->RoomSettings->removeElement($roomSetting);
-
-        return $this;
-    }
-
-
-
-    /**
+     /**
      * @return Collection|Room[]
      */
     public function getRoom(): Collection
@@ -252,14 +182,26 @@ class RoomSettings
         return $this;
     }
 
-    public function getOneToMany(): ?Player
+    public function getHost(): ?Player
     {
-        return $this->OneToMany;
+        return $this->host;
     }
 
-    public function setOneToMany(?Player $OneToMany): self
+    public function setHost(?Player $host): self
     {
-        $this->OneToMany = $OneToMany;
+        $this->host = $host;
+
+        return $this;
+    }
+
+    public function getDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
+    {
+        $this->deletedAt = $deletedAt;
 
         return $this;
     }

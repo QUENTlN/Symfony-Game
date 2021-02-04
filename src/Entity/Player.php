@@ -44,11 +44,6 @@ class Player extends Guest implements UserInterface
     private $isAdmin;
 
     /**
-     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="player")
-     */
-    private $Room;
-
-    /**
      * @ORM\OneToMany(targetEntity=Question::class, mappedBy="player")
      */
     private $Question;
@@ -61,12 +56,17 @@ class Player extends Guest implements UserInterface
      */
     private $RoomSettings;
 
+    /**
+     * @ORM\OneToMany(targetEntity=RoomSettings::class, mappedBy="host", orphanRemoval=true)
+     */
+    private $roomSettings;
+
     public function __construct()
     {
-        $this->Room = new ArrayCollection();
         $this->Question = new ArrayCollection();
         $this->Answer = new ArrayCollection();
         $this->RoomSettings = new ArrayCollection();
+        $this->roomSettings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,36 +130,6 @@ class Player extends Guest implements UserInterface
     }
 
     /**
-     * @return Collection|Room[]
-     */
-    public function getRoom(): Collection
-    {
-        return $this->Room;
-    }
-
-    public function addRoom(Room $room): self
-    {
-        if (!$this->Room->contains($room)) {
-            $this->Room[] = $room;
-            $room->setPlayer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRoom(Room $room): self
-    {
-        if ($this->Room->removeElement($room)) {
-            // set the owning side to null (unless already changed)
-            if ($room->getPlayer() === $this) {
-                $room->setPlayer(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Question[]
      */
     public function getQuestion(): Collection
@@ -190,48 +160,18 @@ class Player extends Guest implements UserInterface
     }
 
     /**
-     * @return Collection|Answer[]
-     */
-    public function getAnswer(): Collection
-    {
-        return $this->Answer;
-    }
-
-    public function addAnswer(Answer $answer): self
-    {
-        if (!$this->Answer->contains($answer)) {
-            $this->Answer[] = $answer;
-            $answer->setPlayer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnswer(Answer $answer): self
-    {
-        if ($this->Answer->removeElement($answer)) {
-            // set the owning side to null (unless already changed)
-            if ($answer->getPlayer() === $this) {
-                $answer->setPlayer(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|RoomSettings[]
      */
     public function getRoomSettings(): Collection
     {
-        return $this->RoomSettings;
+        return $this->roomSettings;
     }
 
     public function addRoomSetting(RoomSettings $roomSetting): self
     {
-        if (!$this->RoomSettings->contains($roomSetting)) {
-            $this->RoomSettings[] = $roomSetting;
-            $roomSetting->setOneToMany($this);
+        if (!$this->roomSettings->contains($roomSetting)) {
+            $this->roomSettings[] = $roomSetting;
+            $roomSetting->setHost($this);
         }
 
         return $this;
@@ -239,10 +179,10 @@ class Player extends Guest implements UserInterface
 
     public function removeRoomSetting(RoomSettings $roomSetting): self
     {
-        if ($this->RoomSettings->removeElement($roomSetting)) {
+        if ($this->roomSettings->removeElement($roomSetting)) {
             // set the owning side to null (unless already changed)
-            if ($roomSetting->getOneToMany() === $this) {
-                $roomSetting->setOneToMany(null);
+            if ($roomSetting->getHost() === $this) {
+                $roomSetting->setHost(null);
             }
         }
 
