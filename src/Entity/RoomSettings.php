@@ -54,16 +54,16 @@ class RoomSettings
      */
     private $Game;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="roomSettings")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $host;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $deletedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="roomSettings")
+     */
+    private $idPlayer;
 
     public function __construct()
     {
@@ -202,6 +202,18 @@ class RoomSettings
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    public function getIdPlayer(): ?Player
+    {
+        return $this->idPlayer;
+    }
+
+    public function setIdPlayer(?Player $idPlayer): self
+    {
+        $this->idPlayer = $idPlayer;
 
         return $this;
     }

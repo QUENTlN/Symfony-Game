@@ -15,8 +15,8 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('login')
             ->add('pseudo')
+            ->add('login')
             ->add('password', RepeatedType::class, [
             'type' => PasswordType::class,
             'invalid_message' => 'Les mots de passe doivent correspondre',
