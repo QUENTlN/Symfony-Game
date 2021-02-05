@@ -10,15 +10,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Player;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/sign_in", name="signIn")
      */
-    public function signIn(): Response
+    public function signIn(AuthenticationUtils $authenticationUtils): Response
     {
-        return $this->render('security/signIn.html.twig');
+        $error = $authenticationUtils -> getLastAuthenticationError();
+        return $this->render('security/signIn.html.twig', [
+            'error' => $error
+        ]);
     }
 
     /**
