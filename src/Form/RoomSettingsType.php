@@ -45,15 +45,24 @@ class RoomSettingsType extends AbstractType
                 'multiple'  => false,
 
             ])
-            //->add('showScore')
+            ->add('showScore')
             //->add('createdAt')
-           // ->add('oneAnswerOnly')
-           // ->add('deletedAt')
+            ->add('oneAnswerOnly', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => true,
+                    'Non'  => false,
+                ],
+                'expanded'  => true,
+                'multiple'  => false,
+
+            ])
+           //->add('oneAnswerOnly')
+            //->add('deletedAt')
            // ->add('subCategories')
             //->add('game')
-            ->add('idPlayer')
+            //->add('idPlayer')
             ->add('numberRound',IntegerType::class)
-            ->add('subCategories', ChoiceType::class, [
+         /*   ->add('subCategories', ChoiceType::class, [
                 'choices' => [
                     'QUIZZ' => self::QUIZZ,
                     'Culture' => self::CULTURE,
@@ -81,7 +90,7 @@ class RoomSettingsType extends AbstractType
                 ],
                 'expanded'  => true,
                 'multiple'  => true,
-            ])
+            ])*/
         ;
     }
 
