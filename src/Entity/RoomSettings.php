@@ -25,7 +25,7 @@ class RoomSettings
     private $nbMaxPlayer;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="boolean")
      */
     private $showScore;
 
@@ -50,9 +50,9 @@ class RoomSettings
     private $subCategories;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Game::class, inversedBy="ManyToMany")
+     * @ORM\ManyToMany(targetEntity=Game::class, inversedBy="roomSettings")
      */
-    private $Game;
+    protected $game;
 
 
     /**
@@ -65,9 +65,19 @@ class RoomSettings
      */
     private $idPlayer;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nameProfil;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numberRound;
+
     public function __construct()
     {
-        $this->Game = new ArrayCollection();
+        $this->game = new ArrayCollection();
         $this->Room = new ArrayCollection();
         $this->subCategories = new ArrayCollection();
     }
@@ -214,6 +224,30 @@ class RoomSettings
     public function setIdPlayer(?Player $idPlayer): self
     {
         $this->idPlayer = $idPlayer;
+
+        return $this;
+    }
+
+    public function getNameProfil(): ?string
+    {
+        return $this->nameProfil;
+    }
+
+    public function setNameProfil(?string $nameProfil): self
+    {
+        $this->nameProfil = $nameProfil;
+
+        return $this;
+    }
+
+    public function getNumberRound(): ?int
+    {
+        return $this->numberRound;
+    }
+
+    public function setNumberRound(int $numberRound): self
+    {
+        $this->numberRound = $numberRound;
 
         return $this;
     }
