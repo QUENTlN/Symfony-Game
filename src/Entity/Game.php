@@ -29,14 +29,14 @@ class Game
     private $subCategories;
 
     /**
-     * @ORM\ManyToMany(targetEntity=RoomSettings::class, mappedBy="Game")
+     * @ORM\ManyToMany(targetEntity=RoomSettings::class, mappedBy="game")
      */
-    private $ManyToMany;
+    private $roomSettings;
 
     public function __construct()
     {
         $this->subCategories = new ArrayCollection();
-        $this->ManyToMany = new ArrayCollection();
+        $this->roomSettings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -80,25 +80,25 @@ class Game
     /**
      * @return Collection|RoomSettings[]
      */
-    public function getManyToMany(): Collection
+    public function getRoomSettings(): Collection
     {
-        return $this->ManyToMany;
+        return $this->roomSettings;
     }
 
-    public function addManyToMany(RoomSettings $manyToMany): self
+    public function addRoomSettings(RoomSettings $roomSettings): self
     {
-        if (!$this->ManyToMany->contains($manyToMany)) {
-            $this->ManyToMany[] = $manyToMany;
-            $manyToMany->addGame($this);
+        if (!$this->roomSettings->contains($roomSettings)) {
+            $this->roomSettings[] = $roomSettings;
+            $roomSettings->addGame($this);
         }
 
         return $this;
     }
 
-    public function removeManyToMany(RoomSettings $manyToMany): self
+    public function removeRoomSettings(RoomSettings $roomSettings): self
     {
-        if ($this->ManyToMany->removeElement($manyToMany)) {
-            $manyToMany->removeGame($this);
+        if ($this->roomSettings->removeElement($roomSettings)) {
+            $roomSettings->removeGame($this);
         }
 
         return $this;
