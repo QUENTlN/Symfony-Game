@@ -47,4 +47,14 @@ class GlobalController extends AbstractController
             'controller_name' => 'GlobalController',
         ]);
     }
+
+    /**
+     * @Route("/accept_question", name="acceptQuestion")
+     */
+    public function acceptQuestion(): Response
+    {
+        return $this->render('global/acceptQuestion.html.twig', [
+            'controller_name' => 'GlobalController',
+        ]);
+    }
 }

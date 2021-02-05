@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Inscription
+{% endblock %}
+
+{% block body %}
+
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient">
+        <div class="container"><a class="navbar-brand logo" href="#">Magma</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navbarNav"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Room</a></li>
+                    <li class="nav-item"><a class="nav-link" href="create-room.html">Créer salon</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profil.html">Project Page</a></li>
+                    <li class="nav-item"><a class="nav-link" href="signup.html">Se connecter</a></li>
+                    <li class="nav-item"><a class="nav-link" href="signin.html">S'inscrire</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profil.html"><i class="fa fa-user-circle"></i></a></li>
+                    <li class="nav-item"><a class="nav-link" href="suggest-question.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="portfolio-block contact text-center">
+        <h2 class="text-center font-weight-bold mt-5">Valider les questions et réponses proposées par les players</h2>
+        <div class="container">
+            <div class="table-responsive mt-5">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Game</th>
+                        <th class="w-50">Questions</th>
+                        <th class="w-50">Réponses</th>
+                        <th>Accepter</th>
+                        <th>Refuser</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-justify">
+                    <tr>
+                        <td>Quiz<br>Culture<br>Histoire</td>
+                        <td class="text">Quelle est la couleur du cheval blanc d'Henri IV ?</td>
+                        <td>Gris<br><br></td>
+                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
+                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
+                    </tr>
+                    <tr>
+                        <td>GuessThe<br>Manga<br></td>
+                        <td class="text-justify"><span>De quel manga est tiré cette image ?&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+                            <div class="text-center"><img class="w-75 mt-2" src="assets/img/nature/yeahitsrainig.jpg"></div>
+                        </td>
+                        <td>Fullmetal Alchimist Brotherhood.</td>
+                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
+                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Quiz<br>Métier<br><br></td>
+                        <td><br>En quoi consistait le métier de&nbsp;blatier&nbsp;?<br>
+                            <div class="text-center"></div>
+                        </td>
+                        <td><br>Vendeur de blé et autres grains, vendeur de blé, vendeur d'orge, vendeur de l'avoine, récolte grains<br></td>
+                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
+                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
+                    </tr>
+                    <tr>
+                        <td>GuessThe<br>Fruit</td>
+                        <td><span>Quel est l'appellation de ce fruit<strong> </strong>?&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
+                            <div class="text-center"><img class="w-75 mt-2" src="assets/img/nature/fruit.jpg"></div>
+                        </td>
+                        <td>jujube</td>
+                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
+                        <td id="text" class="bg-danger text-center"><i class="fa fa-remove"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Quiz<br>Animal</td>
+                        <td><br>Les vers de terre ont-ils un<strong> </strong>coeur ?<br><br></td>
+                        <td>Oui</td>
+                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
+                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Quiz<br>Devinette</td>
+                        <td><br>Ma sœur a autant de frère que de sœurs et mon frère, lui, a deux fois plus de sœurs que de frères. Combien d'enfants dans la fratrie?<br><br></td>
+                        <td>Il y a 3 enfants dans le fratrie.</td>
+                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
+                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Quiz<br>Devinette</td>
+                        <td><br>Mon premier est l'un des 5 sens.<br>Mon deuxième est la première lettre de l'alphabet.<br>Mon troisième est la 11ième lettre de l'alphabet.<br>Mon quatrième est l’inverse de dure.<br><br>Mon tout est un plat d'origine mexicaine fait à partir d’avocat.<br></td>
+                        <td><br>Le guacamole (Goût-A-K-Molle).<br></td>
+                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
+                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
+                    </tr>
+                    <tr>
+                        <td>GuessThe<br>Dessin Animé</td>
+                        <td>Quel est le prénom de la fiancée de Popeye ?<br></td>
+                        <td>Olive</td>
+                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
+                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
+                    </tr>
+                    <tr>
+                        <td>GuessThe<br>Logo</td>
+                        <td>Que représente ce logo ?&nbsp; &nbsp; &nbsp; <div class="text-center"><img class="w-75 mt-2" src="assets/img/Couleur-logo-Pinterest.jpg"></div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td>
+                        <td>Pinterest</td>
+                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
+                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <section></section>
+    </section>
+    <footer class="page-footer">
+        <div class="container">
+            <div class="links"><a href="https://github.com/QUENTlN/game">Made with&nbsp;<i class="icon ion-heart"></i>&nbsp; by LeGroupe5</a></div>
+        </div>
+    </footer>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
+    <script src="assets/js/theme.js"></script>
+
+{% endblock %}
