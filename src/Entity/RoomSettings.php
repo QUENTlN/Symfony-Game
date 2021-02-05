@@ -25,7 +25,7 @@ class RoomSettings
     private $nbMaxPlayer;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="boolean")
      */
     private $showScore;
 
@@ -50,24 +50,34 @@ class RoomSettings
     private $subCategories;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Game::class, inversedBy="ManyToMany")
+     * @ORM\ManyToMany(targetEntity=Game::class, inversedBy="roomSettings")
      */
-    private $Game;
+    protected $game;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="roomSettings")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $host;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $deletedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="roomSettings")
+     */
+    private $idPlayer;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nameProfil;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numberRound;
+
     public function __construct()
     {
-        $this->Game = new ArrayCollection();
+        $this->game = new ArrayCollection();
         $this->Room = new ArrayCollection();
         $this->subCategories = new ArrayCollection();
     }
@@ -202,6 +212,42 @@ class RoomSettings
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    public function getIdPlayer(): ?Player
+    {
+        return $this->idPlayer;
+    }
+
+    public function setIdPlayer(?Player $idPlayer): self
+    {
+        $this->idPlayer = $idPlayer;
+
+        return $this;
+    }
+
+    public function getNameProfil(): ?string
+    {
+        return $this->nameProfil;
+    }
+
+    public function setNameProfil(?string $nameProfil): self
+    {
+        $this->nameProfil = $nameProfil;
+
+        return $this;
+    }
+
+    public function getNumberRound(): ?int
+    {
+        return $this->numberRound;
+    }
+
+    public function setNumberRound(int $numberRound): self
+    {
+        $this->numberRound = $numberRound;
 
         return $this;
     }
