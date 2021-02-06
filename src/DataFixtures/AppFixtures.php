@@ -7,6 +7,7 @@ use App\Entity\Guest;
 use App\Entity\Player;
 use App\Entity\Room;
 use App\Entity\RoomSettings;
+use App\Entity\Round;
 use App\Entity\Score;
 use App\Entity\SubCategory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -17,9 +18,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        gc_collect_cycles();
-
-        $faker = Factory::create();
+        //$faker = Factory::create();
 
         $gamesTab = [
             "\App\Entity\Quiz" => [
@@ -69,10 +68,12 @@ class AppFixtures extends Fixture
             ->setPassword("azerty");
         $manager->persist($admin);
 
-        for($i = 0; $i < 1; $i++){
+        $manager->flush();
+
+        for($i = 0; $i < 10; $i++){
             $player = new Player();
-            $player->setPseudo($faker->userName)
-                ->setLogin($faker->email)
+            $player->setPseudo("Player".$i)
+                ->setLogin("user".$i."@gmail.com")
                 ->setPassword("azerty")
                 ->setIsAdmin(false);
             $manager->persist($player);
@@ -84,21 +85,32 @@ class AppFixtures extends Fixture
                 ->setIdPlayer($player)
                 ->setOneAnswerOnly(true)
                 ->setNameProfil("Profil n°1")
-                ->setNumberRound(10)
-                ->addSubCategory($subCategoriesArray[rand(0,3)])
-                ->addSubCategory($subCategoriesArray[rand(4,5)])
-                ->addSubCategory($subCategoriesArray[rand(6,8)])
-                ->addSubCategory($subCategoriesArray[rand(9,10)])
-                ->addSubCategory($subCategoriesArray[rand(11,13)]);
+                ->setNumberRound(10);
+
+
+            $categoriesSelec = [];
+            for ($j = 0; $j < 5; $j++){
+                $rand = rand(0,sizeof($subCategoriesArray));
+                $cat = $subCategoriesArray[$rand];
+                $categoriesSelec[] = $cat;
+                $roomSettings->addSubCategory($cat);
+            }
             $manager->persist($roomSettings);
 
             $room = new Room();
             $room->setRoomSettings($roomSettings)
                 ->setHost($player)
-                ->setLinkRoom($faker->uuid)
+                ->setLinkRoom("nsqdnfjkqnfk".$i)
                 ->setCreatedAt(new \DateTime())
                 ->setIsPrivate(false);
             $manager->persist($room);
+
+//            for ($j = 0; $j < 10; $j++){
+//                $round = new Round();
+//                $round->setRoom($room)
+//                    ->setIndexOrder($j + 1)
+//
+//            }
 
             $scoreHost = new Score();
             $scoreHost->setScore(0)
@@ -107,9 +119,9 @@ class AppFixtures extends Fixture
             $manager->persist($scoreHost);
 
 
-            for($i = 0; 0 < rand(1,5); $i++){
+            for($j = 0; $j < 10; $j++){
                 $guest = new Guest();
-                $guest->setPseudo($faker->userName);
+                $guest->setPseudo("guest".$j);
                 $manager->persist($guest);
 
                 $score = new Score();
@@ -120,7 +132,7 @@ class AppFixtures extends Fixture
             }
         }
 
-
         $manager->flush();
+
     }
 }
