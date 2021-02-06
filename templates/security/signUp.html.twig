@@ -16,6 +16,11 @@
         <div class="form-group">
             {{ form_row(form.pseudo, {'label':false, 'attr':{'class':'form-control form-sign', 'placeholder':'Pseudo'}}) }}
         </div>
+        {% if form_errors(form.password.first) is not empty %}
+            <div class="alert alert-danger">
+                {{ form_errors(form.password.first)}}
+            </div>
+        {% endif %}
             <div class="form-group">
                 {{ form_row(form.password.first, {'attr':{'placeholder':'Mot de passe'}}) }}
             </div>

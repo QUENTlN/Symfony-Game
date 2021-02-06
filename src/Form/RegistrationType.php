@@ -19,7 +19,7 @@ class RegistrationType extends AbstractType
             ->add('login')
             ->add('password', RepeatedType::class, [
             'type' => PasswordType::class,
-            'invalid_message' => 'Les mots de passe doivent correspondre',
+            'invalid_message' => 'Les mots de passe doivent être identiques',
             'options' => ['attr' => ['class' => 'form-control form-sign',
             ]],
             'required' => true,
