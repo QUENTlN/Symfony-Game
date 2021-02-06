@@ -18,7 +18,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        //$faker = Factory::create();
+        $faker = Factory::create();
 
         $gamesTab = [
             "\App\Entity\Quiz" => [
@@ -72,8 +72,8 @@ class AppFixtures extends Fixture
 
         for($i = 0; $i < 10; $i++){
             $player = new Player();
-            $player->setPseudo("Player".$i)
-                ->setLogin("user".$i."@gmail.com")
+            $player->setPseudo($faker->userName)
+                ->setLogin($faker->email)
                 ->setPassword("azerty")
                 ->setIsAdmin(false);
             $manager->persist($player);
@@ -84,7 +84,7 @@ class AppFixtures extends Fixture
                 ->setShowScore(false)
                 ->setIdPlayer($player)
                 ->setOneAnswerOnly(true)
-                ->setNameProfil("Profil n°1")
+                ->setNameProfil("Profil n°1 de".$player->getPseudo())
                 ->setNumberRound(10);
 
 
@@ -100,7 +100,7 @@ class AppFixtures extends Fixture
             $room = new Room();
             $room->setRoomSettings($roomSettings)
                 ->setHost($player)
-                ->setLinkRoom("nsqdnfjkqnfk".$i)
+                ->setLinkRoom($faker->uuid)
                 ->setCreatedAt(new \DateTime())
                 ->setIsPrivate(false);
             $manager->persist($room);
