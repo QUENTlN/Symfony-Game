@@ -90,7 +90,7 @@ class AppFixtures extends Fixture
 
             $categoriesSelec = [];
             for ($j = 0; $j < 5; $j++){
-                $rand = rand(0,sizeof($subCategoriesArray));
+                $rand = rand(0,sizeof($subCategoriesArray)-1);
                 $cat = $subCategoriesArray[$rand];
                 $categoriesSelec[] = $cat;
                 $roomSettings->addSubCategory($cat);
