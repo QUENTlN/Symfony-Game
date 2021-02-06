@@ -192,18 +192,6 @@ class RoomSettings
         return $this;
     }
 
-    public function getHost(): ?Player
-    {
-        return $this->host;
-    }
-
-    public function setHost(?Player $host): self
-    {
-        $this->host = $host;
-
-        return $this;
-    }
-
     public function getDeletedAt(): ?\DateTimeInterface
     {
         return $this->deletedAt;
