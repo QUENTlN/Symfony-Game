@@ -49,16 +49,13 @@ class Player extends Guest implements UserInterface
      */
     private $Question;
 
-
-    private $Answer;
-
     /**
      * @ORM\OneToMany(targetEntity=RoomSettings::class, mappedBy="idPlayer")
      */
     private $roomSettings;
 
     /**
-     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="idHost", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="host", orphanRemoval=true)
      */
     private $hostedRooms;
 
@@ -67,7 +64,6 @@ class Player extends Guest implements UserInterface
     {
         $this->Question = new ArrayCollection();
         $this->Answer = new ArrayCollection();
-        $this->RoomSettings = new ArrayCollection();
         $this->roomSettings = new ArrayCollection();
         $this->hostedRooms = new ArrayCollection();
     }
@@ -121,11 +117,6 @@ class Player extends Guest implements UserInterface
     public function getSalt()
     {
         return null;
-    }
-
-    public function getUsername()
-    {
-        return $this->login;
     }
 
     public function eraseCredentials()
@@ -212,7 +203,7 @@ class Player extends Guest implements UserInterface
     {
         if (!$this->hostedRooms->contains($hostedRoom)) {
             $this->hostedRooms[] = $hostedRoom;
-            $hostedRoom->setIdHost($this);
+            $hostedRoom->setHost($this);
         }
 
         return $this;
@@ -222,11 +213,16 @@ class Player extends Guest implements UserInterface
     {
         if ($this->hostedRooms->removeElement($hostedRoom)) {
             // set the owning side to null (unless already changed)
-            if ($hostedRoom->getIdHost() === $this) {
-                $hostedRoom->setIdHost(null);
+            if ($hostedRoom->getHost() === $this) {
+                $hostedRoom->setHost(null);
             }
         }
 
         return $this;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->login;
     }
 }

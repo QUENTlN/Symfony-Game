@@ -24,18 +24,18 @@ class Game
 
 
     /**
-     * @ORM\OneToMany(targetEntity=SubCategory::class, mappedBy="Game")
-     */
-    private $subCategories;
-
-    /**
      * @ORM\ManyToMany(targetEntity=RoomSettings::class, mappedBy="game")
      */
     private $roomSettings;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Category::class, mappedBy="game", orphanRemoval=true)
+     */
+    private $categories;
+
     public function __construct()
     {
-        $this->subCategories = new ArrayCollection();
+        $this->categories = new ArrayCollection();
         $this->roomSettings = new ArrayCollection();
     }
 
@@ -44,61 +44,31 @@ class Game
         return $this->id;
     }
 
-
-
-
     /**
-     * @return Collection|SubCategory[]
+     * @return Collection|Category[]
      */
-    public function getSubCategories(): Collection
+    public function getCategories(): Collection
     {
-        return $this->subCategories;
+        return $this->categories;
     }
 
-    public function addSubCategory(SubCategory $subCategory): self
+    public function addCategory(Category $category): self
     {
-        if (!$this->subCategories->contains($subCategory)) {
-            $this->subCategories[] = $subCategory;
-            $subCategory->setGame($this);
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setGame($this);
         }
 
         return $this;
     }
 
-    public function removeSubCategory(SubCategory $subCategory): self
+    public function removeCategory(Category $category): self
     {
-        if ($this->subCategories->removeElement($subCategory)) {
+        if ($this->categories->removeElement($category)) {
             // set the owning side to null (unless already changed)
-            if ($subCategory->getGame() === $this) {
-                $subCategory->setGame(null);
+            if ($category->getGame() === $this) {
+                $category->setGame(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|RoomSettings[]
-     */
-    public function getRoomSettings(): Collection
-    {
-        return $this->roomSettings;
-    }
-
-    public function addRoomSettings(RoomSettings $roomSettings): self
-    {
-        if (!$this->roomSettings->contains($roomSettings)) {
-            $this->roomSettings[] = $roomSettings;
-            $roomSettings->addGame($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRoomSettings(RoomSettings $roomSettings): self
-    {
-        if ($this->roomSettings->removeElement($roomSettings)) {
-            $roomSettings->removeGame($this);
         }
 
         return $this;
