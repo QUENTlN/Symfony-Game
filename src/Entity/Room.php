@@ -58,7 +58,7 @@ class Room
      * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="hostedRooms")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idHost;
+    private $host;
 
 
 
@@ -118,18 +118,6 @@ class Room
     public function setIsPrivate(bool $isPrivate): self
     {
         $this->isPrivate = $isPrivate;
-
-        return $this;
-    }
-
-    public function getPlayer(): ?Player
-    {
-        return $this->player;
-    }
-
-    public function setPlayer(?Player $player): self
-    {
-        $this->player = $player;
 
         return $this;
     }
@@ -206,17 +194,15 @@ class Room
         return $this;
     }
 
-    public function getIdHost(): ?Player
+    public function getHost(): ?Player
     {
-        return $this->idHost;
+        return $this->host;
     }
 
-    public function setIdHost(?Player $idHost): self
+    public function setHost(?Player $host): self
     {
-        $this->idHost = $idHost;
+        $this->host = $host;
 
         return $this;
     }
-
-
 }
