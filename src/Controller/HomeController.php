@@ -17,9 +17,7 @@ class HomeController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
-        $rooms = $this->getDoctrine()->getRepository(Room::class)->findBy([],['createdAt' => 'desc']);
-
-        //dd($rooms);
+        $rooms = $this->getDoctrine()->getRepository(Room::class)->findAllPublicRoom();
 
         $rooms = $paginator->paginate(
             $rooms,
