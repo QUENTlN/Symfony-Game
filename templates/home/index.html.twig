@@ -22,45 +22,20 @@
         <section class="portfolio-block project-no-images">
             <div class="container">
                 <div class="heading">
-                    <h2><br><strong>Jouez dans un salons publics</strong><br></h2>
+                    <h2><strong>Jouer dans un salon publique</strong></h2>
                 </div>
-                <div class="row">
-                    {% for room in rooms %}
-                        <div class="col-12 col-md-6 col-lg-4 d-flex">
-                            <div class="project-card-no-image w-100 row">
-                                <div class="col-12">
-                                    <h3>Sallon de {{ room.host.pseudo }}</h3>
-                                    <h4>Créé par {{ room.host.pseudo }}</h4>
-                                    <ul>
-                                        {% for game in games %}
-                                            {% set subCats = [] %}
-                                            {% for category in game.categories %}
-                                                {% for subCat in category.subCategories %}
-                                                    {% if subCat in room.roomSettings.subCategories %}
-                                                        {% set subCats = subCats|merge([subCat.libSubCategory]) %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endfor %}
-                                            {% if subCats is not empty %}
-                                                <li>{{ constant('TYPE_GAME', game) }} ( {{ subCats|join(', ') }} )</li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                                <div class="row justify-content-between col-12 mt-auto">
-                                    <div class="col col-7">
-                                        <span class="nbplayer">{{ room.scores|length }} / {{ room.roomSettings.nbMaxPlayer }}</span>
-                                    </div>
-                                    <div class="col col-5">
-                                        <a class="btn btn-outline-primary btn-sm" role="button"
-                                           href="#">REJOINDRE</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                    {{ knp_pagination_render(rooms) }}
-                </div>
+                {% if rooms is empty %}
+                    <div class="heading">
+                        <h6>Aucun salon publique n'est ouvert pour le moment</h6>
+                    </div>
+                {% else %}
+                    <div class="row">
+                        {% for room in rooms %}
+                            {{ include('home/_open_public_room.html.twig', {room: room, games: games}) }}
+                        {% endfor %}
+                        {{ knp_pagination_render(rooms) }}
+                    </div>
+                {% endif %}
             </div>
         </section>
     </main>
