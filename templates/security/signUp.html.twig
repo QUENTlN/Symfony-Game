@@ -7,6 +7,12 @@
 {% block body %}
     <div class="login-dark">
         {{ form_start(form,{'attr':{'class':'gradient','style': 'margin-top: 5vh;'}}) }}
+            {% for error in form.vars['errors'] %}
+            <div class="alert alert-danger" role="alert">
+            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                {{ error.message | striptags }}
+            </div>
+            {% endfor %}
             {{ form_row(form._token) }}
             <h2 class="sr-only">Login Form</h2>
             <div class="illustration"><i class="icon ion-android-mail"></i></div>
@@ -16,11 +22,6 @@
         <div class="form-group">
             {{ form_row(form.pseudo, {'label':false, 'attr':{'class':'form-control form-sign', 'placeholder':'Pseudo'}}) }}
         </div>
-        {% if form_errors(form.password.first) is not empty %}
-            <div class="alert alert-danger">
-                {{ form_errors(form.password.first)}}
-            </div>
-        {% endif %}
             <div class="form-group">
                 {{ form_row(form.password.first, {'attr':{'placeholder':'Mot de passe'}}) }}
             </div>

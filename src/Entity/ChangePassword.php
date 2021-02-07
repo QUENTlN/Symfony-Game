@@ -19,12 +19,12 @@ class ChangePassword
      */
     private $newPassword;
 
-    public function getNewPassword()
+    public function getNewPassword(): ?string
     {
         return $this->newPassword;
     }
 
-    public function getOldPassword()
+    public function getOldPassword(): ?string
     {
         return $this->oldPassword;
     }
