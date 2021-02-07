@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New RoomSettings{% endblock %}
+
+{% block body %}
+    {{ dump()}}
+    <h1>Edition des paramètres</h1>
+
+    {{ include('room_settings/_form.html.twig') }}
+
+    <a href="{{ path('room_settings_index') }}">back to list</a>
+{% endblock %}
