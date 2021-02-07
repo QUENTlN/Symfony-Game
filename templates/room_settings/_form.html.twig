@@ -9,7 +9,7 @@
         {{ form_row(form.showScore,{'label':'Montrer le score :', 'attr':{'class':'form-check-label '}}) }}
     </div>
     <div class="form-group">
-        {{ form_row(form.oneAnswerOnly,{'label':'Montrer le score :', 'attr':{'class':'form-check-label '}}) }}
+        {{ form_row(form.oneAnswerOnly,{'label':'Questions à choix multiple :', 'attr':{'class':'form-check-label '}}) }}
     </div>
     <div class="form-group">
         {{ form_row(form.numberRound,{'label':'Nombre de tours', 'attr':{'class':'form-control '}}) }}
@@ -18,7 +18,7 @@
             {#  {{ form_row(form.subCategories,{'label':false, 'attr':{'class':'form-check-label'}}) }} #}
     </div>
         <div>
-        <div class="modal-footer"><button class="btn btn-light" type="reset" data-dismiss="modal">Annuler</button><button class="btn btn-primary btn-success" type="submit" >Créer</button></div>
+        <div class="modal-footer"><a href="{{ path('room_settings_index') }}"  class="btn btn-light" type="reset" data-dismiss="modal">Annuler</a><button class="btn btn-primary btn-success" type="submit" >{{ button|default('Créer') }}</button></div>
     </div>
     {# <div class="alert alert-danger" > {{ form_rest(form) }}</div>#}
     {{ form_end(form) }}
