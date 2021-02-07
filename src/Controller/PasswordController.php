@@ -33,7 +33,7 @@ class PasswordController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('profil/changePassword.html.twig', [
+        return $this->render('profilPassword/changePassword.html.twig', [
             'form' => $form->createView(),
         ]);
     }
