@@ -19,6 +19,7 @@ class RoomSettingsRepository extends ServiceEntityRepository
         parent::__construct($registry, RoomSettings::class);
     }
 
+
     // /**
     //  * @return RoomSettings[] Returns an array of RoomSettings objects
     //  */

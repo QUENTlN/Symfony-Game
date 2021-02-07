@@ -16,9 +16,19 @@ class RoomSettingsType extends AbstractType
     {
         $builder
             ->add('nbMaxPlayer', IntegerType::class, array('attr' => array('min' => 1, 'max' => 20)))
-            ->add('showScore')
+            ->add('showScore', ChoiceType::class, [
+                'choices' => [
+                    'Yes' => true,
+                    'No'  => false,
+                ]
+            ])
            // ->add('createdAt')
-            ->add('oneAnswerOnly')
+            ->add('oneAnswerOnly', ChoiceType::class, [
+               'choices' => [
+                   'Yes' => true,
+                   'No'  => false,
+               ]
+               ])
           //  ->add('deletedAt')
             ->add('nameProfil',TextType::class)
             ->add('numberRound',IntegerType::class, array('attr' => array('min' => 1, 'max' => 20)))
