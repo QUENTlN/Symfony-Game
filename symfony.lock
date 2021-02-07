@@ -99,6 +99,9 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
     },
+    "fzaninotto/faker": {
+        "version": "1.9-dev"
+    },
     "knplabs/knp-components": {
         "version": "v3.0.0"
     },
@@ -119,6 +122,9 @@
     },
     "nikic/php-parser": {
         "version": "v4.10.4"
+    },
+    "php": {
+        "version": "8.0"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
