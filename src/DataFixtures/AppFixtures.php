@@ -18,7 +18,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $faker = Factory::create();
+        $faker = Factory::create("fr_FR");
 
         $gamesTab = [
             "\App\Entity\Quiz" => [
@@ -119,7 +119,7 @@ class AppFixtures extends Fixture
             $manager->persist($scoreHost);
 
 
-            for($j = 0; $j < 10; $j++){
+            for($j = 0; $j < $faker->numberBetween(0,9); $j++){
                 $guest = new Guest();
                 $guest->setPseudo("guest".$j);
                 $manager->persist($guest);

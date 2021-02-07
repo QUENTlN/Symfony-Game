@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Quiz extends Game
 {
+    const TYPE_GAME = 'Quiz';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
