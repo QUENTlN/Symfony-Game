@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class GuessThe extends Game
 {
+    const TYPE_GAME = 'GuessThe';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

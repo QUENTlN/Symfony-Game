@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+        <div class="highlight-blue" style="padding-top: 7em;">
+            <div class="container">
+                <div class="intro">
+                    <h2 class="text-center">Créer un salon</h2>
+                    <p class="text-center">Vous pouvez créer un salon en public pour jouer avec des inconnus ou un
+                        salon privée et inviter vos amis.</p>
+                </div>
+                <div class="buttons">
+                    <a class="btn btn-primary" role="button" href="{{ path('createRoom') }}">Public</a>
+                    <a class="btn btn-primary" role="button" href="{{ path('createRoom') }}">Privée</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <main class="page projets-page">
+        <section class="portfolio-block project-no-images">
+            <div class="container">
+                <div class="heading">
+                    <h2><br><strong>Jouez dans un salons publics</strong><br></h2>
+                </div>
+                <div class="row">
+                    {% for room in rooms %}
+                        <div class="col-12 col-md-6 col-lg-4 d-flex">
+                            <div class="project-card-no-image w-100 row">
+                                <div class="col-12">
+                                    <h3>Sallon de {{ room.host.pseudo }}</h3>
+                                    <h4>Créé par {{ room.host.pseudo }}</h4>
+                                    <ul>
+                                        {% for game in games %}
+                                            {% set subCats = [] %}
+                                            {% for category in game.categories %}
+                                                {% for subCat in category.subCategories %}
+                                                    {% if subCat in room.roomSettings.subCategories %}
+                                                        {% set subCats = subCats|merge([subCat.libSubCategory]) %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endfor %}
+                                            {% if subCats is not empty %}
+                                                <li>{{ constant('TYPE_GAME', game) }} ( {{ subCats|join(', ') }} )</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="row justify-content-between col-12 mt-auto">
+                                    <div class="col col-7">
+                                        <span class="nbplayer">{{ room.scores|length }} / {{ room.roomSettings.nbMaxPlayer }}</span>
+                                    </div>
+                                    <div class="col col-5">
+                                        <a class="btn btn-outline-primary btn-sm" role="button"
+                                           href="#">REJOINDRE</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {{ knp_pagination_render(rooms) }}
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include 'fragments/footer.html.twig' %}
+{% endblock %}
+
