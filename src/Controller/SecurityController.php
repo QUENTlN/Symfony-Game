@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Form\RegistrationType;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Player;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,7 +30,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/sign_up", name="signUp")
      */
-    public function signUp(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    public function signUp(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, MailerInterface $mailer)
     {
         $player = new Player();
 
@@ -41,6 +43,21 @@ class SecurityController extends AbstractController
             $player->setPassword($hash);
             $manager->persist($player);
             $manager->flush();
+
+            $email = (new TemplatedEmail())
+                ->from('symfonytest69@gmail.com')
+                ->to($player->getLogin())
+                ->subject('Bienvenue dans l\'Empire du divertissement !')
+                ->htmlTemplate('email/welcome.html.twig')
+                ->context([
+                    'player' => $player
+                ]);
+            $mailer->send($email);
+
+            $this->addFlash(
+                'success',
+                "Votre compte a bien été créé !Un e-mail vous a été envoyé, vous pouvez maintenant vous connecter !"
+            );
 
             return $this->redirectToRoute('signIn');
         }
