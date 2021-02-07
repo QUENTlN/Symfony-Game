@@ -65,7 +65,7 @@ class AppFixtures extends Fixture
         $admin->setPseudo("admin")
             ->setIsAdmin(true)
             ->setLogin("admin@test.fr")
-            ->setPassword("azerty");
+            ->setPassword(password_hash("azerty",PASSWORD_BCRYPT));
         $manager->persist($admin);
 
         $manager->flush();
@@ -74,7 +74,7 @@ class AppFixtures extends Fixture
             $player = new Player();
             $player->setPseudo($faker->userName)
                 ->setLogin($faker->email)
-                ->setPassword("azerty")
+                ->setPassword(password_hash("azerty",PASSWORD_BCRYPT))
                 ->setIsAdmin(false);
             $manager->persist($player);
 
