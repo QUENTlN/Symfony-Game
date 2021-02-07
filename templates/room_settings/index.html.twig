@@ -1,0 +1,220 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RoomSettings index{% endblock %}
+
+{% block body %}
+    <h1>Mes Paramètres de salon enregistrés</h1>
+    <div class="container">
+    <div class="row">
+    {% for room_setting in room_settings %}
+        <div class="col-md-4 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ room_setting.nameProfil }}</h4>
+                    <p class="card-text">joueurs : {{ room_setting.nbMaxPlayer }}<br>tours
+                        : {{ room_setting.numberRound }}</p>
+                    <ul style="margin-bottom: 2em;">
+                        <li>Quiz (Film, Série, Musique)</li>
+                        <li>Guess the (Film)</li>
+                    </ul>
+                    <div class="modal fade" role="dialog" tabindex="-1" id="modalSupSettings{{room_setting.id}}">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Êtes vous sûr de vouloir supprimer ?</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-light" type="button" data-dismiss="modal">Non</button>
+                                    <button class="btn btn-primary btn-danger" type="button">Oui</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-danger" type="button"
+                            style="margin-right: 0.25em;margin-bottom: 4px;" data-toggle="modal"
+                            data-target="#modalSupSettings{{room_setting.id}}">Supprimer
+                    </button>
+                    <div class="modal fade" role="dialog" tabindex="-1"
+                         id="modalEditSettings-1">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Edition des paramètres</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body" style="padding: 0;">
+                                    <form style="padding: 20px;">
+                                        <div class="form-group"><label for="email">Nom du profil de
+                                                paramètres</label><input class="form-control" type="email" id="name-1">
+                                        </div>
+                                        <div class="form-group"><label for="email">Nombre de joueurs
+                                                maximum</label><input class="form-control" type="email" id="email-2">
+                                        </div>
+                                        <div class="form-group"><label for="email">Nombre de tours</label><input
+                                                    class="form-control" type="email" id="email-3"></div>
+                                        <div class="form-group">
+                                            <div class="form-row">
+                                                <div class="col-md-6">
+                                                    <div class="form-check"><input class="form-check-input"
+                                                                                   type="checkbox"
+                                                                                   id="formCheck-19"><label
+                                                                class="form-check-label" for="formCheck-1">QUIZ</label>
+                                                    </div>
+                                                    <div class="souscheck">
+                                                        <div class="form-check"><input class="form-check-input"
+                                                                                       type="checkbox"
+                                                                                       id="formCheck-20"><label
+                                                                    class="form-check-label"
+                                                                    for="formCheck-1">Culture</label></div>
+                                                        <div class="souscheck">
+                                                            <div class="form-check"><input class="form-check-input"
+                                                                                           type="checkbox"
+                                                                                           id="formCheck-22"><label
+                                                                        class="form-check-label" for="formCheck-1">Histoire</label>
+                                                            </div>
+                                                            <div class="form-check"><input class="form-check-input"
+                                                                                           type="checkbox"
+                                                                                           id="formCheck-23"><label
+                                                                        class="form-check-label" for="formCheck-1">Géographie</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="souscheck">
+                                                        <div class="form-check"><input class="form-check-input"
+                                                                                       type="checkbox"
+                                                                                       id="formCheck-24"><label
+                                                                    class="form-check-label" for="formCheck-1">Divertissement</label>
+                                                        </div>
+                                                        <div class="souscheck">
+                                                            <div class="form-check"><input class="form-check-input"
+                                                                                           type="checkbox"
+                                                                                           id="formCheck-25"><label
+                                                                        class="form-check-label" for="formCheck-1">Cinéma</label>
+                                                            </div>
+                                                            <div class="form-check"><input class="form-check-input"
+                                                                                           type="checkbox"
+                                                                                           id="formCheck-26"><label
+                                                                        class="form-check-label"
+                                                                        for="formCheck-1">Serie</label></div>
+                                                            <div class="form-check"><input class="form-check-input"
+                                                                                           type="checkbox"
+                                                                                           id="formCheck-27"><label
+                                                                        class="form-check-label" for="formCheck-1">Jeux
+                                                                    vidéo</label></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="souscheck">
+                                                        <div class="form-check"><input class="form-check-input"
+                                                                                       type="checkbox"
+                                                                                       id="formCheck-28"><label
+                                                                    class="form-check-label"
+                                                                    for="formCheck-1">Sport</label></div>
+                                                        <div class="souscheck">
+                                                            <div class="form-check"><input class="form-check-input"
+                                                                                           type="checkbox"
+                                                                                           id="formCheck-29"><label
+                                                                        class="form-check-label" for="formCheck-1">Basket</label>
+                                                            </div>
+                                                            <div class="form-check"><input class="form-check-input"
+                                                                                           type="checkbox"
+                                                                                           id="formCheck-30"><label
+                                                                        class="form-check-label"
+                                                                        for="formCheck-1">Foot</label></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-check"><input class="form-check-input"
+                                                                                   type="checkbox"
+                                                                                   id="formCheck-31"><label
+                                                                class="form-check-label" for="formCheck-1">GUESS
+                                                            THE</label></div>
+                                                    <div class="souscheck">
+                                                        <div class="form-check"><input class="form-check-input"
+                                                                                       type="checkbox"
+                                                                                       id="formCheck-32"><label
+                                                                    class="form-check-label"
+                                                                    for="formCheck-1">Film</label></div>
+                                                        <div class="form-check"><input class="form-check-input"
+                                                                                       type="checkbox"
+                                                                                       id="formCheck-33"><label
+                                                                    class="form-check-label"
+                                                                    for="formCheck-1">Série</label></div>
+                                                        <div class="form-check"><input class="form-check-input"
+                                                                                       type="checkbox"
+                                                                                       id="formCheck-34"><label
+                                                                    class="form-check-label" for="formCheck-1">Jeux
+                                                                vidéo</label></div>
+                                                        <div class="form-check"><input class="form-check-input"
+                                                                                       type="checkbox"
+                                                                                       id="formCheck-35"><label
+                                                                    class="form-check-label"
+                                                                    for="formCheck-1">Album</label></div>
+                                                        <div class="form-check"><input class="form-check-input"
+                                                                                       type="checkbox"
+                                                                                       id="formCheck-36"><label
+                                                                    class="form-check-label"
+                                                                    for="formCheck-1">Anime</label></div>
+                                                        <div class="form-check"><input class="form-check-input"
+                                                                                       type="checkbox"
+                                                                                       id="formCheck-37"><label
+                                                                    class="form-check-label"
+                                                                    for="formCheck-1">Acteur</label></div>
+                                                        <div class="form-check"><input class="form-check-input"
+                                                                                       type="checkbox"
+                                                                                       id="formCheck-38"><label
+                                                                    class="form-check-label" for="formCheck-1">Artiste
+                                                                musical</label></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-light" type="button" data-dismiss="modal">Annuler</button>
+                                    <button class="btn btn-primary" type="button">Enregistrer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalEditSettings"
+                            style="margin-bottom: 4px;">Modifier
+                    </button>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+        </div>
+        </div>
+
+
+
+    {# {% for room_setting in room_settings %}
+            <tr>
+                 <td>{{ room_setting.id }}</td>
+                <td>{{ room_setting.nbMaxPlayer }}</td>
+                <td>{{ room_setting.showScore ? 'Yes' : 'No' }}</td>
+                <td>{{ room_setting.createdAt ? room_setting.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ room_setting.oneAnswerOnly ? 'Yes' : 'No' }}</td>
+                <td>{{ room_setting.deletedAt ? room_setting.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ room_setting.nameProfil }}</td>
+                <td>{{ room_setting.numberRound }}</td>
+                <td>
+                    <a href="{{ path('room_settings_show', {'id': room_setting.id}) }}">show</a>
+                    <a href="{{ path('room_settings_edit', {'id': room_setting.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %} #}
+    </tbody>
+    </table>
+
+    <a href="{{ path('room_settings_new') }}">Create new</a>
+{% endblock %}
