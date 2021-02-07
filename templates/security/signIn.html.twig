@@ -8,6 +8,12 @@
     <div class="login-dark">
         <form action="{{ path('signIn') }}" class="gradient" method="post" style="filter: blur(0px);">
             <h2 class="sr-only">Login Form</h2>
+            {# à améliorer pour le rendu sur la page #}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success" style="margin-top: 100px">
+                    {{ message }}
+                </div>
+            {% endfor %}
             <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
             {% if error %}
                 <div class="alert alert-danger" role="alert"><span class="fa fa-exclamation-circle" aria-hidden="true"></span> Une erreur est survenue, le mail ou le mot de passe est invalide</div>
