@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Edit RoomSettings</h1>
 
-    {{ include('room_settings/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('room_settings/_form.html.twig', {form:form,button:'Sauvegarder' })}}
 
     <a href="{{ path('room_settings_index') }}">back to list</a>
 

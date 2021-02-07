@@ -1,0 +1,36 @@
+<div class="col-md-4 col-lg-3">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{{ room_setting.nameProfil }}</h4>
+            <p class="card-text">joueurs : {{ room_setting.nbMaxPlayer }}<br>tours
+                : {{ room_setting.numberRound }}</p>
+            <ul style="margin-bottom: 2em;">
+                <li>Quiz (Film, Série, Musique)</li>
+                <li>Guess the (Film)</li>
+            </ul>
+            <div class="modal fade" role="dialog" tabindex="-1" id="modalSupSettings{{room_setting.id}}">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Êtes vous sûr de vouloir supprimer ?</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">×</span></button>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-light" type="button" data-dismiss="modal">Non</button>
+                            <button class="btn btn-primary btn-danger" type="button">Oui</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-danger" type="button"
+                    style="margin-right: 0.25em;margin-bottom: 4px;" data-toggle="modal"
+                    data-target="#modalSupSettings{{room_setting.id}}">Supprimer
+            </button>
+            <div class="modal fade" role="dialog" tabindex="-1"
+                 id="modalEditSettings{{room_setting.id}}">
+            </div>
+            <a href="{{ path('room_settings_edit', {'id': room_setting.id}) }}" class="btn btn-primary" role="button">Modifier</a>
+        </div>
+    </div>
+</div>
