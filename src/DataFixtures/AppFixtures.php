@@ -41,17 +41,17 @@ class AppFixtures extends Fixture
 
         $subCategoriesArray = [];
 
-        foreach ($gamesTab as $gameTab => $categoriesTab){
+        foreach ($gamesTab as $gameTab => $categoriesTab) {
             $game = new $gameTab;
             $manager->persist($game);
 
-            foreach ($categoriesTab as $categoryTab => $subCategoriesTab){
+            foreach ($categoriesTab as $categoryTab => $subCategoriesTab) {
                 $category = new Category();
                 $category->setLibCategory($categoryTab)
                     ->setGame($game);
                 $manager->persist($category);
 
-                foreach ($subCategoriesTab as $subCategoryTab){
+                foreach ($subCategoriesTab as $subCategoryTab) {
                     $subCategory = new SubCategory();
                     $subCategory->setLibSubCategory($subCategoryTab)
                         ->setCategory($category);
@@ -65,16 +65,16 @@ class AppFixtures extends Fixture
         $admin->setPseudo("admin")
             ->setIsAdmin(true)
             ->setLogin("admin@test.fr")
-            ->setPassword(password_hash("azerty",PASSWORD_BCRYPT));
+            ->setPassword(password_hash("azerty", PASSWORD_BCRYPT));
         $manager->persist($admin);
 
         $manager->flush();
 
-        for($i = 0; $i < 10; $i++){
+        for ($i = 0; $i < 10; $i++) {
             $player = new Player();
             $player->setPseudo($faker->userName)
                 ->setLogin($faker->email)
-                ->setPassword(password_hash("azerty",PASSWORD_BCRYPT))
+                ->setPassword(password_hash("azerty", PASSWORD_BCRYPT))
                 ->setIsAdmin(false);
             $manager->persist($player);
 
@@ -84,13 +84,13 @@ class AppFixtures extends Fixture
                 ->setShowScore(false)
                 ->setIdPlayer($player)
                 ->setOneAnswerOnly(true)
-                ->setNameProfil("Profil n°1 de".$player->getPseudo())
+                ->setNameProfil("Profil n°1 de" . $player->getPseudo())
                 ->setNumberRound(10);
 
 
             $categoriesSelec = [];
-            for ($j = 0; $j < 5; $j++){
-                $rand = rand(0,sizeof($subCategoriesArray)-1);
+            for ($j = 0; $j < 5; $j++) {
+                $rand = rand(0, sizeof($subCategoriesArray) - 1);
                 $cat = $subCategoriesArray[$rand];
                 $categoriesSelec[] = $cat;
                 $roomSettings->addSubCategory($cat);
@@ -100,7 +100,7 @@ class AppFixtures extends Fixture
             $room = new Room();
             $room->setRoomSettings($roomSettings)
                 ->setHost($player)
-                ->setLinkRoom($faker->uuid)
+                ->setName("Salon de " . $player->getPseudo())
                 ->setCreatedAt(new \DateTime())
                 ->setIsPrivate(false);
             $manager->persist($room);
@@ -119,9 +119,9 @@ class AppFixtures extends Fixture
             $manager->persist($scoreHost);
 
 
-            for($j = 0; $j < $faker->numberBetween(0,9); $j++){
+            for ($j = 0; $j < $faker->numberBetween(0, 9); $j++) {
                 $guest = new Guest();
-                $guest->setPseudo("guest".$j);
+                $guest->setPseudo("guest" . $j);
                 $manager->persist($guest);
 
                 $score = new Score();

@@ -1,34 +1,34 @@
- {% if room.scores|length != room.roomSettings.nbMaxPlayer %}
-<div class="col-12 col-md-6 col-lg-4 d-flex">
-    <div class="project-card-no-image w-100 row">
-        <div class="col-12 mb-3">
-            <h3>Sallon de {{ room.host.pseudo }}</h3>
-            <h4>Créé par {{ room.host.pseudo }}</h4>
-            <ul>
-                {% for game in games %}
-                    {% set subCats = [] %}
-                    {% for category in game.categories %}
-                        {% for subCat in category.subCategories %}
-                            {% if subCat in room.roomSettings.subCategories %}
-                                {% set subCats = subCats|merge([subCat.libSubCategory]) %}
-                            {% endif %}
+{% if room.scores|length != room.roomSettings.nbMaxPlayer %}
+    <div class="col-12 col-md-6 col-lg-4 d-flex">
+        <div class="project-card-no-image w-100 row">
+            <div class="col-12 mb-3">
+                <h3>{{ room.name }}</h3>
+                <h4>Créé par {{ room.host.pseudo }}</h4>
+                <ul>
+                    {% for game in games %}
+                        {% set subCats = [] %}
+                        {% for category in game.categories %}
+                            {% for subCat in category.subCategories %}
+                                {% if subCat in room.roomSettings.subCategories %}
+                                    {% set subCats = subCats|merge([subCat.libSubCategory]) %}
+                                {% endif %}
+                            {% endfor %}
                         {% endfor %}
+                        {% if subCats is not empty %}
+                            <li>{{ constant('TYPE_GAME', game) }} ( {{ subCats|join(', ') }} )</li>
+                        {% endif %}
                     {% endfor %}
-                    {% if subCats is not empty %}
-                        <li>{{ constant('TYPE_GAME', game) }} ( {{ subCats|join(', ') }} )</li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="row justify-content-between col-12 mt-auto">
-            <div class="col col-7">
-                <span class="nbplayer">{{ room.scores|length }} / {{ room.roomSettings.nbMaxPlayer }}</span>
+                </ul>
             </div>
-            <div class="col col-5">
-                <a class="btn btn-outline-primary btn-sm" role="button"
-                   href="#">REJOINDRE</a>
+            <div class="row justify-content-between col-12 mt-auto">
+                <div class="col col-7">
+                    <span class="nbplayer">{{ room.scores|length }} / {{ room.roomSettings.nbMaxPlayer }}</span>
+                </div>
+                <div class="col col-5">
+                    <a class="btn btn-outline-primary btn-sm" role="button"
+                       href="#{{ room.id }}">REJOINDRE</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
- {% endif %}
+{% endif %}
