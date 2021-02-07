@@ -135,7 +135,7 @@ class RoomSettings
         return $this;
     }
 
-     /**
+    /**
      * @return Collection|Room[]
      */
     public function getRoom(): Collection
