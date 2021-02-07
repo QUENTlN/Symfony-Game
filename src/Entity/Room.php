@@ -22,7 +22,7 @@ class Room
     /**
      * @ORM\Column(type="string", length=400)
      */
-    private $linkRoom;
+    private $name;
 
     /**
      * @ORM\Column(type="datetime")
@@ -74,14 +74,14 @@ class Room
     }
 
 
-    public function getLinkRoom(): ?string
+    public function getName(): ?string
     {
-        return $this->linkRoom;
+        return $this->name;
     }
 
-    public function setLinkRoom(string $linkRoom): self
+    public function setName(string $name): self
     {
-        $this->linkRoom = $linkRoom;
+        $this->name = $name;
 
         return $this;
     }
