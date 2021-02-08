@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Player;
 use App\Entity\RoomSettings;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -18,7 +19,18 @@ class RoomSettingsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, RoomSettings::class);
     }
-
+    /**
+     * @return RoomSettings[] Returns an array of RoomSettings objects
+     */
+    public function findAllByPlayer(Player $user)
+    {
+        return $this->createQueryBuilder('rs')
+            ->select('rs' )
+            ->where('rs.idPlayer = :idPlayer')
+            ->setParameter('idPlayer', $user->getId())
+            ->getQuery()
+            ->execute();
+    }
 
     // /**
     //  * @return RoomSettings[] Returns an array of RoomSettings objects
