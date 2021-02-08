@@ -3,16 +3,15 @@
 namespace App\Controller;
 
 use App\Form\RegistrationType;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Player;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use App\Service\Mailer;
 
 class SecurityController extends AbstractController
 {
@@ -30,7 +29,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/sign_up", name="signUp")
      */
-    public function signUp(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, MailerInterface $mailer)
+    public function signUp(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, Mailer $mailer)
     {
         $player = new Player();
 
@@ -44,15 +43,7 @@ class SecurityController extends AbstractController
             $manager->persist($player);
             $manager->flush();
 
-            $email = (new TemplatedEmail())
-                ->from('symfonytest69@gmail.com')
-                ->to($player->getLogin())
-                ->subject('Bienvenue dans l\'Empire du divertissement !')
-                ->htmlTemplate('email/welcome.html.twig')
-                ->context([
-                    'player' => $player
-                ]);
-            $mailer->send($email);
+            $mailer->sendRegistrationMail($player);
 
             $this->addFlash(
                 'success',
