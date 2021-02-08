@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\RoomSettings;
 use App\Form\RoomSettingsType;
 use App\Repository\RoomSettingsRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,14 @@ class RoomSettingsController extends AbstractController
     /**
      * @Route("/", name="room_settings_index", methods={"GET"})
      */
-    public function index(RoomSettingsRepository $roomSettingsRepository): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
         return $this->render('room_settings/index.html.twig', [
-            'room_settings' => $roomSettingsRepository->findAll(),
+            'room_settings' => $paginator->paginate(
+                $this->getDoctrine()->getRepository(RoomSettings::class)->findAllByPlayer($this->getUser()),
+                $request->query->getInt('page', 1),
+                12
+            )
         ]);
     }
 
@@ -64,6 +69,7 @@ class RoomSettingsController extends AbstractController
      */
     public function edit(Request $request, RoomSettings $roomSetting): Response
     {
+
         $form = $this->createForm(RoomSettingsType::class, $roomSetting);
         $form->handleRequest($request);
 
@@ -78,6 +84,7 @@ class RoomSettingsController extends AbstractController
             'room_setting' => $roomSetting,
             'form' => $form->createView(),
         ]);
+
     }
 
     /**
