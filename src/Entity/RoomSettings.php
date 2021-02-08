@@ -99,7 +99,7 @@ class RoomSettings
         return $this;
     }
 
-    public function getShowScore(): ?int
+    public function getShowScore(): ?bool
     {
         return $this->showScore;
     }
