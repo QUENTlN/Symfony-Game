@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient">
+<nav class="navbar navbar-dark navbar-expand-lg fixed-top smart-scroll portfolio-navbar gradient">
     <div class="container"><a class="navbar-brand logo" href="{{ path('home') }}">Magma</a>
         <button data-toggle="collapse" class="navbar-toggler" data-target="#navbarNav"><span class="sr-only">Toggle navigation</span><span
                     class="navbar-toggler-icon"></span></button>
@@ -10,9 +10,8 @@
                     <li class="nav-item"><a class="nav-link" href="{{ path('signUp') }}">S'inscrire</a></li>
                 {%  else %}
                     <li class="nav-item"><a class="nav-link" href="{{ path('suggestQuestion') }}">Proposer une question</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ path('logOut') }}">Se déconnecter</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{{ path('account') }}"><i class="fa fa-user-circle"></i></a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link py-0" href="{{ path('account') }}"><h2 class="m-0"><i class="icon ion-ios-contact"></i></h2></a></li>
+                    <li class="nav-item"><a class="nav-link py-0" href="{{ path('logOut') }}"><h2 class="m-0"><i class="icon ion-log-out"></i></h2></a></li>
                 {% endif %}
             </ul>
         </div>

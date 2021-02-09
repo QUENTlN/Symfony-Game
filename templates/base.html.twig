@@ -3,21 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <title>Magma - {% block title %}{% endblock %}</title>
-        <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
-        <link rel="stylesheet" href="{{ asset('assets/fonts/font-awesome.min.css')}}">
-        <link rel="stylesheet" href="{{ asset('assets/fonts/ionicons.min.css')}}">
-        <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css')}}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %} {{ encore_entry_link_tags('app') }} {% endblock %}
     </head>
-    <body>
+    <body class="pt-0">
         {% include 'fragments/navbar.html.twig' %}
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-        <script src="{{ asset('assets/js/jquery.min.js')}}"></script>
-        <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
-        <script src="{{ asset('assets/js/script.min.js')}}"></script>
+        {% block javascripts %} {{ encore_entry_script_tags('app') }} {% endblock %}
     </body>
 </html>
