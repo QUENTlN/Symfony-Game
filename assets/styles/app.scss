@@ -1,3 +1,22 @@
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+@import '~bootstrap'; //fichier scss dans node_modules
+
+.smart-scroll{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+.scrolled-down{
+    transform:translateY(-100%); transition: all 0.3s ease-in-out;
+}
+.scrolled-up{
+    transform:translateY(0); transition: all 0.3s ease-in-out;
+}
+
 .highlight-blue {
     color: #fff;
     background-color: #1e6add;
@@ -174,7 +193,6 @@
     border: 1px solid #444;
     border-radius: 20px;
     overflow: hidden;
-    background: url(../../assets/img/screen-content-phone.jpg) center/cover;
     z-index: -1
 }
 
@@ -192,7 +210,7 @@
 
 .login-dark {
     height: 100vh;
-    background: url(../../assets/img/nature/3.jpg) 0 0/cover #475d62;
+    background: url(../images/3.jpg) 0 0/cover #475d62;
     position: relative
 }
 
