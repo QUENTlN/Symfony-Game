@@ -21,17 +21,8 @@ class GuessThe extends Game
      */
     private $id;
 
-
-    public function __construct()
-    {
-        $this->Category = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
     }
-
-
-
 }

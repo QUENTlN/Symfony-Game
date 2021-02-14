@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
+use App\Entity\Game;
 use App\Entity\SubCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,32 +21,14 @@ class SubCategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, SubCategory::class);
     }
 
-    // /**
-    //  * @return SubCategory[] Returns an array of SubCategory objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByGameQuery($game)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->createQueryBuilder('sc')
+            ->from(Category::class, 'c')
+            ->from(Game::class, 'g')
+            ->where("sc.category=c")
+            ->andWhere("c.game = g")
+            ->andWhere("g INSTANCE OF :quiz")
+            ->setParameter(':quiz', $game);
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?SubCategory
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
