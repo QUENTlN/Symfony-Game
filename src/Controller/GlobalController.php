@@ -30,24 +30,4 @@ class GlobalController extends AbstractController
             'controller_name' => 'GlobalController',
         ]);
     }
-
-    /**
-     * @Route("/suggest_question", name="suggestQuestion")
-     */
-    public function suggestQuestion(): Response
-    {
-        return $this->render('global/suggestQuestion.html.twig', [
-            'controller_name' => 'GlobalController',
-        ]);
-    }
-
-    /**
-     * @Route("/accept_question", name="acceptQuestion")
-     */
-    public function acceptQuestion(): Response
-    {
-        return $this->render('global/acceptQuestion.html.twig', [
-            'controller_name' => 'GlobalController',
-        ]);
-    }
 }
