@@ -23,12 +23,12 @@ class Answer
      */
     private $textAnswer;
 
-
     /**
-     * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="answer")
+     * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="answers", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $question;
+
 
     public function getId(): ?int
     {
