@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=QuestionRepository::class)
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"question" = "Question", "questionWithPicture" = "QuestionWithPicture"})
+ * @ORM\DiscriminatorMap({"question" = "Question", "questionWithPicture" = "QuestionWithPicture", "questionWithText" = "QuestionWithText"})
  */
 class Question
 {
@@ -30,21 +30,10 @@ class Question
     private $id;
 
     /**
-     * @ORM\Column(type="text")
-     */
-    private $textQuestion;
-
-
-    /**
      * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="Question")
      * @ORM\JoinColumn(nullable=false)
      */
     private $player;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="question")
-     */
-    private $answer;
 
     /**
      * @ORM\ManyToOne(targetEntity=SubCategory::class, inversedBy="Question")
@@ -62,30 +51,21 @@ class Question
      */
     private $rounds;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="question", cascade={"persist"}, orphanRemoval=true)
+     */
+    private $answers;
+
     public function __construct()
     {
-        $this->answer = new ArrayCollection();
         $this->rounds = new ArrayCollection();
+        $this->answers = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
-
-    public function getTextQuestion(): ?string
-    {
-        return $this->textQuestion;
-    }
-
-    public function setTextQuestion(string $textQuestion): self
-    {
-        $this->textQuestion = $textQuestion;
-
-        return $this;
-    }
-
 
     public function getPlayer(): ?Player
     {
@@ -95,36 +75,6 @@ class Question
     public function setPlayer(?Player $player): self
     {
         $this->player = $player;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Answer[]
-     */
-    public function getAnswer(): Collection
-    {
-        return $this->answer;
-    }
-
-    public function addRelation(Answer $answer): self
-    {
-        if (!$this->answer->contains($answer)) {
-            $this->answer[] = $answer;
-            $answer->setQuestion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnswer(Answer $answer): self
-    {
-        if ($this->answer->removeElement($answer)) {
-            // set the owning side to null (unless already changed)
-            if ($answer->getQuestion() === $this) {
-                $answer->setQuestion(null);
-            }
-        }
 
         return $this;
     }
@@ -177,6 +127,36 @@ class Question
             // set the owning side to null (unless already changed)
             if ($round->getQuestion() === $this) {
                 $round->setQuestion(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Answer[]
+     */
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(Answer $answer): self
+    {
+        if (!$this->answers->contains($answer)) {
+            $this->answers[] = $answer;
+            $answer->setQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): self
+    {
+        if ($this->answers->removeElement($answer)) {
+            // set the owning side to null (unless already changed)
+            if ($answer->getQuestion() === $this) {
+                $answer->setQuestion(null);
             }
         }
 

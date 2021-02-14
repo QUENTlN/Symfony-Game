@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Suggérer une question{% endblock %}
+
+{% block body %}
+    <main class="page contact-page">
+        <section class="portfolio-block contact">
+            <div class="container">
+                <div class="heading">
+                    <h2>Proposer une question</h2>
+                </div>
+                {{ form_start(form_quiz) }}
+                <div class="form-group text-center">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-info active QuizBtn" type="button">&nbsp; &nbsp; &nbsp;Quiz&nbsp;
+                            &nbsp; &nbsp;
+                        </button>
+                        <button class="btn btn-info GuessTheBtn" type="button">Guess the</button>
+                    </div>
+                </div>
+                {{ form_label(form_quiz.subCategory, 'Catégorie') }}
+                {{ form_row(form_quiz.subCategory, {'label':false}) }}
+                {{ form_label(form_quiz.text, 'Question') }}
+                {{ form_row(form_quiz.text, {'label':false}) }}
+                {{ form_label(form_quiz.answers, 'Réponses') }}
+                <div id="answersDiv"
+                     data-prototype="{{ form_widget(form_quiz.answers.vars.prototype)|e('html_attr') }}">
+                    <div class="mb-2">
+                        {{ form_row(form_quiz.answers[0]) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_row(form_quiz.Envoyer) }}
+                </div>
+                {{ form_end(form_quiz) }}
+                {{ form_start(form_guessThe, {'attr':{'hidden':'true'}}) }}
+                <div class="form-group text-center">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-info QuizBtn" type="button">&nbsp; &nbsp; &nbsp;Quiz&nbsp;
+                            &nbsp; &nbsp;
+                        </button>
+                        <button class="btn btn-info active GuessTheBtn" type="button">Guess the</button>
+                    </div>
+                </div>
+                {{ form_label(form_guessThe.subCategory, 'Catégorie') }}
+                {{ form_row(form_guessThe.subCategory, {'label':false}) }}
+                {{ form_label(form_guessThe.linkPicture, 'Image') }}
+                {{ form_row(form_guessThe.linkPicture, {'label':false}) }}
+                {{ form_label(form_guessThe.answers, 'Réponses') }}
+                <div id="guessTheAnswersDiv"
+                     data-prototype="{{ form_widget(form_guessThe.answers.vars.prototype)|e('html_attr') }}">
+                    {# {% for answer in form_quiz.answers[0] %} #}
+                    <div class="mb-2">
+                        {{ form_row(form_guessThe.answers[0]) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_row(form_guessThe.Envoyer) }}
+                </div>
+                {{ form_end(form_guessThe) }}
+            </div>
+        </section>
+    </main>
+    {% include 'fragments/footer.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('suggestQuestion') }}
+{% endblock %}
+
