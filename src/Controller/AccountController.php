@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\RoomSettings;
 use App\Form\AccountType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class AccountController extends AbstractController
 {
@@ -32,4 +35,25 @@ class AccountController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/account", name="account")
+     */
+    public function index(Request $request, PaginatorInterface $paginator): Response
+    {
+
+        $player = $this->getUser();
+        return $this->render('global/account.html.twig', [
+            'player' => $player,
+            'room_settings' => $paginator->paginate(
+                $this->getDoctrine()->getRepository(RoomSettings::class)->findAllByPlayer($this->getUser()),
+                $request->query->getInt('page', 1),
+                12
+            ),
+
+        ]);
+    }
+
+
+
 }

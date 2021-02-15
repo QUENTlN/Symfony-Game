@@ -18,7 +18,7 @@
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-light" type="button" data-dismiss="modal">Non</button>
-                            <button class="btn btn-primary btn-danger" type="button">Oui</button>
+                            <a href="{{ path('room_settings_delete', {'id': room_setting.id}) }}"  class="btn btn-primary btn-danger" role="button">Oui</a>
                         </div>
                     </div>
                 </div>
