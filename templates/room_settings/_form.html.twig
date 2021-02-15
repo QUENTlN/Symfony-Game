@@ -1,24 +1,48 @@
 {{ form_start(form) }}
-    <div class="form-group">
-        {{ form_row(form.nameProfil,{'label':'Nom du profil :', 'attr':{'class':'form-control '}}) }}
+
+<div class="form-group">
+    {{ form_row(form.nameProfil,{'label':'Nom du profil :', 'attr':{'class':'form-control '}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.nbMaxPlayer,{'label':'Nombre de joueurs maximum :', 'attr':{'class':'form-control '}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.oneAnswerOnly,{'label':'Afficher le score :', 'attr':{'class':'form-check-label '}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.showScore,{'label':'Questions à choix multiple :', 'attr':{'class':'form-check-label '}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.numberRound,{'label':'Nombre de tours', 'attr':{'class':'form-control '}}) }}
+</div>
+{#  <div class="form-group">
+    {{ form_row(form.game,{'label':false, 'attr':{'class':'form-check-label'}}) }}
+</div>#}
+<div class="form-group">
+    {{ form_row(form.subCategories,{'label':false, 'attr':{'class':'form-check-label'}}) }}
+
+    <div class="form-check">
+        {#   {% for gameA in form.game %}
+                    {{ form_row(gameA , {'label_attr' : {
+                        'class' : 'checkbox-inline'
+                    }}) }}
+
+                {% endfor %}
+
+            </div>
+            <div class="souscheck">
+                <div class="form-check">
+                    {% for categ in form.category %}
+                        {{ form_row(categ , {'label_attr' : {
+                            'class' : 'checkbox-inline'
+                        }}) }}
+                    {% endfor %}#}
     </div>
-    <div class="form-group">
-        {{ form_row(form.nbMaxPlayer,{'label':'Nombre de joueurs maximum :', 'attr':{'class':'form-control '}}) }}
-    </div>
-    <div class="form-group">
-       {{ form_row(form.oneAnswerOnly,{'label':'Afficher le score :', 'attr':{'class':'form-check-label '}}) }}
-    </div>
-    <div class="form-group">
-        {{ form_row(form.showScore,{'label':'Questions à choix multiple :', 'attr':{'class':'form-check-label '}}) }}
-    </div>
-    <div class="form-group">
-        {{ form_row(form.numberRound,{'label':'Nombre de tours', 'attr':{'class':'form-control '}}) }}
-    </div>
-        <div class="form-group">
-            {#  {{ form_row(form.subCategories,{'label':false, 'attr':{'class':'form-check-label'}}) }} #}
-    </div>
-        <div>
-        <div class="modal-footer"><a href="{{ path('room_settings_index') }}"  class="btn btn-light" type="reset" data-dismiss="modal">Annuler</a><button class="btn btn-primary btn-success" type="submit" >{{ button|default('Créer') }}</button></div>
-    </div>
-    {# <div class="alert alert-danger" > {{ form_rest(form) }}</div>#}
-    {{ form_end(form) }}
+</div>
+
+</div>
+<div>
+    <div class="modal-footer"><a href="{{ path('account') }}"  class="btn btn-light" type="reset" data-dismiss="modal">Annuler</a><button class="btn btn-primary btn-success" type="submit" >{{ button|default('Créer') }}</button></div>
+</div>
+
+{{ form_end(form) }}

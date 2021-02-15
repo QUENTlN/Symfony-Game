@@ -14,28 +14,4 @@
 
 
 
-
-    {# {% for room_setting in room_settings %}
-            <tr>
-                 <td>{{ room_setting.id }}</td>
-                <td>{{ room_setting.nbMaxPlayer }}</td>
-                <td>{{ room_setting.showScore ? 'Yes' : 'No' }}</td>
-                <td>{{ room_setting.createdAt ? room_setting.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ room_setting.oneAnswerOnly ? 'Yes' : 'No' }}</td>
-                <td>{{ room_setting.deletedAt ? room_setting.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ room_setting.nameProfil }}</td>
-                <td>{{ room_setting.numberRound }}</td>
-                <td>
-                    <a href="{{ path('room_settings_show', {'id': room_setting.id}) }}">show</a>
-                    <a href="{{ path('room_settings_edit', {'id': room_setting.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %} #}
-
-
-    <a href="{{ path('room_settings_new') }}">Create new</a>
 {% endblock %}

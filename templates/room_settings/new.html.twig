@@ -3,10 +3,14 @@
 {% block title %}New RoomSettings{% endblock %}
 
 {% block body %}
-    {{ dump()}}
-    <h1>Edition des paramètres</h1>
-
-    {{ include('room_settings/_form.html.twig') }}
-
-    <a href="{{ path('room_settings_index') }}">back to list</a>
+    <main class="page project-page">
+        <section class="portfolio-block project">
+            <div class="container">
+                <div class="heading">
+                    <h2>Edition des paramètres</h2>
+                </div>
+                {{ include('room_settings/_form.html.twig') }}
+            </div>
+        </section>
+    </main>
 {% endblock %}
