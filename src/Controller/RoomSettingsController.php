@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Controller;
-
+use App\Entity\Player;
 use App\Entity\RoomSettings;
 use App\Form\RoomSettingsType;
-use App\Repository\RoomSettingsRepository;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,51 +15,33 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class RoomSettingsController extends AbstractController
 {
-    /**
-     * @Route("/", name="room_settings_index", methods={"GET"})
-     */
-    public function index(Request $request, PaginatorInterface $paginator): Response
-    {
-        return $this->render('room_settings/index.html.twig', [
-            'room_settings' => $paginator->paginate(
-                $this->getDoctrine()->getRepository(RoomSettings::class)->findAllByPlayer($this->getUser()),
-                $request->query->getInt('page', 1),
-                12
-            )
-        ]);
-    }
 
     /**
      * @Route("/new", name="room_settings_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
+        $em = $this->getDoctrine()->getManager();
         $roomSetting = new RoomSettings();
         $form = $this->createForm(RoomSettingsType::class, $roomSetting);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $roomSetting->setCreatedAt(new \DateTime());
+            $idPlayer = $em->getRepository(Player::class)->findOneBy(['id' => $this->getUser()->getId()]);
+            $roomSetting->setIdPlayer($idPlayer);
+
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($roomSetting);
             $entityManager->flush();
 
-            return $this->redirectToRoute('room_settings_index');
+            return $this->redirectToRoute('account');
         }
 
         return $this->render('room_settings/new.html.twig', [
             'room_setting' => $roomSetting,
             'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="room_settings_show", methods={"GET"})
-     */
-    public function show(RoomSettings $roomSetting): Response
-    {
-        return $this->render('room_settings/show.html.twig', [
-            'room_setting' => $roomSetting,
         ]);
     }
 
@@ -77,7 +58,7 @@ class RoomSettingsController extends AbstractController
             $roomSetting->setCreatedAt(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('room_settings_index');
+            return $this->redirectToRoute('account');
         }
 
         return $this->render('room_settings/edit.html.twig', [
@@ -87,17 +68,22 @@ class RoomSettingsController extends AbstractController
 
     }
 
-    /**
-     * @Route("/{id}", name="room_settings_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, RoomSettings $roomSetting): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$roomSetting->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($roomSetting);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('room_settings_index');
+    /**
+     * @Route("/{id}/delete", name="room_settings_delete")
+     *
+     */
+    public function delete(RoomSettings $roomSetting): RedirectResponse
+    {
+        $roomSetting->setDeletedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($roomSetting);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('account');
     }
+
+
+
+
 }
