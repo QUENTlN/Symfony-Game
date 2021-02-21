@@ -239,4 +239,9 @@ class RoomSettings
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return 'Id des paramètres de room sauvegardés : '.$this->getId();
+    }
 }

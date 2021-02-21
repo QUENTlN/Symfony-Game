@@ -2,23 +2,44 @@ security:
     encoders:
         App\Entity\Player:
             algorithm: bcrypt
+        App\Entity\Admin:
+            algorithm: bcrypt
+
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         users_in_memory: { memory: ~ }
-        in_database:
+        players_provider:
             entity:
                 class: App\Entity\Player
                 property: login
+        # used to reload user from session & other features (e.g. switch_user)
+        admin_provider:
+            entity:
+                class: App\Entity\Admin
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        admin:
+            pattern: ^/admin
+            anonymous: true
+
+            provider: admin_provider
+
+            form_login:
+                login_path: adminLogin
+                check_path: adminLogin
+
+            logout:
+                path: adminlogOut
+                target: home
         main:
             anonymous: true
             lazy: true
 
-            provider: in_database
+            provider: players_provider
 
             form_login:
                 login_path: signIn
@@ -37,5 +58,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
