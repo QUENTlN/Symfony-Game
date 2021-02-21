@@ -1,0 +1,11 @@
+{% extends '@EasyAdmin/layout.html.twig' %}
+
+{% block main %}
+    <h2>Bonjour et bienvenue dans l'interface d'Administration</h2>
+    <h4>Quelques statistiques pour commencer: <br><br>
+        - {{ accountsPlayer }} compte(s) de joueur(s) ont été créé(s). <br>
+        - {{ numberGuest }} invité(s) ont joué au moins une fois. <br>
+        - {{ numberRoomSettings }} profil(s) de room ont été créée(s). <br>
+        - {{ numberRoom }}  room sont créées, {{ numberRoomActive }} sont en cours de partie.
+    </h4>
+{% endblock %}

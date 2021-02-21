@@ -32,6 +32,14 @@ class RoomSettingsRepository extends ServiceEntityRepository
             ->execute();
     }
 
+    public function findNumberRoomSettings(): ?int
+    {
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(r)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return RoomSettings[] Returns an array of RoomSettings objects
     //  */

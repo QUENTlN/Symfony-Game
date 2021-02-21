@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210213141715 extends AbstractMigration
+final class Version20210220230832 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -20,6 +20,7 @@ final class Version20210213141715 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('CREATE TABLE admin (id INT AUTO_INCREMENT NOT NULL, username VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_880E0D76F85E0677 (username), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE answer (id INT AUTO_INCREMENT NOT NULL, question_id INT NOT NULL, text_answer LONGTEXT DEFAULT NULL, INDEX IDX_DADD4A251E27F6BF (question_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE category (id INT AUTO_INCREMENT NOT NULL, game_id INT NOT NULL, lib_category VARCHAR(255) NOT NULL, INDEX IDX_64C19C1E48FD905 (game_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE game (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -87,6 +88,7 @@ final class Version20210213141715 extends AbstractMigration
         $this->addSql('ALTER TABLE sub_category_room_settings DROP FOREIGN KEY FK_311C8F004DA136B7');
         $this->addSql('ALTER TABLE question DROP FOREIGN KEY FK_B6F7494EF7BFE87C');
         $this->addSql('ALTER TABLE sub_category_room_settings DROP FOREIGN KEY FK_311C8F00F7BFE87C');
+        $this->addSql('DROP TABLE admin');
         $this->addSql('DROP TABLE answer');
         $this->addSql('DROP TABLE category');
         $this->addSql('DROP TABLE game');

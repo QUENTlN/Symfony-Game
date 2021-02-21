@@ -111,7 +111,13 @@ class Player extends Guest implements UserInterface
 
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        if($this->getIsAdmin()==true)
+        {
+            return ['ROLE_USER', 'ROLE_MODERATEUR'];
+        }
+        else{
+            return ['ROLE_USER'];
+        }
     }
 
     public function getSalt()
@@ -224,5 +230,10 @@ class Player extends Guest implements UserInterface
     public function getUsername(): string
     {
         return $this->login;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getUsername();
     }
 }

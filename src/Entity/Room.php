@@ -205,4 +205,9 @@ class Room
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return 'Id de la room  : '.$this->getId();
+    }
 }
