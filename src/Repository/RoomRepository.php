@@ -32,4 +32,21 @@ class RoomRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
+
+    public function findNumberRoom(): ?int
+    {
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(r)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function findNumberRoomActive(): ?int
+    {
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(r)')
+            ->andWhere('r.finishedAt is NULL')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }
