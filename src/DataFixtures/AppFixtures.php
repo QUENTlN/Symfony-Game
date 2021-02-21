@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Admin;
 use App\Entity\Category;
 use App\Entity\Guest;
 use App\Entity\Player;
@@ -61,12 +62,18 @@ class AppFixtures extends Fixture
             }
         }
 
-        $admin = new Player();
-        $admin->setPseudo("admin")
-            ->setIsAdmin(true)
-            ->setLogin("admin@test.fr")
-            ->setPassword(password_hash("azerty", PASSWORD_BCRYPT));
+        $admin = new Admin();
+        $admin->setPassword(password_hash("admin", PASSWORD_BCRYPT))
+            ->setUsername("admin");
         $manager->persist($admin);
+
+        $moderateur = new Player();
+        $moderateur->setPseudo("moderateur")
+            ->setLogin("moderateur@test.fr")
+            ->setPassword(password_hash("azerty", PASSWORD_BCRYPT));
+        $manager->persist($moderateur);
+        $moderateur->setIsAdmin(true);
+        $manager->persist($moderateur);
 
         $manager->flush();
 
