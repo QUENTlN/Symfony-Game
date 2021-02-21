@@ -19,6 +19,14 @@ class GuestRepository extends ServiceEntityRepository
         parent::__construct($registry, Guest::class);
     }
 
+    public function findNumberGuest(): ?int
+    {
+        return $this->createQueryBuilder('g')
+            ->select('COUNT(g)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Guest[] Returns an array of Guest objects
     //  */
