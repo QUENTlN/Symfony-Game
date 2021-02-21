@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\RoomSettings;
+use App\Repository\SubCategoryRepository;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Game;
@@ -57,22 +59,36 @@ class RoomSettingsType extends AbstractType
 
                    ))
            */
-            ->add('subCategories', EntityType::class, array(
-                'class'        => SubCategory::class,
-                'choice_value' => 'id',
-                'choice_label' => function(SubCategory $subCategory){
-                    return $subCategory->getLibSubCategory();
+            ->add('subCategories', EntityType::class, [
+                'class' => SubCategory::class,
+                'query_builder' => function (SubCategoryRepository $repo) {
+                    return $repo->findByGameQuery('Game');
                 },
+                'query_builder' => function (SubCategoryRepository $repo) {
+                    return $repo->findByGameQuery('GuessThe');
+                },
+                'choice_label' => 'libSubCategory',
+                'group_by' => ChoiceList::groupBy($this, 'category.libCategory'),
+                'attr' => ['class' => 'form-control mb-2'],
                 'multiple'     => 'true',
                 'expanded'     => 'true',
-                'group_by'     =>function($choice,$key,$value){
+            ])
 
+            /*
+            ->add('subCategories', EntityType::class, array(
+                'class'        => SubCategory::class,
+                'query_builder' => function (SubCategoryRepository $repo) {
+                    return $repo->findByGameQuery('Quiz');
+                },
+                'choice_label' => 'libSubCategory',
+                'group_by' => ChoiceList::groupBy($this, 'category.libCategory'),
+                'multiple'     => 'true',
+                'expanded'     => 'true',
 
-                }
 
 
             ))
-
+            */
 
             // ->add('createdAt')
             //  ->add('deletedAt')
