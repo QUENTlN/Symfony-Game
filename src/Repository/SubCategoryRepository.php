@@ -31,4 +31,5 @@ class SubCategoryRepository extends ServiceEntityRepository
             ->andWhere("g INSTANCE OF :quiz")
             ->setParameter(':quiz', $game);
     }
+
 }

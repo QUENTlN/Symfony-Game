@@ -60,10 +60,20 @@ class RoomSettingsController extends AbstractController
 
             return $this->redirectToRoute('account');
         }
+        $form_g = $this->createForm(RoomSettingsType::class, $roomSetting);
+        $form_g->handleRequest($request);
+
+        if ($form_g->isSubmitted() && $form_g->isValid()) {
+            $roomSetting->setCreatedAt(new \DateTime());
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('account');
+        }
 
         return $this->render('room_settings/edit.html.twig', [
             'room_setting' => $roomSetting,
             'form' => $form->createView(),
+            'form_g' => $form->createView(),
         ]);
 
     }
