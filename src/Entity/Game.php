@@ -9,9 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=GameRepository::class)
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"game" = "Game", "quiz" = "Quiz", "guessThe" = "GuessThe"})
  */
 class Game
 {
@@ -32,6 +29,11 @@ class Game
      * @ORM\OneToMany(targetEntity=Category::class, mappedBy="game", orphanRemoval=true)
      */
     private $categories;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
 
     public function __construct()
     {
@@ -70,6 +72,18 @@ class Game
                 $category->setGame(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

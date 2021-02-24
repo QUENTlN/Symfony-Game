@@ -22,7 +22,7 @@ class RoomSettingsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            // ->add('idPlayer',IntegerType::class)
+
             ->add('nbMaxPlayer', IntegerType::class, array('attr' => array('min' => 1, 'max' => 20)))
             ->add('oneAnswerOnly', CheckboxType::class, [
                 'required' => false,
@@ -30,72 +30,26 @@ class RoomSettingsType extends AbstractType
             ->add('showScore', CheckboxType::class, [
                 'required' => false,
             ])
-            /*
-                       ->add('game', EntityType::class, array(
-                           'class'        => Game::class,
-                           //'choice_value' => 'id',
-                           'query_builder'=> function(EntityRepository $repository){
-                               $query =$repository->createQueryBuilder('g')
-                                   ->select('PARTIAL g.{id}');
 
-                               return $query;
-                           },
-                           'choice_label' => function(Game $game){
-                              return $game->getCategories();
-                           },
-                           'multiple'     => 'true',
-                           'expanded'     => 'true',
-
-                       ))
-
-                   ->add('subCategories', EntityType::class, array(
-                       'class'        => Category::class,
-                       //'choice_value' => 'id',
-                       'choice_label' => function(Category $category){
-                           return $category->getLibCategory();
-                       },
-                       'multiple'     => 'true',
-                       'expanded'     => 'true',
-
-                   ))
-           */
             ->add('subCategories', EntityType::class, [
                 'class' => SubCategory::class,
                 'query_builder' => function (SubCategoryRepository $repo) {
-                    return $repo->findByGameQuery('Game');
+                    return $repo->findAllQuery();
                 },
-                'query_builder' => function (SubCategoryRepository $repo) {
-                    return $repo->findByGameQuery('GuessThe');
-                },
+                'by_reference' => false,
                 'choice_label' => 'libSubCategory',
-                'group_by' => ChoiceList::groupBy($this, 'category.libCategory'),
-                'attr' => ['class' => 'form-control mb-2'],
-                'multiple'     => 'true',
-                'expanded'     => 'true',
+                //'group_by' => ChoiceList::groupBy($this, 'category.libCategory'),
+              // 'group_by' => function (SubCategory $subCategory) {
+               //   return $subCategory->getCategory()->getLibCategory();
+
+               // },
+                'multiple' => 'true',
+                'expanded' => 'true',
             ])
 
-            /*
-            ->add('subCategories', EntityType::class, array(
-                'class'        => SubCategory::class,
-                'query_builder' => function (SubCategoryRepository $repo) {
-                    return $repo->findByGameQuery('Quiz');
-                },
-                'choice_label' => 'libSubCategory',
-                'group_by' => ChoiceList::groupBy($this, 'category.libCategory'),
-                'multiple'     => 'true',
-                'expanded'     => 'true',
+            ->add('nameProfil', TextType::class)
+            ->add('numberRound', IntegerType::class, array('attr' => array('min' => 1, 'max' => 20)))
 
-
-
-            ))
-            */
-
-            // ->add('createdAt')
-            //  ->add('deletedAt')
-            ->add('nameProfil',TextType::class)
-            ->add('numberRound',IntegerType::class, array('attr' => array('min' => 1, 'max' => 20)))
-            //->add('subCategories')
-            //->add('game')
         ;
     }
 

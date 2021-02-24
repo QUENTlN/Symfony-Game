@@ -27,6 +27,7 @@ class RoomSettingsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('rs')
             ->select('rs' )
             ->where('rs.idPlayer = :idPlayer')
+            ->andwhere('rs.deletedAt IS NULL')
             ->setParameter('idPlayer', $user->getId())
             ->getQuery()
             ->execute();
