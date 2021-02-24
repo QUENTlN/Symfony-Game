@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\Game;
 use App\Entity\Player;
 use App\Entity\RoomSettings;
 use App\Form\RoomSettingsType;
@@ -38,9 +39,11 @@ class RoomSettingsController extends AbstractController
 
             return $this->redirectToRoute('account');
         }
+        $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
 
         return $this->render('room_settings/new.html.twig', [
             'room_setting' => $roomSetting,
+            'games' => $games,
             'form' => $form->createView(),
         ]);
     }
@@ -50,7 +53,6 @@ class RoomSettingsController extends AbstractController
      */
     public function edit(Request $request, RoomSettings $roomSetting): Response
     {
-
         $form = $this->createForm(RoomSettingsType::class, $roomSetting);
         $form->handleRequest($request);
 
@@ -58,22 +60,16 @@ class RoomSettingsController extends AbstractController
             $roomSetting->setCreatedAt(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('account');
-        }
-        $form_g = $this->createForm(RoomSettingsType::class, $roomSetting);
-        $form_g->handleRequest($request);
-
-        if ($form_g->isSubmitted() && $form_g->isValid()) {
-            $roomSetting->setCreatedAt(new \DateTime());
-            $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('account');
         }
+        $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
 
         return $this->render('room_settings/edit.html.twig', [
             'room_setting' => $roomSetting,
+            'games' => $games,
             'form' => $form->createView(),
-            'form_g' => $form->createView(),
+
         ]);
 
     }
@@ -87,7 +83,6 @@ class RoomSettingsController extends AbstractController
     {
         $roomSetting->setDeletedAt(new \DateTime());
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($roomSetting);
         $entityManager->flush();
 
         return $this->redirectToRoute('account');

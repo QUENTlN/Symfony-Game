@@ -15,37 +15,50 @@
 <div class="form-group">
     {{ form_row(form.numberRound,{'label':'Nombre de tours', 'attr':{'class':'form-control '}}) }}
 </div>
-{#  <div class="form-group">
-    {{ form_row(form.game,{'label':false, 'attr':{'class':'form-check-label'}}) }}
-</div>#}
-<div class="form-group">
-    {{ form_label(form.subCategories, 'Quizz') }}
-    {{ form_row(form.subCategories,{'label':false, 'attr':{'class':'form-check-label'}}) }}
-</div>
-<div class="form-group">
-    {{ form_label(form.subCategories, 'Guess The') }}
-    {{ form_row(form_g.subCategories,{'label':false, 'attr':{'class':'form-check-label'}}) }}
-</div>
-    <div class="form-check">
-        {#   {% for gameA in form.game %}
-                    {{ form_row(gameA , {'label_attr' : {
-                        'class' : 'checkbox-inline'
-                    }}) }}
-
-                {% endfor %}
-
+<div class="row">
+    {% set gameKey = 1 %}
+    {% for game in games %}
+        <div class="col-6">
+            <div class="form-check" id="{{ gameKey }}">
+                <input type="checkbox" class="form-check-input checkbox-parent"><label
+                        class="form-check-label">{{ game.name }}</label>
             </div>
             <div class="souscheck">
-                <div class="form-check">
-                    {% for categ in form.category %}
-                        {{ form_row(categ , {'label_attr' : {
-                            'class' : 'checkbox-inline'
-                        }}) }}
-                    {% endfor %}#}
-    </div>
+                {% set categoryKey = 1 %}
+                {% for category in game.categories %}
+                    {% set subCatsOfCat = [] %}
+                    {% for subCategory in category.subCategories %}
+                        {% set subCatsOfCat = subCatsOfCat|merge([subCategory.id]) %}
+                    {% endfor %}
+                    <div>
+                        <div class="form-check" id="{{ gameKey }}-{{ categoryKey }}">
+                            <input type="checkbox" class="form-check-input checkbox-parent checkbox-child"><label
+                                    class="form-check-label">{{ category.libCategory }}</label>
+                        </div>
+                        <div class="souscheck">
+                            {% set subCategoryKey = 1%}
+                            {% for subCategoryForm in form.subCategories %}
+                                {% if subCategoryForm.vars.value in subCatsOfCat %}
+                                    <div class="form-check" id="{{ gameKey }}-{{ categoryKey }}-{{ subCategoryKey }}">
+                                        {{ form_row(subCategoryForm,{'label':false,'attr':{'class':'form-check-input checkbox-child'}}) }}
+                                        {{ form_label(subCategoryForm,null, { 'label_attr': {'class': 'form-check-label'} }) }}
+                                    </div>
+                                    {% set subCategoryKey = subCategoryKey + 1 %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% set categoryKey = categoryKey + 1 %}
+                {% endfor %}
+            </div>
+        </div>
+        {% set gameKey = gameKey + 1 %}
+    {% endfor %}
 </div>
 
-    <div class="modal-footer"><a href="{{ path('account') }}"  class="btn btn-light" type="reset" data-dismiss="modal">Annuler</a><button class="btn btn-primary btn-success" type="submit" >{{ button|default('Créer') }}</button></div>
+
+<div class="modal-footer"><a href="{{ path('account') }}" class="btn btn-light" type="reset" data-dismiss="modal">Annuler</a>
+    <button class="btn btn-primary btn-success" type="submit">{{ button|default('Créer') }}</button>
 </div>
 
 {{ form_end(form) }}
