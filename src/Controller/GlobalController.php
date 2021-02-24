@@ -12,11 +12,12 @@ class GlobalController extends AbstractController
 
     /**
      * @Route("/create_room", name="createRoom")
-     */
+
     public function createRoom(): Response
     {
         return $this->render('global/createRoom.html.twig', [
             'controller_name' => 'GlobalController',
         ]);
     }
+     */
 }
