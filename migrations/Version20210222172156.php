@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210220230832 extends AbstractMigration
+final class Version20210222172156 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -23,14 +23,14 @@ final class Version20210220230832 extends AbstractMigration
         $this->addSql('CREATE TABLE admin (id INT AUTO_INCREMENT NOT NULL, username VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_880E0D76F85E0677 (username), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE answer (id INT AUTO_INCREMENT NOT NULL, question_id INT NOT NULL, text_answer LONGTEXT DEFAULT NULL, INDEX IDX_DADD4A251E27F6BF (question_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE category (id INT AUTO_INCREMENT NOT NULL, game_id INT NOT NULL, lib_category VARCHAR(255) NOT NULL, INDEX IDX_64C19C1E48FD905 (game_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE game (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE guess_the (id INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE game (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE guess_the (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE guest (id INT AUTO_INCREMENT NOT NULL, pseudo VARCHAR(25) NOT NULL, type VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE player (id INT NOT NULL, login VARCHAR(255) NOT NULL, password VARCHAR(100) NOT NULL, is_admin TINYINT(1) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE question (id INT AUTO_INCREMENT NOT NULL, player_id INT NOT NULL, sub_category_id INT NOT NULL, status VARCHAR(255) NOT NULL, type VARCHAR(255) NOT NULL, INDEX IDX_B6F7494E99E6F5DF (player_id), INDEX IDX_B6F7494EF7BFE87C (sub_category_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE question_with_picture (id INT NOT NULL, link_picture VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE question_with_text (id INT NOT NULL, text VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE quiz (id INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE quiz (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE reset_password_request (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, selector VARCHAR(20) NOT NULL, hashed_token VARCHAR(100) NOT NULL, requested_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', expires_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_7CE748AA76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE room (id INT AUTO_INCREMENT NOT NULL, room_settings_id INT DEFAULT NULL, host_id INT NOT NULL, name VARCHAR(400) NOT NULL, created_at DATETIME NOT NULL, finished_at DATETIME DEFAULT NULL, is_private TINYINT(1) NOT NULL, INDEX IDX_729F519B4DA136B7 (room_settings_id), INDEX IDX_729F519B1FB8D185 (host_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE room_settings (id INT AUTO_INCREMENT NOT NULL, id_player_id INT DEFAULT NULL, nb_max_player INT NOT NULL, show_score TINYINT(1) NOT NULL, created_at DATETIME NOT NULL, one_answer_only TINYINT(1) NOT NULL, deleted_at DATETIME DEFAULT NULL, name_profil VARCHAR(255) DEFAULT NULL, number_round INT NOT NULL, INDEX IDX_45A3600119D349F8 (id_player_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -41,13 +41,11 @@ final class Version20210220230832 extends AbstractMigration
         $this->addSql('CREATE TABLE sub_category_room_settings (sub_category_id INT NOT NULL, room_settings_id INT NOT NULL, INDEX IDX_311C8F00F7BFE87C (sub_category_id), INDEX IDX_311C8F004DA136B7 (room_settings_id), PRIMARY KEY(sub_category_id, room_settings_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE answer ADD CONSTRAINT FK_DADD4A251E27F6BF FOREIGN KEY (question_id) REFERENCES question (id)');
         $this->addSql('ALTER TABLE category ADD CONSTRAINT FK_64C19C1E48FD905 FOREIGN KEY (game_id) REFERENCES game (id)');
-        $this->addSql('ALTER TABLE guess_the ADD CONSTRAINT FK_809B4A05BF396750 FOREIGN KEY (id) REFERENCES game (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE player ADD CONSTRAINT FK_98197A65BF396750 FOREIGN KEY (id) REFERENCES guest (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE question ADD CONSTRAINT FK_B6F7494E99E6F5DF FOREIGN KEY (player_id) REFERENCES player (id)');
         $this->addSql('ALTER TABLE question ADD CONSTRAINT FK_B6F7494EF7BFE87C FOREIGN KEY (sub_category_id) REFERENCES sub_category (id)');
         $this->addSql('ALTER TABLE question_with_picture ADD CONSTRAINT FK_8CDC8A28BF396750 FOREIGN KEY (id) REFERENCES question (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE question_with_text ADD CONSTRAINT FK_E8B61C77BF396750 FOREIGN KEY (id) REFERENCES question (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE quiz ADD CONSTRAINT FK_A412FA92BF396750 FOREIGN KEY (id) REFERENCES game (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE reset_password_request ADD CONSTRAINT FK_7CE748AA76ED395 FOREIGN KEY (user_id) REFERENCES player (id)');
         $this->addSql('ALTER TABLE room ADD CONSTRAINT FK_729F519B4DA136B7 FOREIGN KEY (room_settings_id) REFERENCES room_settings (id)');
         $this->addSql('ALTER TABLE room ADD CONSTRAINT FK_729F519B1FB8D185 FOREIGN KEY (host_id) REFERENCES player (id)');
@@ -68,8 +66,6 @@ final class Version20210220230832 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE sub_category DROP FOREIGN KEY FK_BCE3F79812469DE2');
         $this->addSql('ALTER TABLE category DROP FOREIGN KEY FK_64C19C1E48FD905');
-        $this->addSql('ALTER TABLE guess_the DROP FOREIGN KEY FK_809B4A05BF396750');
-        $this->addSql('ALTER TABLE quiz DROP FOREIGN KEY FK_A412FA92BF396750');
         $this->addSql('ALTER TABLE room_settings_game DROP FOREIGN KEY FK_2E78C75DE48FD905');
         $this->addSql('ALTER TABLE player DROP FOREIGN KEY FK_98197A65BF396750');
         $this->addSql('ALTER TABLE score DROP FOREIGN KEY FK_329937519A4AA658');

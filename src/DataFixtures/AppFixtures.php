@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Admin;
 use App\Entity\Category;
+use App\Entity\Game;
 use App\Entity\Guest;
 use App\Entity\Player;
 use App\Entity\Room;
@@ -22,7 +23,7 @@ class AppFixtures extends Fixture
         $faker = Factory::create("fr_FR");
 
         $gamesTab = [
-            "\App\Entity\Quiz" => [
+            "Quiz" => [
                 "Culture" => [
                     "Histoire", "Géographie"
                 ],
@@ -33,7 +34,7 @@ class AppFixtures extends Fixture
                     "Basket", "Foot"
                 ]
             ],
-            "\App\Entity\GuessThe" => [
+            "GuessThe" => [
                 "Autre" => [
                     "Film", "Série", "Jeux Vidéo", "Album", "Anime", "Acteur", "Artiste musical"
                 ]
@@ -43,7 +44,8 @@ class AppFixtures extends Fixture
         $subCategoriesArray = [];
 
         foreach ($gamesTab as $gameTab => $categoriesTab) {
-            $game = new $gameTab;
+            $game = new Game();
+            $game->setName($gameTab);
             $manager->persist($game);
 
             foreach ($categoriesTab as $categoryTab => $subCategoriesTab) {

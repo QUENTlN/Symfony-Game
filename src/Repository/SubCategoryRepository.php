@@ -28,8 +28,13 @@ class SubCategoryRepository extends ServiceEntityRepository
             ->from(Game::class, 'g')
             ->where("sc.category=c")
             ->andWhere("c.game = g")
-            ->andWhere("g INSTANCE OF :quiz")
+            ->andWhere("g.name = :quiz")
             ->setParameter(':quiz', $game);
+    }
+
+    public function findAllQuery()
+    {
+        return $this->createQueryBuilder('sc');
     }
 
 }
