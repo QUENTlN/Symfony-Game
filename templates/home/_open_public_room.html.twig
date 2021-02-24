@@ -15,7 +15,7 @@
                             {% endfor %}
                         {% endfor %}
                         {% if subCats is not empty %}
-                            <li>{{ constant('TYPE_GAME', game) }} ( {{ subCats|join(', ') }} )</li>
+                            <li>{{ game.name}} ( {{ subCats|join(', ') }} )</li>
                         {% endif %}
                     {% endfor %}
                 </ul>
