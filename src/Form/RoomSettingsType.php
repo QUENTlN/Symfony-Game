@@ -38,11 +38,6 @@ class RoomSettingsType extends AbstractType
                 },
                 'by_reference' => false,
                 'choice_label' => 'libSubCategory',
-                //'group_by' => ChoiceList::groupBy($this, 'category.libCategory'),
-              // 'group_by' => function (SubCategory $subCategory) {
-               //   return $subCategory->getCategory()->getLibCategory();
-
-               // },
                 'multiple' => 'true',
                 'expanded' => 'true',
             ])
