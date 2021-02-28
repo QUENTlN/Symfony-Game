@@ -6,21 +6,6 @@
 
 {% block body %}
 
-    <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient">
-        <div class="container"><a class="navbar-brand logo" href="#">Magma</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navbarNav"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Room</a></li>
-                    <li class="nav-item"><a class="nav-link" href="create-room.html">Créer salon</a></li>
-                    <li class="nav-item"><a class="nav-link" href="profil.html">Project Page</a></li>
-                    <li class="nav-item"><a class="nav-link" href="signup.html">Se connecter</a></li>
-                    <li class="nav-item"><a class="nav-link" href="signin.html">S'inscrire</a></li>
-                    <li class="nav-item"><a class="nav-link" href="profil.html"><i class="fa fa-user-circle"></i></a></li>
-                    <li class="nav-item"><a class="nav-link" href="suggest-question.html">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
     <section class="portfolio-block contact text-center">
         <h2 class="text-center font-weight-bold mt-5">Valider les questions et réponses proposées par les players</h2>
         <div class="container">
@@ -32,25 +17,35 @@
                         <th class="w-50">Questions</th>
                         <th class="w-50">Réponses</th>
                         <th>Accepter</th>
-                        <th>Refuser</th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
                     </tr>
                     </thead>
                     <tbody class="text-justify">
-                    <tr>
-                        <td>Quiz<br>Culture<br>Histoire</td>
-                        <td class="text">Quelle est la couleur du cheval blanc d'Henri IV ?</td>
-                        <td>Gris<br><br></td>
-                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
-                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
-                    </tr>
-                    <tr>
+                    {% for question in questionsWithText %}
+                        <tr>
+
+
+                            <td><br>{{ question.subcategory.category.game.name }}<br>{{ question.getSubCategory() }}</td>
+                            <td class="text">{{ question.getText() }}</td>
+                            {% for answer in question.answers %}
+                                <td>{{ answer.getTextAnswer() }}<br><br></td>
+                            {% endfor %}
+                            <td><a href="{{ path('acceptQuestion', {'id':question.getId()})}}" class="btn btn-success"><i class="fa fa-check"></i></a></td>
+                            <td><a href="{{ path('modify_question', {'id':question.getId()})}}" class="btn btn-info"></a></td>
+                            <td><a href="{{ path('delete_question', {'id':question.getId()})}}" class="btn btn-danger"></a></td>
+                            {#  <td> <a href="" class="btn btn-primary"> Lire la suite </a></td>#}
+                        </tr>
+
+                        {#  <tr>
                         <td>GuessThe<br>Manga<br></td>
                         <td class="text-justify"><span>De quel manga est tiré cette image ?&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
                             <div class="text-center"><img class="w-75 mt-2" src="assets/img/nature/yeahitsrainig.jpg"></div>
                         </td>
                         <td>Fullmetal Alchimist Brotherhood.</td>
-                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
-                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
+                        <td class="bg-success"><button><i class="fa fa-check"></i></button></td>
+                        <td class="bg-info"><button><i class="fa fa-edit"></i></button></td>
+                        <td class="bg-danger text-center"><button><i class="fa fa-remove"></i></button></td>
                     </tr>
                     <tr>
                         <td>Quiz<br>Métier<br><br></td>
@@ -58,8 +53,9 @@
                             <div class="text-center"></div>
                         </td>
                         <td><br>Vendeur de blé et autres grains, vendeur de blé, vendeur d'orge, vendeur de l'avoine, récolte grains<br></td>
-                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
-                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
+                        <td class="bg-success"><button><i class="fa fa-check"></i></button></td>
+                        <td class="bg-info"><button><i class="fa fa-edit"></i></button></td>
+                        <td class="bg-danger text-center"><button><i class="fa fa-remove"></i></button></td>
                     </tr>
                     <tr>
                         <td>GuessThe<br>Fruit</td>
@@ -67,45 +63,50 @@
                             <div class="text-center"><img class="w-75 mt-2" src="assets/img/nature/fruit.jpg"></div>
                         </td>
                         <td>jujube</td>
-                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
-                        <td id="text" class="bg-danger text-center"><i class="fa fa-remove"></i></td>
+                        <td class="bg-success"><button><i class="fa fa-check"></i></button></td>
+                        <td class="bg-info"><button><i class="fa fa-edit"></i></button></td>
+                        <td id="text" class="bg-danger text-center"><button><i class="fa fa-remove"></i></button></td>
                     </tr>
                     <tr>
                         <td>Quiz<br>Animal</td>
                         <td><br>Les vers de terre ont-ils un<strong> </strong>coeur ?<br><br></td>
                         <td>Oui</td>
-                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
-                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
+                        <td class="bg-success"><button><i class="fa fa-check"></i></button></td>
+                        <td class="bg-info"><button><i class="fa fa-edit"></i></button></td>
+                        <td class="bg-danger text-center"><button><i class="fa fa-remove"></i></button></td>
                     </tr>
                     <tr>
                         <td>Quiz<br>Devinette</td>
                         <td><br>Ma sœur a autant de frère que de sœurs et mon frère, lui, a deux fois plus de sœurs que de frères. Combien d'enfants dans la fratrie?<br><br></td>
                         <td>Il y a 3 enfants dans le fratrie.</td>
-                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
-                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
+                        <td class="bg-success"><button><i class="fa fa-check"></i></button></td>
+                        <td class="bg-info"><button><i class="fa fa-edit"></i></button></td>
+                        <td class="bg-danger text-center"><button><i class="fa fa-remove"></i></button></td>
                     </tr>
-                    <tr>
-                        <td>Quiz<br>Devinette</td>
-                        <td><br>Mon premier est l'un des 5 sens.<br>Mon deuxième est la première lettre de l'alphabet.<br>Mon troisième est la 11ième lettre de l'alphabet.<br>Mon quatrième est l’inverse de dure.<br><br>Mon tout est un plat d'origine mexicaine fait à partir d’avocat.<br></td>
-                        <td><br>Le guacamole (Goût-A-K-Molle).<br></td>
-                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
-                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
-                    </tr>
-                    <tr>
-                        <td>GuessThe<br>Dessin Animé</td>
-                        <td>Quel est le prénom de la fiancée de Popeye ?<br></td>
-                        <td>Olive</td>
-                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
-                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
-                    </tr>
-                    <tr>
-                        <td>GuessThe<br>Logo</td>
-                        <td>Que représente ce logo ?&nbsp; &nbsp; &nbsp; <div class="text-center"><img class="w-75 mt-2" src="assets/img/Couleur-logo-Pinterest.jpg"></div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td>
-                        <td>Pinterest</td>
-                        <td class="bg-info text-center"><i class="fa fa-check"></i></td>
-                        <td class="bg-danger text-center"><i class="fa fa-remove"></i></td>
-                    </tr>
+                        #}
+                        <tr></tr>
+                        <tr></tr>
+                        <tr></tr>
+                    {% endfor %}
+                    {% for question in questionsWithPicture %}
+                        <tr>
+
+                            <td>Quiz<br>Culture<br>Histoire</td>
+                            <td class="text"> {{ question.linkPicture }}</td>
+                            {% for answer in question.answers %}
+                                <td>{{ answer.getTextAnswer() }}<br><br></td>
+                            {% endfor %}
+                            <td class="bg-success"><button><i class="fa fa-check"></i></button></td>
+                            <td class="bg-info"><button class="btn"><i class="fas fa-edit"></i></button></td>
+                            <td class="bg-danger text-center"><button class="btn"><i class="fa fa-remove"></i></button></td>
+                            {#<td> <a href="" class="btn btn-primary"> Lire la suite </a></td> #}
+                        </tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr></tr>
+                    {% endfor %}
                     </tbody>
+
                 </table>
             </div>
         </div>
