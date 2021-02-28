@@ -27,34 +27,34 @@ class Question
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="Question")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $player;
+    protected $player;
 
     /**
      * @ORM\ManyToOne(targetEntity=SubCategory::class, inversedBy="Question")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $subCategory;
+    protected $subCategory;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $status;
+    protected $status;
 
     /**
      * @ORM\OneToMany(targetEntity=Round::class, mappedBy="question", orphanRemoval=true)
      */
-    private $rounds;
+    protected $rounds;
 
     /**
      * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="question", cascade={"persist"}, orphanRemoval=true)
      */
-    private $answers;
+    protected $answers;
 
     public function __construct()
     {
