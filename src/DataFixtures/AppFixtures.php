@@ -3,10 +3,14 @@
 namespace App\DataFixtures;
 
 use App\Entity\Admin;
+use App\Entity\Answer;
 use App\Entity\Category;
 use App\Entity\Game;
 use App\Entity\Guest;
 use App\Entity\Player;
+use App\Entity\Question;
+use App\Entity\QuestionWithPicture;
+use App\Entity\QuestionWithText;
 use App\Entity\Room;
 use App\Entity\RoomSettings;
 use App\Entity\Round;
@@ -86,6 +90,36 @@ class AppFixtures extends Fixture
                 ->setPassword(password_hash("azerty", PASSWORD_BCRYPT))
                 ->setIsAdmin(false);
             $manager->persist($player);
+
+            $questionWithText = new QuestionWithText();
+            $questionWithText->setText($faker->parse("question n° ".$i))
+                ->setPlayer($player)
+                ->setSubCategory($subCategory)
+                ->setStatus(Question::STATUS["pending"]);
+
+
+            $answerForQWT = new Answer();
+            $answerForQWT->setTextAnswer("réponse n° ".$i);
+
+            $questionWithText->addAnswer($answerForQWT);
+
+            $manager->persist($answerForQWT);
+            $manager->persist($questionWithText);
+
+            $questionWithPicture = new QuestionWithPicture();
+            $questionWithPicture->setLinkPicture($faker->imageUrl('http://lorempixel.com/640/480/'))
+                ->setPlayer($player)
+                ->setSubCategory($subCategory)
+                ->setStatus(Question::STATUS["pending"]);
+
+            $answerForQWP = new Answer();
+            $answerForQWP->setTextAnswer("réponse n° ".$i);
+
+            $questionWithPicture->addAnswer($answerForQWP);
+
+            $manager->persist($answerForQWP);
+            $manager->persist($questionWithPicture);
+
 
             $roomSettings = new RoomSettings();
             $roomSettings->setCreatedAt(new \DateTime())
