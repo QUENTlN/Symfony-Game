@@ -10,13 +10,17 @@ use App\Entity\QuestionWithPicture;
 use App\Entity\QuestionWithText;
 use App\Entity\Room;
 use App\Form\GuessTheQuestionType;
+use App\Form\ModifyQuestionWithTextType;
+use App\Form\ModifyQuestionWithPictureType;
 use App\Form\QuizQuestionType;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\True_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class QuestionController extends AbstractController
 {
@@ -27,12 +31,6 @@ class QuestionController extends AbstractController
     {
         $questionWithText = new QuestionWithText();
         $answer = new Answer();
-
-        $category = new Category();
-        $category->setGame();
-        $category->setLibCategory();
-        $game = new Game();
-        $game->setName("Quiz");
 
         $answer->setQuestion($questionWithText);
         $questionWithText->addAnswer($answer)
@@ -82,6 +80,7 @@ class QuestionController extends AbstractController
 
     /**
      * @Route("/accept_Question/{id}", name="acceptQuestion")
+     * @IsGranted ("ROLE_MODERATEUR")
      */
     public function acceptQuestion($id)
     {
@@ -98,6 +97,7 @@ class QuestionController extends AbstractController
 
     /**
      * @Route("/show_Question", name="showQuestion")
+     * @IsGranted ("ROLE_MODERATEUR")
      */
     public function show(){
         $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
@@ -115,15 +115,42 @@ class QuestionController extends AbstractController
     }
 
     /**
-     * @Route("/accept_Question/{id}", name="modify_question")
+     * @Route("/modify_Question/{id}", name="modify_question")
+     * @IsGranted ("ROLE_MODERATEUR")
+     * @param $id
+     * @param $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function modify($id)
+    public function modify($id, Request $request)
     {
+        $question = $this->getDoctrine()->getRepository(Question::class)->find($id);
+        if (strcmp($question->getType(), 'QuestionWithText') == 0) {
+            $boolean = true;
+            $form = $this->createForm(ModifyQuestionWithTextType::class, $question);
+        }else {
+            $boolean = false;
+            $form = $this->createForm(ModifyQuestionWithPictureType::class, $question);
+        }
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($question);
+            $em->flush();
+
+            return $this->redirectToRoute('showQuestion');
+        }
+        return $this->render('question/modifyQuestion.html.twig', [
+            'form' => $form->createView(),
+            'boolean' => $boolean,
+        ]);
+        /*
         $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
         $question = $this->getDoctrine()->getRepository(Question::class)->find($id);
         $question->setStatus(Question::STATUS["accepted"]);
         $this->getDoctrine()->getManager()->persist($question);
         $this->getDoctrine()->getManager()->flush();
+        */
         /*return $this->render('question/acceptQuestion.html.twig', [
             'question' => $question
         ]);*/
@@ -133,6 +160,7 @@ class QuestionController extends AbstractController
 
     /**
      * @Route("/{id}/delete", name="delete_question")
+     * @IsGranted ("ROLE_MODERATEUR")
      *
      */
     public function delete($id)

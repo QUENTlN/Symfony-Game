@@ -38,4 +38,9 @@ class QuestionWithPicture extends Question
 
         return $this;
     }
+
+    public function getType(): string
+    {
+        return (new \ReflectionClass($this))->getShortName();
+    }
 }
