@@ -3,16 +3,24 @@
 namespace App\Controller;
 
 use App\Entity\Answer;
+use App\Entity\Game;
+use App\Entity\Category;
+use App\Entity\Question;
 use App\Entity\QuestionWithPicture;
 use App\Entity\QuestionWithText;
+use App\Entity\Room;
 use App\Form\GuessTheQuestionType;
+use App\Form\ModifyQuestionWithTextType;
+use App\Form\ModifyQuestionWithPictureType;
 use App\Form\QuizQuestionType;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\True_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class QuestionController extends AbstractController
 {
@@ -23,6 +31,7 @@ class QuestionController extends AbstractController
     {
         $questionWithText = new QuestionWithText();
         $answer = new Answer();
+
         $answer->setQuestion($questionWithText);
         $questionWithText->addAnswer($answer)
             ->setStatus("pending")
@@ -70,12 +79,101 @@ class QuestionController extends AbstractController
     }
 
     /**
-     * @Route("/accept_question", name="acceptQuestion")
+     * @Route("/accept_Question/{id}", name="acceptQuestion")
+     * @IsGranted ("ROLE_MODERATEUR")
      */
-    public function acceptQuestion(): Response
+    public function acceptQuestion($id)
     {
-        return $this->render('question/acceptQuestion.html.twig', [
+        $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
+        $question = $this->getDoctrine()->getRepository(Question::class)->find($id);
+        $question->setStatus(Question::STATUS["accepted"]);
+        $this->getDoctrine()->getManager()->persist($question);
+        $this->getDoctrine()->getManager()->flush();
+        /*return $this->render('question/acceptQuestion.html.twig', [
+            'question' => $question
+        ]);*/
+        return $this->redirectToRoute("showQuestion");
+    }
 
+    /**
+     * @Route("/show_Question", name="showQuestion")
+     * @IsGranted ("ROLE_MODERATEUR")
+     */
+    public function show(){
+        $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
+        $category = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        $questionWithText = $this->getDoctrine()->getRepository(QuestionWithText::class)->findQuestionWithStatusPending();
+        $questionWithPicture = $this->getDoctrine()->getRepository(QuestionWithPicture::class)->findQuestionWithStatusPending();
+
+
+        return $this->render('question/acceptQuestion.html.twig', [
+            'game' => $games,
+            'category' => $category,
+            'questionsWithText' => $questionWithText,
+            'questionsWithPicture' => $questionWithPicture,
         ]);
     }
+
+    /**
+     * @Route("/modify_Question/{id}", name="modify_question")
+     * @IsGranted ("ROLE_MODERATEUR")
+     * @param $id
+     * @param $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function modify($id, Request $request)
+    {
+        $question = $this->getDoctrine()->getRepository(Question::class)->find($id);
+        if (strcmp($question->getType(), 'QuestionWithText') == 0) {
+            $boolean = true;
+            $form = $this->createForm(ModifyQuestionWithTextType::class, $question);
+        }else {
+            $boolean = false;
+            $form = $this->createForm(ModifyQuestionWithPictureType::class, $question);
+        }
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($question);
+            $em->flush();
+
+            return $this->redirectToRoute('showQuestion');
+        }
+        return $this->render('question/modifyQuestion.html.twig', [
+            'form' => $form->createView(),
+            'boolean' => $boolean,
+        ]);
+        /*
+        $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
+        $question = $this->getDoctrine()->getRepository(Question::class)->find($id);
+        $question->setStatus(Question::STATUS["accepted"]);
+        $this->getDoctrine()->getManager()->persist($question);
+        $this->getDoctrine()->getManager()->flush();
+        */
+        /*return $this->render('question/acceptQuestion.html.twig', [
+            'question' => $question
+        ]);*/
+        return $this->redirectToRoute("showQuestion");
+    }
+
+
+    /**
+     * @Route("/{id}/delete", name="delete_question")
+     * @IsGranted ("ROLE_MODERATEUR")
+     *
+     */
+    public function delete($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $question = $this->getDoctrine()->getRepository(Question::class)->find($id);
+        $em->remove($question);
+        $em->flush();
+        /*return $this->render('question/acceptQuestion.html.twig', [
+            'question' => $question
+        ]);*/
+        return $this->redirectToRoute("showQuestion");
+    }
+
+
 }

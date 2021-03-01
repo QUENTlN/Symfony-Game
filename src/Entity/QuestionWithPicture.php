@@ -15,7 +15,7 @@ class QuestionWithPicture extends Question
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -37,5 +37,10 @@ class QuestionWithPicture extends Question
         $this->linkPicture = $linkPicture;
 
         return $this;
+    }
+
+    public function getType(): string
+    {
+        return (new \ReflectionClass($this))->getShortName();
     }
 }

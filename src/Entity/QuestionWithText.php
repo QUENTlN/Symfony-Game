@@ -15,7 +15,7 @@ class QuestionWithText extends Question
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -37,5 +37,10 @@ class QuestionWithText extends Question
         $this->text = $text;
 
         return $this;
+    }
+
+    public function getType(): string
+    {
+        return (new \ReflectionClass($this))->getShortName();
     }
 }
