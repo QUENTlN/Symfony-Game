@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Modifier la question
+{% endblock %}
+{% block body %}
+    {# {% if boolean == true %}
+    <p>tibo est gentil</p>
+    {% else %}
+    <p>tibo la merde</p>
+    {% endif %} #}
+    {{ form_start(form,{'attr':{'style': 'margin-top: 5vh;'}} ) }}
+    {# mettre un button submit #}
+    {{ form_end(form) }}
+<div class="form-group"><button class="btn btn-primary btn-block" type="submit">Enregistrez vos modifications de la question</button>
+{% endblock %}
