@@ -2,24 +2,59 @@
 
 namespace App\Controller;
 
-use App\Entity\Game;
 use App\Entity\Player;
 use App\Entity\Room;
 use App\Form\CreateRoomType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\PublisherInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RoomController extends AbstractController
 {
-    #[Route('/room', name: 'room')]
+    /**
+     * @Route("/quentin", name="quentin")
+     * @param PublisherInterface $publisher
+     */
+    public function quentin(PublisherInterface $publisher): Response
+    {
+//        define('DEMO_JWT', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdfX0.soGvjZ9Yky1D3bA_W39iTv7PTPXi8FDE1HZgEl5N2ZE');
+//
+//        $postData = http_build_query([
+//            'topic' => 'https://localhost/demo/books/1',
+//            'data' => json_encode(['key' => 'updated value']),
+//        ]);
+//
+//        echo file_get_contents('https://localhost:3000/.well-known/mercure', false, stream_context_create(['http' => [
+//            'method'  => 'POST',
+//            'header'  => "Content-type: application/x-www-form-urlencoded\r\nAuthorization: Bearer ".DEMO_JWT,
+//            'content' => $postData,
+//        ]]));
+//        dd($publisher);
+        $update = new Update(
+            'http://example.com/books/1',
+            json_encode(['status' => 'OutOfStock'])
+        );
+
+        // The Publisher service is an invokable object
+        $publisher($update);
+
+        return new Response('published!');
+    }
+
+    /**
+     * @Route("/room", name="room")
+     */
     public function index(): Response
     {
         return $this->render('room/index.html.twig', [
             'controller_name' => 'RoomController',
         ]);
     }
+
+
     /**
      * @Route("/create_room", name="createRoom", methods={"GET","POST"})
      */
