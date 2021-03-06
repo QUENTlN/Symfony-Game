@@ -5,59 +5,89 @@
 {% endblock %}
 
 {% block body %}
+
     <main class="page hire-me-page">
         <section class="portfolio-block hire-me">
             <div class="container">
                 <div class="heading">
                     <h2>CRéER UN SALON</h2>
                 </div>
+
                 <form>
-                    <div class="form-group"><label for="subject">Configurations enregistrés</label><select class="form-control" id="subject"><option value="" selected="">Choose Subject</option><option value="1">Subject 1</option><option value="2">Subject 2</option><option value="3">Subject 3</option></select></div>
-                    <div
-                            class="form-group"><label for="email">Nombre de joueurs maximum</label><input class="form-control" type="email" id="email"></div>
-                    <div class="form-group"><label for="email">Nombre de tours</label><input class="form-control" type="email" id="email-1"></div>
+
+                    {{ form_start(form_r) }}
+                    <div class="form-group config-enregistre" data-id="{{ room.roomSettings.id }}">
+                      {{ form_row(form_c.nameProfil,{'label':'Configurations enregistrés :', 'attr':{'class':'form-control ',}}) }}
+{#                        {{ dump(room.roomSettings.id) }}#}
+
+                    </div>
+                    <div class="form-group numberPlayer">
+                        {{ form_row(form_c.nbMaxPlayer,{'label':'Nombre de joueurs maximum :', 'attr':{'class':'form-control '}}) }}
+                    </div>
+
+                    <div class="form-group oneAnswer " >
+                        {{ form_row(form_c.oneAnswerOnly,{'label':'Afficher le score :', 'attr':{'class':'form-check-label '}}) }}
+                    </div>
+                    <div class="form-group score ">
+                        {{ form_row(form_c.showScore,{'label':'Questions à choix multiple :', 'attr':{'class':'form-check-label '}}) }}
+                    </div>
+                    <div class="form-group numbRound">
+                        {{ form_row(form_c.numberRound,{'label':'Nombre de tours', 'attr':{'class':'form-control '}}) }}
+                    </div>
                     <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">QUIZ</label></div>
-                                <div class="souscheck">
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-1">Culture</label></div>
+
+                        <div class="row">
+                            {% set gameKey = 1 %}
+                            {% for game in games %}
+                                <div class="col-6">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input checkbox-parent"><label
+                                                class="form-check-label">{{ game.name }}</label>
+                                    </div>
                                     <div class="souscheck">
-                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-4"><label class="form-check-label" for="formCheck-1">Histoire</label></div>
-                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-5"><label class="form-check-label" for="formCheck-1">Géographie</label></div>
+                                        {% set categoryKey = 1 %}
+                                        {% for category in game.categories %}
+                                            {% set subCatsOfCat = [] %}
+                                            {% for subCategory in category.subCategories %}
+                                                {% set subCatsOfCat = subCatsOfCat|merge([subCategory.id]) %}
+                                            {% endfor %}
+                                            <div>
+                                                <div class="form-check">
+                                                    <input type="checkbox"
+                                                           class="form-check-input checkbox-parent checkbox-child"><label
+                                                            class="form-check-label">{{ category.libCategory }}</label>
+                                                </div>
+                                                <div class="souscheck">
+                                                    {% set subCategoryKey = 1%}
+                                                    {% for subCategoryForm in form_c.subCategories %}
+                                                        {% if subCategoryForm.vars.value in subCatsOfCat %}
+                                                            <div class="form-check" id="{{ gameKey }}-{{ categoryKey }}-{{ subCategoryKey }}">
+                                                                {{ form_row(subCategoryForm,{'label':false,'attr':{'class':'form-check-input checkbox-child'}}) }}
+                                                                {{ form_label(subCategoryForm,null, { 'label_attr': {'class': 'form-check-label'} }) }}
+                                                            </div>
+                                                            {% set subCategoryKey = subCategoryKey + 1 %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            {% set categoryKey = categoryKey + 1 %}
+                                        {% endfor %}
                                     </div>
                                 </div>
-                                <div class="souscheck">
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-8"><label class="form-check-label" for="formCheck-1">Divertissement</label></div>
-                                    <div class="souscheck">
-                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-9"><label class="form-check-label" for="formCheck-1">Cinéma</label></div>
-                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-10"><label class="form-check-label" for="formCheck-1">Serie</label></div>
-                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-21"><label class="form-check-label" for="formCheck-1">Jeux vidéo</label></div>
-                                    </div>
-                                </div>
-                                <div class="souscheck">
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-1">Sport</label></div>
-                                    <div class="souscheck">
-                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-6"><label class="form-check-label" for="formCheck-1">Basket</label></div>
-                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-7"><label class="form-check-label" for="formCheck-1">Foot</label></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-11"><label class="form-check-label" for="formCheck-1">GUESS THE</label></div>
-                                <div class="souscheck">
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-12"><label class="form-check-label" for="formCheck-1">Film</label></div>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-16"><label class="form-check-label" for="formCheck-1">Série</label></div>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-15"><label class="form-check-label" for="formCheck-1">Jeux vidéo</label></div>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-14"><label class="form-check-label" for="formCheck-1">Album</label></div>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-18"><label class="form-check-label" for="formCheck-1">Anime</label></div>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-13"><label class="form-check-label" for="formCheck-1">Acteur</label></div>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-17"><label class="form-check-label" for="formCheck-1">Artiste musical</label></div>
-                                </div>
-                            </div>
+                                {% set gameKey = gameKey + 1 %}
+                            {% endfor %}
                         </div>
-                    </div><button class="btn btn-primary btn-block" type="submit">OUVRIR LE SALON</button></form>
+                        <button class="btn btn-primary btn-block" type="submit">OUVRIR LE SALON</button>
+                        {{ form_end(form_r) }}
+                        </div>
+                </form>
             </div>
         </section>
     </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('createRoom') }}
+    {{ encore_entry_script_tags('account') }}
 {% endblock %}
