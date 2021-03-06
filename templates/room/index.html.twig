@@ -18,3 +18,8 @@
     </ul>
 </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('room') }}
+{% endblock %}
