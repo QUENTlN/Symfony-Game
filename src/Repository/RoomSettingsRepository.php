@@ -28,9 +28,9 @@ class RoomSettingsRepository extends ServiceEntityRepository
             ->select('rs' )
             ->where('rs.idPlayer = :idPlayer')
             ->andwhere('rs.deletedAt IS NULL')
-            ->setParameter('idPlayer', $user->getId())
-            ->getQuery()
-            ->execute();
+            ->setParameter('idPlayer', $user->getId());
+        //    ->getQuery()
+        //    ->execute();
     }
 
     public function findNumberRoomSettings(): ?int
@@ -39,6 +39,16 @@ class RoomSettingsRepository extends ServiceEntityRepository
             ->select('COUNT(r)')
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    public function findIdRoomSettingsByNameProfil($name)
+    {
+        return $this->createQueryBuilder('irs')
+            ->select('irs' )
+            ->where('irs.nameProfil = :name')
+            ->setParameter('name',$name )
+            ->getQuery()
+            ->getSingleResult();
     }
 
     // /**
