@@ -2,13 +2,14 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <title>Magma - {% block title %}{% endblock %}</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
         {% block stylesheets %} {{ encore_entry_link_tags('app') }} {% endblock %}
     </head>
     <body class="pt-0">
-        {% include 'fragments/navbar.html.twig' %}
+        {% block navbar %}{% include 'fragments/navbar.html.twig' %}{% endblock %}
         {% block body %}{% endblock %}
         {% block javascripts %} {{ encore_entry_script_tags('app') }} {% endblock %}
     </body>
