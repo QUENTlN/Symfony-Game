@@ -1,3 +1,0 @@
-web: MERCURE_PUBLISHER_JWT_KEY='!ChangeMe!' MERCURE_SUBSCRIBER_JWT_KEY='!ChangeMe!' ./mercure run -config Caddyfile.dev
-
-ADDR=$PORT ./mercure
