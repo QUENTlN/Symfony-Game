@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Faker\Provider\Text;
 
 class PlayerCrudController extends AbstractCrudController
 {
@@ -25,6 +26,7 @@ class PlayerCrudController extends AbstractCrudController
         return [
             TextField::new('pseudo', 'Pseudo'),
             TextField::new('login','Email',),
+            TextField::new('password', 'Mot de passe'),
             Field::new('isAdmin', 'Modérateur ?')
                 ->setTextAlign('center'),
             //fait référence à la fonction getRoles
