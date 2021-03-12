@@ -24,9 +24,11 @@ class RoomCrudController extends AbstractCrudController
             TextField::new('name', 'Nom'),
             TextField::new('host','Host'),
             DateTimeField::new('createdAt','Date de création')
-                ->setTextAlign('center'),
+                ->setTextAlign('center')
+                ->setFormTypeOption('disabled', 'disabled' ),
             DateTimeField::new('finishedAt','Date de fin de la partie')
-                ->setTextAlign('center'),
+                ->setTextAlign('center')
+                ->setFormTypeOption('disabled', 'disabled' ),
             Field::new('isPrivate','Room privée ?')
         ];
     }
