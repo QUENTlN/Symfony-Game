@@ -43,4 +43,10 @@ class QuestionWithText extends Question
     {
         return (new \ReflectionClass($this))->getShortName();
     }
+
+    public function __toString(): string
+    {
+        return $this->getText();
+    }
+
 }
