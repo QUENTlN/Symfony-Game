@@ -21,11 +21,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Security;
 
 class QuestionController extends AbstractController
 {
     /**
      * @Route("/suggest_question", name="suggestQuestion")
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param TokenStorageInterface $tokenStorage
+     * @return Response
+     * @throws \Exception
      */
     public function suggestQuestion(Request $request, EntityManagerInterface $manager): Response
     {

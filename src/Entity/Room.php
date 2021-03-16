@@ -50,7 +50,7 @@ class Room
     private $scores;
 
     /**
-     * @ORM\OneToMany(targetEntity=Round::class, mappedBy="room", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Round::class, mappedBy="room", cascade={"persist"}, orphanRemoval=true)
      */
     private $rounds;
 
@@ -59,6 +59,11 @@ class Room
      * @ORM\JoinColumn(nullable=false)
      */
     private $host;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $startedAt;
 
 
 
@@ -209,5 +214,17 @@ class Room
     public function __toString(): string
     {
         return 'Id de la room  : '.$this->getId();
+    }
+
+    public function getStartedAt(): ?\DateTimeInterface
+    {
+        return $this->startedAt;
+    }
+
+    public function setStartedAt(?\DateTimeInterface $startedAt): self
+    {
+        $this->startedAt = $startedAt;
+
+        return $this;
     }
 }
