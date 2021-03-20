@@ -7,6 +7,7 @@ use App\Entity\Room;
 use App\Entity\Score;
 use App\Form\CreateRoomType;
 use App\Repository\AnswerRepository;
+use App\Repository\GuestRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\RoomRepository;
 use App\Repository\RoundRepository;
@@ -53,7 +54,7 @@ class RoomController extends AbstractController
      */
     public function pushAnswer(MessageBusInterface $bus, AnswerRepository $answerRepository, QuestionRepository $questionRepository, Request $request): RedirectResponse
     {
-        $question =$questionRepository->findOneBy(['id' => $request->request->get('question')]);
+        $question = $questionRepository->findOneBy(['id' => $request->request->get('question')]);
         $answer = $answerRepository->findOneBy(['question' => $question]);
         $update = new Update(
             'http://mercure.hub/room/' . $request->request->get('idRoom'),
@@ -69,43 +70,51 @@ class RoomController extends AbstractController
     /**
      * @Route("/answerQuestion", name="answerQuestion")
      * @param MessageBusInterface $bus
+     * @param EntityManagerInterface $entityManager
      * @param Request $request
+     * @param ScoreRepository $scoreRepository
+     * @param GuestRepository $guestRepository
      * @param QuestionRepository $questionRepository
      * @param RoomRepository $roomRepository
      * @param AnswerRepository $answerRepository
      * @return RedirectResponse
      */
-    public function answerQuestion(MessageBusInterface $bus, Request $request, QuestionRepository $questionRepository, RoomRepository $roomRepository, AnswerRepository $answerRepository): RedirectResponse
+    public function answerQuestion(MessageBusInterface $bus, EntityManagerInterface $entityManager, Request $request, ScoreRepository $scoreRepository, GuestRepository $guestRepository, QuestionRepository $questionRepository, RoomRepository $roomRepository, AnswerRepository $answerRepository): RedirectResponse
     {
-        $question = $questionRepository->findOneBy(['id' => $request->request->get('idQuestion')]);
-        $answer = $answerRepository->findOneBy(['question' => $question]);
-//        dd($answer);/*/
+        $question = $questionRepository->findOneBy(['id' => $request->request->get('question')]);
+        $answer = $answerRepository->findOneBy(['question' => $question, 'textAnswer' => $request->request->get('message')]);
         if ($answer !== null) {
             $newPoints = $request->request->get('time');
-            $room = $roomRepository->findOneBy(['id' => $request->request->get('idRoom')]);
 
-            $update = new Update(
-                'http://mercure.hub/room/' . $request->request->get('idRoom'),
-                json_encode([
-                    'type' => $request->request->get('type'),
-                    'isCorrest' => true,
-                    'message' => $request->request->get('message'),
-                    'idUser' => $request->request->get('idUser'),
-                    'newPoints' => $newPoints
-                ])
-            );
+            $body = json_encode([
+                'type' => $request->request->get('type'),
+                'isCorrect' => true,
+                'message' => $request->request->get('message'),
+                'idUser' => $request->request->get('idUser'),
+                'newPoints' => $newPoints
+            ]);
         } else {
-            $update = new Update(
-                'http://mercure.hub/room/' . $request->request->get('idRoom'),
-                json_encode([
-                    'type' => $request->request->get('type'),
-                    'isCorrest' => false,
-                    'message' => $request->request->get('message'),
-                    'idUser' => $request->request->get('idUser')
-                ])
-            );
+            $body = json_encode([
+                'type' => $request->request->get('type'),
+                'isCorrest' => false,
+                'message' => $request->request->get('message'),
+                'idUser' => $request->request->get('idUser')
+            ]);
         }
+        $update = new Update(
+            'http://mercure.hub/room/' . $request->request->get('idRoom'),
+            $body
+        );
         $bus->dispatch($update);
+        if ($answer !== null) {
+            $room = $roomRepository->findOneBy(['id' => $request->request->get('idRoom')]);
+            $guest = $guestRepository->findOneBy(['id' => $request->request->get('idUser')]);
+            $score = $scoreRepository->findOneBy(['guest' => $guest, 'room' => $room]);
+
+            $score->setScore($score->getScore() + $newPoints);
+            $entityManager->persist($score);
+            $entityManager->flush();
+        }
         return $this->redirectToRoute('room', ['id' => $request->request->get('idRoom')]);
     }
 
