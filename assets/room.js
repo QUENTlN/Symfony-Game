@@ -8,24 +8,7 @@ const username = $('#js-get-username').data('username');
 const roomId = $('#js-get-id-room').data('roomId');
 const hostId = $('#js-get-id-host').data('hostId');
 const nbRound = $('#js-get-nb-round').data('nbRound');
-
-// console.log(playerId);
-// console.log(username);
-// console.log(roomId);
-
-//
-// const eventSource = new EventSource('http://127.0.0.1:2700/.well-known/mercure?topic=' + encodeURIComponent('http://example.com/books/1'));
-// eventSource.onmessage = event => {
-//     // Will be called every time an update is published by the server
-//     console.log(JSON.parse(event.data)); //['answer']
-//     // $("body").append("<h1>"+JSON.parse(event.data)['question']+"</h1>");
-// }
-
-// window.addEventListener('beforeunload', function(){
-//     if(eventSource != null){
-//         eventSource.close()
-//     }
-// })
+let alreadyCorrectAnswer = false;
 
 (function ($) {
     $("#sidebarToggle, #sidebarToggleTop").on('click', function (e) {
@@ -46,7 +29,7 @@ const _callAnswerForm = document.getElementById('call-answer-form');
 if (hostId === playerId && _startForm !== null) {
 
     _startForm.onsubmit = event => {
-        sendMessage('startGame', 'start');
+        sendMessage('startGame');
         event.preventDefault();
         fetch(_startForm.action, {
             method: _startForm.method
@@ -57,10 +40,10 @@ if (hostId === playerId && _startForm !== null) {
     }
 }
 
-const sendMessage = (typeMsg, message) => {
+const sendMessage = (typeMsg) => {
     fetch(_sendForm.action, {
         method: _sendForm.method,
-        body: 'type=' + typeMsg + '&message=' + message + '&idUser=' + playerId + '&idRoom=' + roomId + '&username=' + username,
+        body: 'type=' + typeMsg + '&idUser=' + playerId + '&idRoom=' + roomId + '&username=' + username,
         headers: new Headers({
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
         })
@@ -89,15 +72,7 @@ const nextQuestion = () => {
             $('#current-round').val(parseInt(currentRound) + 1)
         });
     } else {
-        // fetch(_nextQuestionForm.action, {
-        //     method: _nextQuestionForm.method,
-        //     body: "mes",
-        //     headers: new Headers({
-        //         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-        //     })
-        // }).then(() => {
-        //     $('#current-round').value().counter++;
-        // });
+        sendMessage('showResult');
     }
 }
 
@@ -119,14 +94,33 @@ url.searchParams.append('topic', 'http://mercure.hub/room/'.concat(roomId));
 const eventSource = new EventSource(url);
 eventSource.onmessage = event => {
     const data = JSON.parse(event.data);
-    console.log(data)
     switch (data.type) {
         case 'answer':
             if (data.isCorrect === true) {
-                $('#score-user-' + data.idUser).html(parseInt($('#score-user-' + data.idUser).html()) + data.newPoints);
+                if (parseInt(data.idUser) === playerId){
+                    $('#answer-input').prop('disabled', true);
+                }
+                $('#score-user-' + data.idUser).html(parseInt($('#score-user-' + data.idUser).html()) + parseInt(data.newPoints));
             } else {
 
             }
+            let scores = []
+            $(".user-info").each(function (index){
+                scores[index] = {id:$(this).data('idPlayer'),score:$(this).find(".score").text(),pseudo:$(this).find(".pseudo").text()}
+            })
+            scores.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
+            $("#accordionSidebar").html("")
+            $.each(scores, function( index, user ) {
+                $("#accordionSidebar").append("\n" +
+                    "                        <li class=\"nav-item\" id=\"div-user-{{ score.guest.id }}\">\n" +
+                    "                            <div class=\"nav-link active user-info\" data-id-player=\""+user.id+"\">\n" +
+                    "                                <i class=\"icon ion-happy\"></i>\n" +
+                    "                                <span class=\"pseudo\">"+user.pseudo+"</span>\n" +
+                    "                                <span id=\"score-user-"+user.id+"\"\n" +
+                    "                                      class=\"badge badge-primary float-right score\">"+user.score+"</span>\n" +
+                    "                            </div>\n" +
+                    "                        </li>")
+            });
             break;
         case 'join':
             if ($("#div-user-" + data.idUser).length === 0) {
@@ -139,8 +133,6 @@ eventSource.onmessage = event => {
                     '                    </li>');
             }
             break;
-        // case 'left':
-        //     break;
         case 'pushQuestion':
             $('#answerDiv').removeAttr('hidden')
             $('#answer-input').removeAttr('disabled');
@@ -151,7 +143,7 @@ eventSource.onmessage = event => {
                     break;
                 case 'QuestionWithPicture':
                     $('#question-content').html('<img class="rounded mx-auto d-block w-auto unselectable" \n' +
-                        '                                 src="./games_images/guess_the/' + data.link + '" \n' +
+                        '                                 src="./games_images/guess_the/44cafe894c519dc4595f2c4c47a6997c.jpg/*' + data.link + '*/" \n' +
                         '                                 style="max-height: 70vh; max-width: 100%" alt="?Guess The?"> ')
                     $('#question-content-generated').html('De quel ' + data.subcategory + ' est tirée cette image ?')
                     break;
@@ -161,7 +153,7 @@ eventSource.onmessage = event => {
                 event.preventDefault();
                 fetch(_answerForm.action, {
                     method: _answerForm.method,
-                    body: 'type=answer&message=' + $('#answer-input').val() + '&idRoom=' + roomId + '&time=' + parseInt($('#time-addon').html()) + '&question=' + data.idQuestion,
+                    body: 'type=answer&message=' + $('#answer-input').val() + '&idRoom=' + roomId + '&time=' + parseInt($('#time-addon').html()) + '&question=' + data.idQuestion + '&idUser=' + playerId,
                     headers: new Headers({
                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                     })
@@ -171,7 +163,6 @@ eventSource.onmessage = event => {
             }
             if (hostId === playerId) {
                 setTimeout(function () {
-                    console.log(data);
                     fetch(_callAnswerForm.action, {
                         method: _callAnswerForm.method,
                         body: 'type=pushAnswer&idRoom=' + roomId + '&question=' + data.idQuestion,
@@ -190,17 +181,38 @@ eventSource.onmessage = event => {
             $('#question-content').html(data.answer);
             $('#question-content-generated').html('');
             $('#answer-input').prop('disabled', true);
+            $('#answer-input').val('');
             break;
         case 'startGame':
             $('#waiting-text').hide();
             $('#gameCard').removeClass("bg-gradient-primary");
             if (hostId === playerId) {
-                console.log('je passe')
                 nextQuestion();
             }
             break;
         case 'showResult':
-            console.log('Mangoes and papayas are $2.79 a pound.');
+            $("#question-content").html("\n" +
+                "                                <table class=\"table text-center w-50 mx-auto border-top-0\">\n" +
+                "                                    <tbody class=\"text-light\">\n" +
+                "                                    <tr class=\"\">\n" +
+                "                                        <th scope=\"col\" style=\"border-top-left-radius: 15px\">#</th>\n" +
+                "                                        <th scope=\"col\">Joueur</th>\n" +
+                "                                        <th scope=\"col\" style=\"border-top-right-radius: 15px\">Score</th>\n" +
+                "                                    </tr>\n" +
+                "                                    </tbody>\n" +
+                "                                </table>")
+            let position = 1;
+            $(".user-info").each(function (){
+                let userInfo = this
+                $("tbody").append("\n" +
+                    "                                    <tr>\n" +
+                    "                                        <th scope=\"row\">"+position+"</th>\n" +
+                    "                                        <td>"+$(userInfo).find(".pseudo").text()+"</td>\n" +
+                    "                                        <td>"+$(userInfo).find(".score").text()+"</td>\n" +
+                    "                                    </tr>")
+                position++
+            })
+            $("#gameCard").addClass('bg-gradient-primary');
             break;
     }
     if (!data.message) {
@@ -210,5 +222,5 @@ eventSource.onmessage = event => {
 };
 
 window.addEventListener('DOMContentLoaded', () => {
-    sendMessage('join', username + ' joined!');
+    sendMessage('join');
 });
