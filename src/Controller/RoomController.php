@@ -7,6 +7,7 @@ use App\Entity\Room;
 use App\Entity\Game;
 use App\Entity\RoomSettings;
 use App\Entity\Score;
+use App\Form\ConfigEnregistreType;
 use App\Form\CreateRoomType;
 use App\Repository\AnswerRepository;
 use App\Repository\GuestRepository;

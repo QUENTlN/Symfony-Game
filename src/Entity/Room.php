@@ -33,6 +33,11 @@ class Room
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
+    private $startedAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
     private $finishedAt;
 
     /**
@@ -95,6 +100,18 @@ class Room
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getStartedAt(): ?\DateTimeInterface
+    {
+        return $this->startedAt;
+    }
+
+    public function setStartedAt(\DateTimeInterface $startedAt): self
+    {
+        $this->startedAt = $startedAt;
 
         return $this;
     }
