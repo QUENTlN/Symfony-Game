@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=RoomSettingsRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class RoomSettings
 {
@@ -219,6 +220,14 @@ class RoomSettings
     public function getNameProfil(): ?string
     {
         return $this->nameProfil;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
     }
 
     public function setNameProfil(?string $nameProfil): self
