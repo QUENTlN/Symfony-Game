@@ -12,8 +12,8 @@
                         salon privée et inviter vos amis.</p>
                 </div>
                 <div class="buttons">
-                    <a class="btn btn-primary" role="button" href="{{ path('createRoom') }}">Public</a>
-                    <a class="btn btn-primary" role="button" href="{{ path('createRoom') }}">Privée</a>
+                    <a class="btn btn-primary" role="button" href="{{ path('createRoom', {access: 'public'}) }}">Public</a>
+                    <a class="btn btn-primary" role="button" href="{{ path('createRoom', {access: 'private'}) }}">Privée</a>
                 </div>
             </div>
         </div>
