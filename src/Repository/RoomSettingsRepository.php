@@ -43,6 +43,7 @@ class RoomSettingsRepository extends ServiceEntityRepository
     }
 
 
+
     // /**
     //  * @return RoomSettings[] Returns an array of RoomSettings objects
     //  */

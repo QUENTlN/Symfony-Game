@@ -19,42 +19,15 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-    /*public function findById($id)
+    public function findBySubCategories($subCategories)
     {
         return $this->createQueryBuilder('q')
-            ->andWhere('q.id = :id')
-            ->setParameter('id', $id)
+            ->Where('q.subCategory IN (:subCategory)')
+            ->andWhere('q.status = :status' )
+            ->setParameter('subCategory', $subCategories)
+            ->setParameter('status',"accepted" )
             ->getQuery()
-            ->getScalarResult();
-    }*/
-
-
-    // /**
-    //  * @return Question[] Returns an array of Question objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Question
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
