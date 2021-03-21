@@ -27,14 +27,13 @@ const _callAnswerForm = document.getElementById('call-answer-form');
 
 
 if (hostId === playerId && _startForm !== null) {
-
     _startForm.onsubmit = event => {
-        sendMessage('startGame');
         event.preventDefault();
+        sendMessage('startGame');
+        $('#start-game-form').hide()
         fetch(_startForm.action, {
             method: _startForm.method
         }).then(() => {
-            $('#start-game-form').hide()
         });
         return false;
     }
@@ -54,7 +53,6 @@ const sendMessage = (typeMsg) => {
 
 _sendForm.onsubmit = (evt) => {
     sendMessage(_messageInput.value);
-
     evt.preventDefault();
     return false;
 };
@@ -78,8 +76,8 @@ const nextQuestion = () => {
 
 const startQuestionChrono = () => {
     var timeleft = 15;
-    var downloadTimer = setInterval(function(){
-        if(timeleft <= 0){
+    var downloadTimer = setInterval(function () {
+        if (timeleft <= 0) {
             clearInterval(downloadTimer);
             document.getElementById("time-addon").innerHTML = "0";
         } else {
@@ -97,27 +95,30 @@ eventSource.onmessage = event => {
     switch (data.type) {
         case 'answer':
             if (data.isCorrect === true) {
-                if (parseInt(data.idUser) === playerId){
-                    $('#answer-input').prop('disabled', true);
-                }
                 $('#score-user-' + data.idUser).html(parseInt($('#score-user-' + data.idUser).html()) + parseInt(data.newPoints));
             } else {
-
+                if (parseInt(data.idUser) === playerId) {
+                    $('#answer-input').prop('disabled', false);
+                }
             }
             let scores = []
-            $(".user-info").each(function (index){
-                scores[index] = {id:$(this).data('idPlayer'),score:$(this).find(".score").text(),pseudo:$(this).find(".pseudo").text()}
+            $(".user-info").each(function (index) {
+                scores[index] = {
+                    id: $(this).data('idPlayer'),
+                    score: $(this).find(".score").text(),
+                    pseudo: $(this).find(".pseudo").text()
+                }
             })
             scores.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
             $("#accordionSidebar").html("")
-            $.each(scores, function( index, user ) {
+            $.each(scores, function (index, user) {
                 $("#accordionSidebar").append("\n" +
                     "                        <li class=\"nav-item\" id=\"div-user-{{ score.guest.id }}\">\n" +
-                    "                            <div class=\"nav-link active user-info\" data-id-player=\""+user.id+"\">\n" +
+                    "                            <div class=\"nav-link active user-info\" data-id-player=\"" + user.id + "\">\n" +
                     "                                <i class=\"icon ion-happy\"></i>\n" +
-                    "                                <span class=\"pseudo\">"+user.pseudo+"</span>\n" +
-                    "                                <span id=\"score-user-"+user.id+"\"\n" +
-                    "                                      class=\"badge badge-primary float-right score\">"+user.score+"</span>\n" +
+                    "                                <span class=\"pseudo\">" + user.pseudo + "</span>\n" +
+                    "                                <span id=\"score-user-" + user.id + "\"\n" +
+                    "                                      class=\"badge badge-primary float-right score\">" + user.score + "</span>\n" +
                     "                            </div>\n" +
                     "                        </li>")
             });
@@ -138,12 +139,12 @@ eventSource.onmessage = event => {
             $('#answer-input').removeAttr('disabled');
             switch (data.questionType) {
                 case 'QuestionWithText':
-                    $('#question-content').html('<h1 className="h1 text-center mx-auto d-block w-auto unselectable">' + data.text + '</h1>')
+                    $('#question-content').html('<h1 class="h1 text-center mx-auto d-block w-auto unselectable">' + data.text + '</h1>')
                     $('#question-content-generated').html('')
                     break;
                 case 'QuestionWithPicture':
                     $('#question-content').html('<img class="rounded mx-auto d-block w-auto unselectable" \n' +
-                        '                                 src="./games_images/guess_the/44cafe894c519dc4595f2c4c47a6997c.jpg/*' + data.link + '*/" \n' +
+                        '                                 src="./../games_images/guess_the/44cafe894c519dc4595f2c4c47a6997c.jpg' /*+ data.link*/ + '" \n' +
                         '                                 style="max-height: 70vh; max-width: 100%" alt="?Guess The?"> ')
                     $('#question-content-generated').html('De quel ' + data.subcategory + ' est tirée cette image ?')
                     break;
@@ -151,14 +152,16 @@ eventSource.onmessage = event => {
             startQuestionChrono()
             _answerForm.onsubmit = event => {
                 event.preventDefault();
+                $("#answer-input").prop('disabled', true);
+                let message = $("#answer-input").val()
+                $("#answer-input").val("");
                 fetch(_answerForm.action, {
                     method: _answerForm.method,
-                    body: 'type=answer&message=' + $('#answer-input').val() + '&idRoom=' + roomId + '&time=' + parseInt($('#time-addon').html()) + '&question=' + data.idQuestion + '&idUser=' + playerId,
+                    body: 'type=answer&message=' + message + '&idRoom=' + roomId + '&time=' + parseInt($('#time-addon').html()) + '&question=' + data.idQuestion + '&idUser=' + playerId,
                     headers: new Headers({
                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                     })
                 }).then(() => {
-                    _messageInput.value = '';
                 });
             }
             if (hostId === playerId) {
@@ -178,7 +181,7 @@ eventSource.onmessage = event => {
             }
             break;
         case 'pushAnswer':
-            $('#question-content').html(data.answer);
+            $('#question-content').html('<h1 class="h1 text-center mx-auto d-block w-auto unselectable">' + data.answer + '</h1>');
             $('#question-content-generated').html('');
             $('#answer-input').prop('disabled', true);
             $('#answer-input').val('');
@@ -188,9 +191,16 @@ eventSource.onmessage = event => {
             $('#gameCard').removeClass("bg-gradient-primary");
             if (hostId === playerId) {
                 nextQuestion();
+                $("#replay-game").remove();
             }
             break;
         case 'showResult':
+            $("#answerDiv").attr("hidden", true);
+            if (hostId === playerId) {
+                $("#answerDiv").before("<div id=\"replay-game\" class=\"row w-100 justify-content-center\" >\n" +
+                    "                    <button class=\"btn btn-primary btn-lg\">Recommencer</button>\n" +
+                    "                </div>")
+            }
             $("#question-content").html("\n" +
                 "                                <table class=\"table text-center w-50 mx-auto border-top-0\">\n" +
                 "                                    <tbody class=\"text-light\">\n" +
@@ -202,13 +212,13 @@ eventSource.onmessage = event => {
                 "                                    </tbody>\n" +
                 "                                </table>")
             let position = 1;
-            $(".user-info").each(function (){
+            $(".user-info").each(function () {
                 let userInfo = this
                 $("tbody").append("\n" +
                     "                                    <tr>\n" +
-                    "                                        <th scope=\"row\">"+position+"</th>\n" +
-                    "                                        <td>"+$(userInfo).find(".pseudo").text()+"</td>\n" +
-                    "                                        <td>"+$(userInfo).find(".score").text()+"</td>\n" +
+                    "                                        <th scope=\"row\">" + position + "</th>\n" +
+                    "                                        <td>" + $(userInfo).find(".pseudo").text() + "</td>\n" +
+                    "                                        <td>" + $(userInfo).find(".score").text() + "</td>\n" +
                     "                                    </tr>")
                 position++
             })
