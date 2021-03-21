@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Service\Mailer;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
@@ -29,7 +30,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/sign_up", name="signUp")
      */
-    public function signUp(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, Mailer $mailer)
+    public function signUp(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, Mailer $mailer, TranslatorInterface $translator)
     {
         $player = new Player();
 
@@ -47,7 +48,7 @@ class SecurityController extends AbstractController
 
             $this->addFlash(
                 'success',
-                "Votre compte a bien été créé !Un e-mail vous a été envoyé, vous pouvez maintenant vous connecter !"
+                $translator->trans('accountCreated')
             );
 
             return $this->redirectToRoute('signIn');
