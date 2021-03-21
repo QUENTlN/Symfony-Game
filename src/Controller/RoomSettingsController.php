@@ -22,15 +22,17 @@ class RoomSettingsController extends AbstractController
      */
     public function new(Request $request): Response
     {
-//        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $roomSetting = new RoomSettings();
         $form = $this->createForm(RoomSettingsType::class, $roomSetting);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $roomSetting->setCreatedAt(new \DateTime());
-//            $idPlayer = $em->getRepository(Player::class)->findOneBy(['id' => $this->getUser()->getId()]);
-//            $roomSetting->setIdPlayer($idPlayer);
+//            $roomSetting->setCreatedAt(new \DateTime());
+            $idPlayer = $em->getRepository(Player::class)->findOneBy(['id' => $this->getUser()->getId()]);
+            $roomSetting->setIdPlayer($idPlayer);
+            $roomSetting->setOneAnswerOnly(false);
+            $roomSetting->setShowScore(true);
 
 
             $entityManager = $this->getDoctrine()->getManager();

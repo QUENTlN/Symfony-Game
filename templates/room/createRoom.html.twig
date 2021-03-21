@@ -13,74 +13,76 @@
                     <h2>CRéER UN SALON</h2>
                 </div>
 
-                <form>
 
-                    {{ form_start(form_r) }}
-                    <div class="form-group config-enregistre" data-id="{{ room.roomSettings.id }}">
-                      {{ form_row(form_c.nameProfil,{'label':'Configurations enregistrés :', 'attr':{'class':'form-control ',}}) }}
-{#                        {{ dump(room.roomSettings.id) }}#}
+                {{ form_start(form_r) }}
+                {{ form_start(form_c) }}
 
-                    </div>
-                    <div class="form-group numberPlayer">
-                        {{ form_row(form_c.nbMaxPlayer,{'label':'Nombre de joueurs maximum :', 'attr':{'class':'form-control '}}) }}
-                    </div>
+                <div class="form-group">
+                    {{ form_row(form_r.name,{'label':'Nom du salon :', 'attr':{'class':'form-control '}}) }}
+                </div>
 
-                    <div class="form-group oneAnswer " >
-                        {{ form_row(form_c.oneAnswerOnly,{'label':'Afficher le score :', 'attr':{'class':'form-check-label '}}) }}
-                    </div>
-                    <div class="form-group score ">
-                        {{ form_row(form_c.showScore,{'label':'Questions à choix multiple :', 'attr':{'class':'form-check-label '}}) }}
-                    </div>
-                    <div class="form-group numbRound">
-                        {{ form_row(form_c.numberRound,{'label':'Nombre de tours', 'attr':{'class':'form-control '}}) }}
-                    </div>
-                    <div class="form-group">
 
-                        <div class="row">
-                            {% set gameKey = 1 %}
-                            {% for game in games %}
-                                <div class="col-6">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input checkbox-parent"><label
-                                                class="form-check-label">{{ game.name }}</label>
-                                    </div>
-                                    <div class="souscheck">
-                                        {% set categoryKey = 1 %}
-                                        {% for category in game.categories %}
-                                            {% set subCatsOfCat = [] %}
-                                            {% for subCategory in category.subCategories %}
-                                                {% set subCatsOfCat = subCatsOfCat|merge([subCategory.id]) %}
-                                            {% endfor %}
-                                            <div>
-                                                <div class="form-check">
-                                                    <input type="checkbox"
-                                                           class="form-check-input checkbox-parent checkbox-child"><label
-                                                            class="form-check-label">{{ category.libCategory }}</label>
-                                                </div>
-                                                <div class="souscheck">
-                                                    {% set subCategoryKey = 1%}
-                                                    {% for subCategoryForm in form_c.subCategories %}
-                                                        {% if subCategoryForm.vars.value in subCatsOfCat %}
-                                                            <div class="form-check" id="{{ gameKey }}-{{ categoryKey }}-{{ subCategoryKey }}">
-                                                                {{ form_row(subCategoryForm,{'label':false,'attr':{'class':'form-check-input checkbox-child'}}) }}
-                                                                {{ form_label(subCategoryForm,null, { 'label_attr': {'class': 'form-check-label'} }) }}
-                                                            </div>
-                                                            {% set subCategoryKey = subCategoryKey + 1 %}
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                            {% set categoryKey = categoryKey + 1 %}
-                                        {% endfor %}
-                                    </div>
+                <div class="form-group">
+                    {{ form_row(form_c.nameProfil,{'label':'Configurations enregistrés :', 'attr':{'class':'form-control '}}) }}
+
+
+                </div>
+                <div class="form-group">
+                    {{ form_row(form_c.nbMaxPlayer,{'label':'Nombre de joueurs maximum :', 'attr':{'class':'form-control '}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_row(form_c.numberRound,{'label':'Nombre de tours', 'attr':{'class':'form-control '}}) }}
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        {% set gameKey = 1 %}
+                        {% for game in games %}
+                            <div class="col-6">
+                                <div class="form-check" id="{{ gameKey }}">
+                                    <input type="checkbox" class="form-check-input checkbox-parent"><label
+                                            class="form-check-label">{{ game.name }}</label>
                                 </div>
-                                {% set gameKey = gameKey + 1 %}
-                            {% endfor %}
-                        </div>
-                        <button class="btn btn-primary btn-block" type="submit">OUVRIR LE SALON</button>
-                        {{ form_end(form_r) }}
-                        </div>
-                </form>
+                                <div class="souscheck">
+                                    {% set categoryKey = 1 %}
+                                    {% for category in game.categories %}
+                                        {% set subCatsOfCat = [] %}
+                                        {% for subCategory in category.subCategories %}
+                                            {% set subCatsOfCat = subCatsOfCat|merge([subCategory.id]) %}
+                                        {% endfor %}
+                                        <div>
+                                            <div class="form-check" id="{{ gameKey }}-{{ categoryKey }}">
+                                                <input type="checkbox" class="form-check-input checkbox-parent checkbox-child"><label
+                                                        class="form-check-label">{{ category.libCategory }}</label>
+                                            </div>
+                                            <div class="souscheck">
+                                                {% set subCategoryKey = 1 %}
+                                                {% for subCategoryForm in form_c.subCategories %}
+                                                    {% if subCategoryForm.vars.value in subCatsOfCat %}
+                                                        <div class="form-check"
+                                                             id="{{ gameKey }}-{{ categoryKey }}-{{ subCategoryKey }}">
+                                                            {{ form_row(subCategoryForm,{'label':false,'attr':{'class':'form-check-input checkbox-child'}}) }}
+                                                            {{ form_label(subCategoryForm,null, { 'label_attr': {'class': 'form-check-label'} }) }}
+                                                        </div>
+                                                        {% set subCategoryKey = subCategoryKey + 1 %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        {% set categoryKey = categoryKey + 1 %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% set gameKey = gameKey + 1 %}
+                        {% endfor %}
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">OUVRIR LE SALON</button>
+
+                    {{ form_end(form_c) }}
+                    {{ form_end(form_r) }}
+
+                </div>
+
             </div>
         </section>
     </main>
@@ -89,5 +91,4 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('createRoom') }}
-    {{ encore_entry_script_tags('account') }}
 {% endblock %}

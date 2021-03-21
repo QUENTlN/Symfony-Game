@@ -27,6 +27,7 @@ class RoomSettingsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('rs')
             ->select('rs' )
             ->where('rs.idPlayer = :idPlayer')
+            ->andWhere('rs.nameProfil IS NOT NULL')
             ->andwhere('rs.deletedAt IS NULL')
             ->setParameter('idPlayer', $user->getId());
         //    ->getQuery()
@@ -41,15 +42,6 @@ class RoomSettingsRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function findIdRoomSettingsByNameProfil($name)
-    {
-        return $this->createQueryBuilder('irs')
-            ->select('irs' )
-            ->where('irs.nameProfil = :name')
-            ->setParameter('name',$name )
-            ->getQuery()
-            ->getSingleResult();
-    }
 
     // /**
     //  * @return RoomSettings[] Returns an array of RoomSettings objects

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=RoomRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Room
 {
@@ -40,7 +41,7 @@ class Room
     private $isPrivate;
 
     /**
-     * @ORM\ManyToOne(targetEntity=RoomSettings::class, inversedBy="Room")
+     * @ORM\ManyToOne(targetEntity=RoomSettings::class, inversedBy="Room",cascade={"persist"})
      */
     private $roomSettings;
 
@@ -204,6 +205,13 @@ class Room
         $this->host = $host;
 
         return $this;
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
     }
 
     public function __toString(): string
