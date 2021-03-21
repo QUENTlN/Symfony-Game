@@ -8,7 +8,7 @@
 
     <section class="portfolio-block contact text-center">
         <h2 class="text-center font-weight-bold mt-5">Valider les questions et réponses proposées par les players</h2>
-        <div class="container">
+        <div class="container-fluid">
             <div class="table-responsive mt-5">
                 <table class="table">
                     <thead>
@@ -24,37 +24,31 @@
                     <tbody class="text-justify">
                     {% for question in questionsWithText %}
                         <tr>
-
-
-                            <td><br>{{ question.subcategory.category.game.name }}<br>{{ question.getSubCategory() }}</td>
+                            <td><br>{{ question.subcategory.category.game.name }}<br>{{ question.subcategory.category.getLibCategory()}}<br>{{ question.getSubCategory() }}</td>
                             <td class="text">{{ question.getText() }}</td>
+                            <td>
                             {% for answer in question.answers %}
-                                <td>{{ answer.getTextAnswer() }}<br><br></td>
+                                {{ answer.getTextAnswer() }}<br>
                             {% endfor %}
+                            </td>
                             <td><a href="{{ path('acceptQuestion', {'id':question.getId()})}}" class="btn btn-success"><i class="fa fa-check"></i></a></td>
                             <td><a href="{{ path('modify_question', {'id':question.getId()})}}" class="btn btn-info"></a></td>
                             <td><a href="{{ path('delete_question', {'id':question.getId()})}}" class="btn btn-danger"></a></td>
                             {#  <td> <a href="" class="btn btn-primary"> Lire la suite </a></td>#}
                         </tr>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr></tr>
                     {% endfor %}
                     {% for question in questionsWithPicture %}
                         <tr>
 
-                            <td>Quiz<br>Culture<br>Histoire</td>
-                            <td class="text"> {{ question.linkPicture }}</td>
+                            <td>{{ question.subcategory.category.game.name }}<br>{{ question.subcategory.category.getLibCategory()}}<br>{{ question.getSubCategory() }}</td>
+                            <td><img src="{{ asset('games_images/guess_the/JD.jpg') }} " alt="" style="width:200px; height:auto;"> </td>
                             {% for answer in question.answers %}
-                                <td>{{ answer.getTextAnswer() }}<br><br></td>
+                                {{ answer.getTextAnswer() }}<br>
                             {% endfor %}
                             <td><a href="{{ path('acceptQuestion', {'id':question.getId()})}}" class="btn btn-success"><i class="fa fa-check"></i></a></td>
                             <td><a href="{{ path('modify_question', {'id':question.getId()})}}" class="btn btn-info"></a></td>
                             <td><a href="{{ path('delete_question', {'id':question.getId()})}}" class="btn btn-danger"></a></td>
                         </tr>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr></tr>
                     {% endfor %}
                     </tbody>
 
