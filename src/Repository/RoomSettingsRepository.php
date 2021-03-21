@@ -27,10 +27,11 @@ class RoomSettingsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('rs')
             ->select('rs' )
             ->where('rs.idPlayer = :idPlayer')
+            ->andWhere('rs.nameProfil IS NOT NULL')
             ->andwhere('rs.deletedAt IS NULL')
-            ->setParameter('idPlayer', $user->getId())
-            ->getQuery()
-            ->execute();
+            ->setParameter('idPlayer', $user->getId());
+        //    ->getQuery()
+        //    ->execute();
     }
 
     public function findNumberRoomSettings(): ?int
@@ -40,6 +41,7 @@ class RoomSettingsRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
 
     // /**
     //  * @return RoomSettings[] Returns an array of RoomSettings objects

@@ -83,8 +83,6 @@ class AppFixtures extends Fixture
 
         $manager->flush();
 
-        $questionTab = [];
-
         for ($i = 0; $i < 10; $i++) {
             $player = new Player();
             $player->setPseudo($faker->userName)
@@ -109,7 +107,7 @@ class AppFixtures extends Fixture
             $manager->persist($questionWithText);
 
             $questionWithPicture = new QuestionWithPicture();
-            $questionWithPicture->setLinkPicture($faker->imageUrl())
+            $questionWithPicture->setLinkPicture($faker->imageUrl('http://lorempixel.com/640/480/'))
                 ->setPlayer($player)
                 ->setSubCategory($subCategory)
                 ->setStatus(Question::STATUS["pending"]);
@@ -121,9 +119,6 @@ class AppFixtures extends Fixture
 
             $manager->persist($answerForQWP);
             $manager->persist($questionWithPicture);
-
-            $questionTab[] = $questionWithText;
-            $questionTab[] = $questionWithPicture;
 
 
             $roomSettings = new RoomSettings();
@@ -138,7 +133,7 @@ class AppFixtures extends Fixture
 
             $categoriesSelec = [];
             for ($j = 0; $j < 5; $j++) {
-                $rand = random_int(0, sizeof($subCategoriesArray) - 1);
+                $rand = rand(0, sizeof($subCategoriesArray) - 1);
                 $cat = $subCategoriesArray[$rand];
                 $categoriesSelec[] = $cat;
                 $roomSettings->addSubCategory($cat);
@@ -151,16 +146,14 @@ class AppFixtures extends Fixture
                 ->setName("Salon de " . $player->getPseudo())
                 ->setCreatedAt(new \DateTime())
                 ->setIsPrivate(false);
-
-            for ($j = 1; $j <= 10; $j++){
-                $round = new Round();
-                $round->setRoom($room)
-                    ->setIndexOrder($j)
-                    ->setQuestion($questionTab[array_rand($questionTab)]);
-                $room->addRound($round);
-            }
-
             $manager->persist($room);
+
+//            for ($j = 0; $j < 10; $j++){
+//                $round = new Round();
+//                $round->setRoom($room)
+//                    ->setIndexOrder($j + 1)
+//
+//            }
 
             $scoreHost = new Score();
             $scoreHost->setScore(0)

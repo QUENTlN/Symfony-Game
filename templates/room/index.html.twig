@@ -17,16 +17,34 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light h-75 d-inline-block" id="accordionSidebar">
-                    {% for score in room.scores %}
-                        <li class="nav-item" id="div-user-{{ score.guest.id }}">
-                            <div class="nav-link active user-info" data-id-player="{{ score.guest.id }}">
-                                <i class="icon ion-happy"></i>
-                                <span class="pseudo">{{ score.guest.pseudo }}</span>
-                                <span id="score-user-{{ score.guest.id }}"
-                                      class="badge badge-primary float-right score">{{ score.score }}</span>
-                            </div>
-                        </li>
-                    {% endfor %}
+{#                    <li class="nav-item">#}
+{#                        <div class="nav-link active">#}
+{#                            <i class="icon ion-happy"></i>#}
+{#                            <span>Joueur 1</span>#}
+{#                            <span class="badge badge-primary float-right">42</span>#}
+{#                        </div>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <div class="nav-link active">#}
+{#                            <i class="icon ion-happy"></i>#}
+{#                            <span>Joueur 2</span>#}
+{#                            <span class="badge badge-primary float-right">100</span>#}
+{#                        </div>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <div class="nav-link active">#}
+{#                            <i class="icon ion-happy"></i>#}
+{#                            <span>Joueur 3</span>#}
+{#                            <span class="badge badge-primary float-right">27</span>#}
+{#                        </div>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <div class="nav-link active">#}
+{#                            <i class="icon ion-happy"></i>#}
+{#                            <span>Joueur 4</span>#}
+{#                            <span class="badge badge-primary float-right">76</span>#}
+{#                        </div>#}
+{#                    </li>#}
                 </ul>
                 <div class="text-center d-none d-md-inline">
                     <button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button>
@@ -35,73 +53,71 @@
         </nav>
         <div class="d-flex flex-column" id="content-wrapper">
             <div class="container-fluid h-100 d-flex align-items-end flex-column">
-                <div id="gameCard"
-                     class="card {% if room.startedAt == null %}bg-gradient-primary{% endif %} shadow my-4 w-100"
-                     onselectstart="return false"
+                <div class="card {#bg-gradient-primary#} shadow my-4 w-100" onselectstart="return false"
                      oncontextmenu="return false"
                      ondragstart="return false">
-                    <div class="card-body {# overflow-auto #} overflow-hidden mb-4" style="height: 80vh;">
-                        <h1 id="question-content-generated" class="h4 unselectable"></h1>
+                    <div class="card-body {#overflow-auto#} {# overflow-hidden #} mb-4" style="height: 80vh;">
+                        <h1 id="question-content-generated" class="h4 unselectable" hidden>De quel * est tirée cette
+                            image ?</h1>
                         <div class="row h-100">
                             <div id="question-content" class="col-md-12 my-auto">
-                                {% if room.startedAt == null %}
-                                    {% if room.host == app.user %}
-                                        <form id="start-game-form" action="{{ path('startGame', {id: room.id}) }}"
-                                              method="POST">
-                                            <button type="submit" id="start-game-btn"
-                                                    class="btn btn-light btn-lg rounded-pill mx-auto d-block text-primary">
-                                                <strong>Commencer</strong>
-                                            </button>
-                                        </form>
-                                    {% else %}
-                                        <h2 id="waiting-text" class="text-center text-light">Attendre que l'hôte lance
-                                            la
-                                            partie</h2>
-                                    {% endif %}
-                                {% endif %}
+                                {# <table class="table text-center w-50 mx-auto border-top-0"> #}
+                                {# <tbody class="text-light"> #}
+                                {# <tr class=""> #}
+                                {# <th scope="col" style="border-top-left-radius: 15px">#</th> #}
+                                {# <th scope="col">Joueur</th> #}
+                                {# <th scope="col" style="border-top-right-radius: 15px">Score</th> #}
+                                {# </tr> #}
+                                {# <tr> #}
+                                {# <th scope="row">1</th> #}
+                                {# <td>Joueur 2</td> #}
+                                {# <td>100</td> #}
+                                {# </tr> #}
+                                {# <tr> #}
+                                {# <th scope="row">2</th> #}
+                                {# <td>Joueur 4</td> #}
+                                {# <td>76</td> #}
+                                {# </tr> #}
+                                {# <tr> #}
+                                {# <th scope="row">3</th> #}
+                                {# <td>Joueur 1</td> #}
+                                {# <td>42</td> #}
+                                {# </tr> #}
+                                {# <tr> #}
+                                {# <th scope="row">4</th> #}
+                                {# <td>Joueur 3</td> #}
+                                {# <td>27</td> #}
+                                {# </tr> #}
+                                {# </tbody> #}
+                                {# </table> #}
+                                {# <button type="button" #}
+                                {# class="btn btn-light btn-lg rounded-pill mx-auto d-block text-primary"><strong>Commencer</strong> #}
+                                {# </button> #}
                                 {# <h1 class="h1 text-center mx-auto d-block w-auto unselectable">Quel est la capitale de l'Italie ?</h1> #}
-                                {# <img class="rounded mx-auto d-block w-auto unselectable"
-                                 src="{{ asset('./games_images/guess_the/44cafe894c519dc4595f2c4c47a6997c.jpg') }}"
-                                 style="max-height: 70vh; max-width: 100%" alt="?Guess The?"> #}
+                                {# <img class="rounded mx-auto d-block w-auto unselectable" #}
+                                {# src="{{ asset('./games_images/guess_the/44cafe894c519dc4595f2c4c47a6997c.jpg') }}" #}
+                                {# style="max-height: 70vh; max-width: 100%" alt="?Guess The?"> #}
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <div class="row w-100 justify-content-center" hidden>
+                    <button class="btn btn-primary btn-lg">Recommencer</button>
+                </div>
                 <div id="answerDiv" class="card shadow mt-auto mb-4 w-100" hidden>
                     <div class="card-body p-0 m-0">
-                        <form action="{{ path('answerQuestion') }}" method="POST" id="answer-form">
-                            <div class="input-group input-group-lg">
-                                <input id="answer-input" type="text" class="form-control" placeholder="Réponse"
-                                       aria-label="Answer" aria-describedby="time-addon">
-                                <div class="input-group-append">
-                                    <p class="input-group-text bg-primary text-light" id="time-addon">15</p>
-                                </div>
+                        <div class="input-group input-group-lg">
+                            <input type="text" class="form-control" placeholder="Réponse"
+                                   aria-label="Answer" aria-describedby="time-addon">
+                            <div class="input-group-append">
+                                <p class="input-group-text bg-primary text-light" id="time-addon">20</p>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <form id="next-question-form" action="{{ path('nextQuestion') }}" method="post" hidden>
-        <input id="current-round" type="number" value="1">
-        <button type="submit" id="start-game-btn"
-                class="btn btn-light btn-lg rounded-pill mx-auto d-block text-primary">
-        </button>
-    </form>
-    <div id="mercure-content-receiver" hidden></div>
-    <form id="mercure-message-form" action="{{ path('quentin') }}" method="post" hidden>
-        <label for="mercure-message-input">Message:</label>
-        <input type="text" id="mercure-message-input" name="message"/>
-        <input type="submit" id="mercure-message-btn" value="Send"/>
-    </form>
-    <form id="call-answer-form" action="{{ path('pushAnswer') }}" method="post" hidden></form>
-    <div id="js-get-id-player" data-player-id="{{ app.user.id }}"></div>
-    <div id="js-get-username" data-username="{{ app.user.pseudo }}"></div>
-    <div id="js-get-id-room" data-room-id="{{ room.id }}"></div>
-    <div id="js-get-id-host" data-host-id="{{ room.host.id }}"></div>
-    <div id="js-get-nb-round" data-nb-round="{{ room.roomSettings.numberRound }}"></div>
 {% endblock %}
 
 {% block javascripts %}
