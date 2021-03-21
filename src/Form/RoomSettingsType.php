@@ -4,12 +4,7 @@ namespace App\Form;
 
 use App\Entity\RoomSettings;
 use App\Repository\SubCategoryRepository;
-use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form\ChoiceList\ChoiceList;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\Game;
-use App\Entity\Category;
 use App\Entity\SubCategory;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
