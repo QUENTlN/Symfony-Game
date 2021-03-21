@@ -3,14 +3,33 @@
 {% block title %}
     Modifier la question
 {% endblock %}
+
 {% block body %}
-    {# {% if boolean == true %}
-    <p>tibo est gentil</p>
-    {% else %}
-    <p>tibo la merde</p>
-    {% endif %} #}
-    {{ form_start(form,{'attr':{'style': 'margin-top: 5vh;'}} ) }}
-    {# mettre un button submit #}
-    {{ form_end(form) }}
-<div class="form-group"><button class="btn btn-primary btn-block" type="submit">Enregistrez vos modifications de la question</button>
+    <main class="page contact-page">
+        <section class="portfolio-block contact">
+            <div class="container">
+                <div class="heading">
+                    <h2>Modifier une question</h2>
+                </div>
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_row(form.status,{'label':'Statut :', 'attr':{'class':'form-control '}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.text,{'label': 'Text :', 'attr':{'class':'form-control '}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.player,{'label':'Joueur :', 'attr':{'class':'form-control  '}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.subCategory,{'label':'Sous catégorie :', 'attr':{'class':'form-control'  }}) }}
+                </div>
+                <br>
+                <div class="form-group"
+                    ><button class="btn btn-primary btn-block" type="submit">Enregistrez vos modifications de la question</button>
+                </div>
+                {{ form_end(form) }}
+        </section>
+    </main>
+
 {% endblock %}
