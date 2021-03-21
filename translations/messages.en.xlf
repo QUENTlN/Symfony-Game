@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="XWF5YRC" resname="Une erreur est survenue, le nom d'utilisateur ou le mot de passe est invalide">
+        <source>Une erreur est survenue, le nom d'utilisateur ou le mot de passe est invalide</source>
+        <target>Username or password incorrect</target>
+      </trans-unit>
+      <trans-unit id="CsPSyzA" resname="Se connecter">
+        <source>Se connecter</source>
+        <target>Sign in</target>
+      </trans-unit>
+      <trans-unit id="P7uY8dQ" resname="Retour à l'accueil du site">
+        <source>Retour à l'accueil du site</source>
+        <target>Back to homepage</target>
+      </trans-unit>
+      <trans-unit id="PCX0_17" resname="S'inscrire">
+        <source>S'inscrire</source>
+        <target>Sign up</target>
+      </trans-unit>
+      <trans-unit id="nJ0pmH0" resname="Vous avez déjà un compte ?">
+        <source>Vous avez déjà un compte ?</source>
+        <target>Already registered ?</target>
+      </trans-unit>
+      <trans-unit id="BH9Ys5T" resname="Pseudo">
+        <source>Pseudo</source>
+        <target>Nickname</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id=".5yLjAZ" resname="Mot de passe">
+        <source>Mot de passe</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="SQlNO6e" resname="Confirmer le mot de passe">
+        <source>Confirmer le mot de passe</source>
+        <target>Confirm your password</target>
+      </trans-unit>
+      <trans-unit id="z7GsDIB" resname="Inscription">
+        <source>Inscription</source>
+        <target>Registration</target>
+      </trans-unit>
+      <trans-unit id="YdaVBBA" resname="Connexion">
+        <source>Connexion</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="VeQFAUK" resname="Une erreur est survenue, le mail ou le mot de passe est invalide">
+        <source>Une erreur est survenue, le mail ou le mot de passe est invalide</source>
+        <target>Username or password incorrect</target>
+      </trans-unit>
+      <trans-unit id="C1fpZ.9" resname="&quot;Email&quot;">
+        <source>"Email"</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="h.mSYX6" resname="&quot;Mot de passe&quot;">
+        <source>"Mot de passe"</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id=".sIpuLh" resname="Mot de passe oublié ?">
+        <source>Mot de passe oublié ?</source>
+        <target>Forgot password ?</target>
+      </trans-unit>
+      <trans-unit id="gWnQx3j" resname="Vous n'avez pas encore de compte ?">
+        <source>Vous n'avez pas encore de compte ?</source>
+        <target>New to Magma ?</target>
+      </trans-unit>
+      <trans-unit id="soYnwQv" resname="Nous vous enverrons un email contenant un lien vous permettant de réinitialiser votre mot de passe.">
+        <source>Nous vous enverrons un email contenant un lien vous permettant de réinitialiser votre mot de passe.</source>
+        <target>We will sent you an email with a link allowing you to reset your password.</target>
+      </trans-unit>
+      <trans-unit id="jKkNyqz" resname="Confirmer l'envoi">
+        <source>Confirmer l'envoi</source>
+        <target>Confirm the request</target>
+      </trans-unit>
+      <trans-unit id="kJgi9GH" resname="Réinitialisation du mot de passe">
+        <source>Réinitialisation du mot de passe</source>
+        <target>Reset password</target>
+      </trans-unit>
+      <trans-unit id="ERIbpfW" resname="Email pour le changement de mot de passe envoyé !">
+        <source>Email pour le changement de mot de passe envoyé !</source>
+        <target>Email sent with success !</target>
+      </trans-unit>
+      <trans-unit id="RjnzHoI" resname="Un email vous a été envoyé contenant un lien vous permettant de réinitialiser votre mot de passe.&#10;                Attention, ce lien expire dans">
+        <source>Un email vous a été envoyé contenant un lien vous permettant de réinitialiser votre mot de passe.
+                Attention, ce lien expire dans</source>
+        <target>An email has been sent with a link allowing you to reset your password.
+                Be careful, this link expires in</target>
+      </trans-unit>
+      <trans-unit id="ycCmPCh" resname="Si vous ne recevez pas de mail pas de panique ! Vérifiez dans vos spams ou">
+        <source>Si vous ne recevez pas de mail pas de panique ! Vérifiez dans vos spams ou</source>
+        <target>If you don't receive this email don't panic ! Check in your spam or </target>
+      </trans-unit>
+      <trans-unit id="vAhu4w8" resname="réessayer l'envoi de mail">
+        <source>réessayer l'envoi de mail</source>
+        <target> try again sending email</target>
+      </trans-unit>
+      <trans-unit id="A0kfbRi" resname="Retour à la page d'accueil">
+        <source>Retour à la page d'accueil</source>
+        <target>Back to homepage</target>
+      </trans-unit>
+      <trans-unit id="oTVT6Xd" resname="Réinitialiser votre mot de passe">
+        <source>Réinitialiser votre mot de passe</source>
+        <target>Reset your password</target>
+      </trans-unit>
+      <trans-unit id="LpkJGx4" resname="Réinitialiser le mot de passe">
+        <source>Réinitialiser le mot de passe</source>
+        <target>Reset the password</target>
+      </trans-unit>
+      <trans-unit id="X4sYKvU" resname="Répéter le mot de passe">
+        <source>Répéter le mot de passe</source>
+        <target>Repeat the password</target>
+      </trans-unit>
+      <trans-unit id="npZ5msi" resname="Changement de mot de passe">
+        <source>Changement de mot de passe</source>
+        <target>Change of password</target>
+      </trans-unit>
+      <trans-unit id="o9ZcpWl" resname="Nouveau mot de passe">
+        <source>Nouveau mot de passe</source>
+        <target>New password</target>
+      </trans-unit>
+      <trans-unit id=".SvUvGX" resname="Confirmer nouveau mot de passe">
+        <source>Confirmer nouveau mot de passe</source>
+        <target>Confirm your password</target>
+      </trans-unit>
+      <trans-unit id="lW.Fwvv" resname="Modifier le mot de passe">
+        <source>Modifier le mot de passe</source>
+        <target>Modify your password</target>
+      </trans-unit>
+      <trans-unit id="Rq05Fva" resname="Annuler">
+        <source>Annuler</source>
+        <target>Cancel</target>
+      </trans-unit>
+      <trans-unit id="dcTsAyj" resname="Salut">
+        <source>Salut</source>
+        <target>Hey </target>
+      </trans-unit>
+      <trans-unit id="pNedOWv" resname="Apparemment tu aurais quelques petits soucis pour te rappeler de ton mot de passe ?&#10;    Ne t'en fais pas nous sommes là pour toi ! Pour réinitialiser ton mot de passe, clique sur le lien suivant :">
+        <source>Apparemment tu aurais quelques petits soucis pour te rappeler de ton mot de passe ?
+    Ne t'en fais pas nous sommes là pour toi ! Pour réinitialiser ton mot de passe, clique sur le lien suivant :</source>
+        <target>Apparently you have some trouble to remember your password ?
+    Don't worry we're here for you ! To reset your password, click on the following link :</target>
+      </trans-unit>
+      <trans-unit id="h_Kxf90" resname="Attention ce lien est éphémère, tout comme une série de victoire :( Il expire dans :">
+        <source>Attention ce lien est éphémère, tout comme une série de victoire :( Il expire dans :</source>
+        <target>Be careful this link is short-lived, like a winning-streak :( He expires in :</target>
+      </trans-unit>
+      <trans-unit id="WFzcLA4" resname="Amuse toi bien, et surtout no rage !">
+        <source>Amuse toi bien, et surtout no rage !</source>
+        <target>Have fun ! And most importantly don't rage !</target>
+      </trans-unit>
+      <trans-unit id="dIOmvcS" resname="Bonjour et bienvenue dans l'interface d'Administration">
+        <source>Bonjour et bienvenue dans l'interface d'Administration</source>
+        <target>Hello and welcome to the back office</target>
+      </trans-unit>
+      <trans-unit id="lFv02A7" resname="Quelques statistiques pour commencer:">
+        <source>Quelques statistiques pour commencer:</source>
+        <target>Some stats to start with :</target>
+      </trans-unit>
+      <trans-unit id="5PVVrC2" resname="compte(s) de joueur(s) ont été créé(s).">
+        <source>compte(s) de joueur(s) ont été créé(s).</source>
+        <target>player's account(s) have been created.</target>
+      </trans-unit>
+      <trans-unit id="AxEjXGa" resname="invité(s) ont joué au moins une fois.">
+        <source>invité(s) ont joué au moins une fois.</source>
+        <target>guest(s) have played at least one time.</target>
+      </trans-unit>
+      <trans-unit id="FW05AFt" resname="profil(s) de room ont été créée(s).">
+        <source>profil(s) de room ont été créée(s).</source>
+        <target>room's setting(s) have been created</target>
+      </trans-unit>
+      <trans-unit id="geHIPED" resname="room sont créées,">
+        <source>room sont créées,</source>
+        <target>rooms have been created</target>
+      </trans-unit>
+      <trans-unit id="en5QArT" resname="sont en cours de partie.">
+        <source>sont en cours de partie.</source>
+        <target>are in game right now.</target>
+      </trans-unit>
+      <trans-unit id="V.sqZbJ" resname="resetPasswordMail">
+        <source>resetPasswordMail</source>
+        <target>Oopsi... It seems that there is a problem while sending an email, do you check if your email is well written ?</target>
+      </trans-unit>
+      <trans-unit id="eNl1UWU" resname="tokenResetNotFound">
+        <source>tokenResetNotFound</source>
+        <target>No reset password token found in the URL or in the session.</target>
+      </trans-unit>
+      <trans-unit id="J0ku_ms" resname="resetPasswordError">
+        <source>resetPasswordError</source>
+        <target>Oopsi.. It seems that there was a problem while resetting your password, here's why : </target>
+      </trans-unit>
+      <trans-unit id="VfLCcNl" resname="Proposer une question">
+        <source>Proposer une question</source>
+        <target>Suggest a question</target>
+      </trans-unit>
+      <trans-unit id="E67TJOM" resname="Accepter une question">
+        <source>Accepter une question</source>
+        <target>Accept a question</target>
+      </trans-unit>
+      <trans-unit id="accountCreated" resname="accountCreated">
+        <source>Votre compte a bien été créé !Un e-mail vous a été envoyé, vous pouvez maintenant vous connecter !</source>
+        <target>Your account has been created with success ! We have been sending you an eamil, you can now sign in !</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

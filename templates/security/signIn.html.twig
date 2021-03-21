@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Connexion
+    {% trans %}Connexion{% endtrans %}
 {% endblock %}
 
 {% block body %}
@@ -16,10 +16,10 @@
             {% endfor %}
             <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
             {% if error %}
-                <div class="alert alert-danger" role="alert"><span class="fa fa-exclamation-circle" aria-hidden="true"></span> Une erreur est survenue, le mail ou le mot de passe est invalide</div>
+                <div class="alert alert-danger" role="alert"><span class="fa fa-exclamation-circle" aria-hidden="true"></span>{% trans %} Une erreur est survenue, le mail ou le mot de passe est invalide{% endtrans %}</div>
             {% endif %}
-            <div class="form-group"><input class="form-control form-sign" required type="text" name="_username" placeholder="Email"></div>
-            <div class="form-group"><input class="form-control form-sign" required type="password" name="_password" placeholder="Mot de passe"></div>
-            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Se connecter</button></div><a class="forgot" href="{{ path('forgotPasswordRequest') }}">Mot de passe oublié ?</a><a class="forgot" href="{{ path('signUp') }}">Vous n'avez pas encore de compte ?</a></form>
+            <div class="form-group"><input class="form-control form-sign" required type="text" name="_username" placeholder={% trans %}"Email"{% endtrans%} ></div>
+            <div class="form-group"><input class="form-control form-sign" required type="password" name="_password" placeholder={% trans %}"Mot de passe"{% endtrans%}></div>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">{% trans %}Se connecter{% endtrans %}</button></div><a class="forgot" href="{{ path('forgotPasswordRequest') }}">{% trans %}Mot de passe oublié ?{% endtrans %}</a><a class="forgot" href="{{ path('signUp') }}">{% trans %}Vous n'avez pas encore de compte ?{% endtrans %}</a></form>
     </div>
 {% endblock %}
