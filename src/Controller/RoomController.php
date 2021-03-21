@@ -15,6 +15,7 @@ use App\Repository\QuestionRepository;
 use App\Repository\RoomRepository;
 use App\Repository\RoundRepository;
 use App\Repository\ScoreRepository;
+use App\Service\RoundsGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -221,7 +222,7 @@ class RoomController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function new(Request $request, string $access, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, string $access, EntityManagerInterface $entityManager,RoundsGenerator $roundsGenerator): Response
     {
         $room = new Room();
         if ($access === 'private') {
@@ -229,6 +230,7 @@ class RoomController extends AbstractController
         } else {
             $room->setIsPrivate(false);
         }
+
 
         $room->setName("Salon de " . $this->getUser()->getPseudo());
         $roomSetting = new RoomSettings();
@@ -250,8 +252,10 @@ class RoomController extends AbstractController
             $room->setRoomSettings($roomSetting);
             $room->setHost($user);
             $roomSetting->setNameProfil(null);
+            $roundsGenerator->roundsGenerator($room);
             $entityManager->persist($room);
             $entityManager->flush();
+            dd($room);
             return $this->redirectToRoute('room',['id'=> $room->getId()]);
         }
 

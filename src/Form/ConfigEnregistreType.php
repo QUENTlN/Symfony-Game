@@ -27,10 +27,6 @@ class ConfigEnregistreType extends AbstractType
     {
         $this->security = $security;
     }
-//    public function getParent()
-//    {
-//        return RoomSettings::class;
-//    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -41,22 +37,6 @@ class ConfigEnregistreType extends AbstractType
                 },
                 'choice_label' => 'nameProfil',
             ])
-//        ;
-//            $builder->get('nameProfil')->addEventListener(
-//                FormEvents::POST_SUBMIT,
-//                function (FormEvent $event){
-////                    dump($event->getForm());
-////                    dump($event->getData());
-//                    $form = $event->getForm();
-//                    $form->getParent()->add('nbMaxPlayer',EntityType::class,[
-//                        'class' =>RoomSettings::class,
-//                        'mapped'=>false,
-//                        'required'=>false,
-//                        'choices'=>$form->getData()->getNbMaxPlayer()
-//                    ]);
-
-//                }
-//            )
 
             ->add('nbMaxPlayer', IntegerType::class, array('attr' => array('min' => 1, 'max' => 20)))
 //            ->add('oneAnswerOnly', CheckboxType::class, [
@@ -65,8 +45,6 @@ class ConfigEnregistreType extends AbstractType
 //            ->add('showScore', CheckboxType::class, [
 //                'required' => false,
 //            ])
-//            add('createdAt')
-//            ->add('deletedAt')
             ->add('numberRound',IntegerType::class, array('attr' => array('min' => 1, 'max' => 20)))
             ->add('subCategories', EntityType::class, [
                 'class' => SubCategory::class,
@@ -78,9 +56,6 @@ class ConfigEnregistreType extends AbstractType
                 'multiple' => 'true',
                 'expanded' => 'true',
             ])
-            //->add('game')
-            //->add('idPlayer')
-
 
         ;
     }
