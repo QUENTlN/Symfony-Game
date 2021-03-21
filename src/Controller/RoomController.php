@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Guest;
 use App\Entity\Player;
 use App\Entity\Room;
 use App\Entity\Game;
@@ -198,17 +199,30 @@ class RoomController extends AbstractController
         if ($room === null) {
             //signal error
         } else {
-            $score = $scoreRepository->findOneBy(['guest' => $this->getUser(), 'room' => $id]);
+            if ($this->getUser() !== null) {
+                $user = $this->getUser();
+                dd($this->getUser(),$this->get('security.token_storage')->getToken()->isAuthenticated(),$this->container->get('security.token_storage')->getToken()->getUser());
+            } else {
+                $user = new Guest();
+                $user->setPseudo("Guest" . substr(hexdec(uniqid('', true)), 0, 5));
+                $manager->persist($user);
+            }
+            $score = $scoreRepository->findOneBy(['guest' => $user, 'room' => $id]);
             if ($score === null) {
                 $score = new Score;
                 $score->setRoom($room);
-                $score->setGuest($this->container->get('security.token_storage')->getToken()->getUser());
+                if ($this->getUser() !== null) {
+                    $score->setGuest($this->container->get('security.token_storage')->getToken()->getUser());
+                } else {
+                    $score->setGuest($user);
+                }
                 $score->setScore(0);
                 $manager->persist($score);
-                $manager->flush();
             }
+            $manager->flush();
             return $this->render('room/index.html.twig', [
                 'room' => $room,
+                'guest' => $user
             ]);
         }
     }
@@ -242,7 +256,7 @@ class RoomController extends AbstractController
 
         if ($form_r->isSubmitted() && $form_r->isValid()) {
             //$user = $this->get('security.context')->getToken()->getUser();
-            $user=$this->container->get('security.token_storage')->getToken()->getUser();
+            $user = $this->container->get('security.token_storage')->getToken()->getUser();
             $roomSetting->setIdPlayer($user);
             $roomSetting->setOneAnswerOnly(false);
             $roomSetting->setShowScore(true);
@@ -252,7 +266,7 @@ class RoomController extends AbstractController
             $roomSetting->setNameProfil(null);
             $entityManager->persist($room);
             $entityManager->flush();
-            return $this->redirectToRoute('room',['id'=> $room->getId()]);
+            return $this->redirectToRoute('room', ['id' => $room->getId()]);
         }
 
         $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
