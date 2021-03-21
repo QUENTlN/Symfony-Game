@@ -59,12 +59,12 @@ class ConfigEnregistreType extends AbstractType
 //            )
 
             ->add('nbMaxPlayer', IntegerType::class, array('attr' => array('min' => 1, 'max' => 20)))
-            ->add('oneAnswerOnly', CheckboxType::class, [
-                'required' => false,
-            ])
-            ->add('showScore', CheckboxType::class, [
-                'required' => false,
-            ])
+//            ->add('oneAnswerOnly', CheckboxType::class, [
+//                'required' => false,
+//            ])
+//            ->add('showScore', CheckboxType::class, [
+//                'required' => false,
+//            ])
 //            add('createdAt')
 //            ->add('deletedAt')
             ->add('numberRound',IntegerType::class, array('attr' => array('min' => 1, 'max' => 20)))

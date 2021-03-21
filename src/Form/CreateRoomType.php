@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
@@ -41,9 +42,9 @@ class CreateRoomType extends AbstractType
 //                ]
 //
 //            )
-            //->add('name')
-           // ->add('createdAt')
-           // ->add('finishedAt')
+            ->add('name',TextType::class)
+//            ->add('createdAt')
+//            ->add('finishedAt')
            // ->add('isPrivate')
            /* ->add('roomSettings',EntityType::class,[
                 'class' =>RoomSettings::class,

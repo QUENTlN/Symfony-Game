@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use App\Entity\Game;
+use App\Entity\RoomSettings;
 use App\Entity\SubCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -36,5 +37,18 @@ class SubCategoryRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('sc');
     }
+
+//    public function findSubCatByIdRoomSetting($id)
+//    {
+//        return $this->createQueryBuilder('scr')
+//            ->select('scr' )
+//            ->innerJoin(scr.id,"idSubCat")
+//            ->from(RoomSettings::class)
+//            ->addSelect("idSubCat")
+//            ->where('idSubCat.id = :idroomset')
+//            ->setParameter('idroomset',$id )
+//            ->getQuery()
+//            ->getSingleResult();
+//    }
 
 }
