@@ -5,16 +5,21 @@
         <div class="collapse navbar-collapse"
              id="navbarNav">
             <ul class="nav navbar-nav ml-auto">
+                {% for locale in locales %}
+                    {%  if locale != app.request.locale %}
+                        <li class="nav-item"><a class="nav-link" href="{{ path('changeLanguage', {'locale': locale}) }}"><img src="{{ asset('language_images/'~locale~'.png') }}" width="40px" style="margin: auto" alt="{{ locale }}"></a></li>
+                    {% endif %}
+                {% endfor %}
                 {% if not app.user %}
-                    <li class="nav-item"><a class="nav-link" href="{{ path('signIn') }}">Se connecter</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ path('signUp') }}">S'inscrire</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('signIn') }}">{% trans %}Se connecter{% endtrans %}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('signUp') }}">{% trans %}S'inscrire{% endtrans %}</a></li>
                 {% elseif is_granted('ROLE_MODERATEUR') %}
-                    <li class="nav-item"><a class="nav-link" href="{{ path('suggestQuestion') }}">Proposer une question</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ path('showQuestion')}}">Accepter une question</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('suggestQuestion') }}">{% trans %}Proposer une question{% endtrans %}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('showQuestion')}}">{% trans %}Accepter une question{% endtrans %}</a></li>
                     <li class="nav-item"><a class="nav-link py-0" href="{{ path('account') }}"><h2 class="m-0"><i class="icon ion-ios-contact"></i></h2></a></li>
                     <li class="nav-item"><a class="nav-link py-0" href="{{ path('logOut') }}"><h2 class="m-0"><i class="icon ion-log-out"></i></h2></a></li>
                 {%  else %}
-                    <li class="nav-item"><a class="nav-link" href="{{ path('suggestQuestion') }}">Proposer une question</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('suggestQuestion') }}">{% trans %}Proposer une question{% endtrans %}</a></li>
                     <li class="nav-item"><a class="nav-link py-0" href="{{ path('account') }}"><h2 class="m-0"><i class="icon ion-ios-contact"></i></h2></a></li>
                     <li class="nav-item"><a class="nav-link py-0" href="{{ path('logOut') }}"><h2 class="m-0"><i class="icon ion-log-out"></i></h2></a></li>
                 {% endif %}

@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
@@ -53,12 +54,11 @@ class ResetPasswordController extends AbstractController
      * Confirmation page after a user has requested a password reset.
      * @Route("/check_email", name="checkEmail")
      */
-    public function checkEmail(): Response
+    public function checkEmail(TranslatorInterface $translator): Response
     {
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
-            $this->addFlash('reset_password_error', sprintf(
-                'Oups.. Il semble qu\'il y ait eu un problème lors de l\'envoi du mail, avez-vous bien 
-                renseigné votre mail ?'));
+            $this->addFlash('reset_password_error',
+                $translator->trans('resetPasswordMail'));
             return $this->redirectToRoute('forgotPasswordRequest');
         }
 
@@ -71,7 +71,7 @@ class ResetPasswordController extends AbstractController
      * Validates and process the reset URL that the user clicked in their email.
      * @Route("/reset/{token}", name="resetPassword")
      */
-    public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, string $token = null): Response
+    public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, string $token = null, TranslatorInterface $translator): Response
     {
         if ($token) {
 
@@ -82,17 +82,15 @@ class ResetPasswordController extends AbstractController
 
         $token = $this->getTokenFromSession();
         if (null === $token) {
-            throw $this->createNotFoundException('No reset password token found in the URL or in the session.');
+            throw $this->createNotFoundException($translator->trans('tokenResetNotFound'));
         }
 
         try {
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
         } catch (ResetPasswordExceptionInterface $e) {
-            $this->addFlash('reset_password_error', sprintf(
-                'Oups.. Il semble qu\'il y ait eu un problème lors de la réinitialisation de votre mot de passe, en voici la 
-                 raison :  %s',
-                $e->getReason()
-            ));
+            $this->addFlash('reset_password_error',
+                $translator->trans('resetPasswordError').$e->getReason()
+            );
 
             return $this->redirectToRoute('forgotPasswordRequest');
         }

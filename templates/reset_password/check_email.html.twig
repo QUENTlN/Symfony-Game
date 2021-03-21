@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Email pour le changement de mot de passe envoyé !{% endblock %}
+{% block title %}{% trans %}Email pour le changement de mot de passe envoyé !{% endtrans %}{% endblock %}
 
 {% block body %}
     <div class="login-dark">
@@ -8,10 +8,10 @@
             <h2 class="sr-only">Login Form</h2>
             <div class="illustration"><i class="fa fa-paper-plane"></i></div>
             <p>
-                Un email vous a été envoyé contenant un lien vous permettant de réinitialiser votre mot de passe.
-                Attention, ce lien expire dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+                {% trans %}Un email vous a été envoyé contenant un lien vous permettant de réinitialiser votre mot de passe.
+                Attention, ce lien expire dans {% endtrans %}{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
             </p>
-            <p>Si vous ne recevez pas de mail pas de panique ! Vérifiez dans vos spams ou <a href="{{ path('forgotPasswordRequest') }}" style="color:rgb(132,63,169);">réessayer l'envoi de mail</a>.</p>
-            <div class="form-group"><a href="{{ path('home') }}" class="btn btn-primary">Retour à la page d'accueil </a></div></form>
+            <p>{% trans %}Si vous ne recevez pas de mail pas de panique ! Vérifiez dans vos spams ou {% endtrans %}<a href="{{ path('forgotPasswordRequest') }}" style="color:rgb(132,63,169);">{% trans %} réessayer l'envoi de mail{% endtrans %}</a>.</p>
+            <div class="form-group"><a href="{{ path('home') }}" class="btn btn-primary">{% trans %}Retour à la page d'accueil {% endtrans %}</a></div></form>
     </div>
    {% endblock %}
