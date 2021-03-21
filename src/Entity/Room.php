@@ -56,7 +56,7 @@ class Room
     private $scores;
 
     /**
-     * @ORM\OneToMany(targetEntity=Round::class, mappedBy="room", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Round::class, mappedBy="room", orphanRemoval=true,cascade={"persist"})
      */
     private $rounds;
 

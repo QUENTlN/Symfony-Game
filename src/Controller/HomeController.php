@@ -18,7 +18,6 @@ class HomeController extends AbstractController
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $rooms = $this->getDoctrine()->getRepository(Room::class)->findAllPublicRoom();
-
         $rooms = $paginator->paginate(
             $rooms,
             $request->query->getInt('page', 1),
