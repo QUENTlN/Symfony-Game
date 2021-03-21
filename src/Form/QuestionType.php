@@ -20,6 +20,7 @@ class QuestionType extends AbstractType
             ])
 //            ->add('status')
 //            ->add('player')
+
 //            ->add('subCategory')
             ->add('answers', CollectionType::class, array(
                 'entry_type' => AnswerType::class,

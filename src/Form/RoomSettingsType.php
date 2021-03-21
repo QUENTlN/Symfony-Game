@@ -24,12 +24,12 @@ class RoomSettingsType extends AbstractType
         $builder
 
             ->add('nbMaxPlayer', IntegerType::class, array('attr' => array('min' => 1, 'max' => 20)))
-            ->add('oneAnswerOnly', CheckboxType::class, [
-                'required' => false,
-            ])
-            ->add('showScore', CheckboxType::class, [
-                'required' => false,
-            ])
+           // ->add('oneAnswerOnly', CheckboxType::class, [
+              //  'required' => false,
+            //])
+           // ->add('showScore', CheckboxType::class, [
+            //    'required' => false,
+            //])
 
             ->add('subCategories', EntityType::class, [
                 'class' => SubCategory::class,
