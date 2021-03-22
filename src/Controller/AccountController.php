@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Game;
 use App\Entity\RoomSettings;
 use App\Form\AccountType;
+use App\Repository\GameRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,11 +22,11 @@ class AccountController extends AbstractController
      * @Route("/profile",name="profile")
      * @IsGranted("ROLE_USER")
      */
-    public function profile(Request $request, EntityManagerInterface $manager): Response
+    public function profile(Request $request, EntityManagerInterface $manager, FormFactoryInterface $factory): Response
     {
         $player = $this->getUser();
 
-        $form = $this->createForm(AccountType::class, $player);
+        $form = $factory->create(AccountType::class, $player);
 
         $form->handleRequest($request);
 
@@ -43,9 +45,9 @@ class AccountController extends AbstractController
      * @Route("/account", name="account")
      * @IsGranted("ROLE_USER")
      */
-    public function index(Request $request, PaginatorInterface $paginator): Response
+    public function index(Request $request, PaginatorInterface $paginator, GameRepository $gameRepository): Response
     {
-        $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
+        $games = $gameRepository->findAll();
         $player = $this->getUser();
         return $this->render('global/account.html.twig', [
             'player' => $player,
