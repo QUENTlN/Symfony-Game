@@ -203,7 +203,6 @@ class Room
     public function removeRound(Round $round): self
     {
         if ($this->rounds->removeElement($round)) {
-            // set the owning side to null (unless already changed)
             if ($round->getRoom() === $this) {
                 $round->setRoom(null);
             }

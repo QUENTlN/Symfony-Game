@@ -71,7 +71,6 @@ class Guest
     public function removeRoom(Score $room): self
     {
         if ($this->rooms->removeElement($room)) {
-            // set the owning side to null (unless already changed)
             if ($room->getGuest() === $this) {
                 $room->setGuest(null);
             }

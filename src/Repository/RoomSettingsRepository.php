@@ -30,8 +30,7 @@ class RoomSettingsRepository extends ServiceEntityRepository
             ->andWhere('rs.nameProfil IS NOT NULL')
             ->andwhere('rs.deletedAt IS NULL')
             ->setParameter('idPlayer', $user->getId());
-        //    ->getQuery()
-        //    ->execute();
+
     }
 
     public function findNumberRoomSettings(): ?int
@@ -41,35 +40,4 @@ class RoomSettingsRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
-
-
-
-    // /**
-    //  * @return RoomSettings[] Returns an array of RoomSettings objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?RoomSettings
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -19,7 +19,6 @@ class QuestionWithTextRepository extends ServiceEntityRepository
         parent::__construct($registry, QuestionWithText::class);
     }
 
-
     public function findQuestionWithStatusPending()
     {
         return $this->createQueryBuilder('q')
@@ -28,32 +27,4 @@ class QuestionWithTextRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    // /**
-    //  * @return QuestionWithText[] Returns an array of QuestionWithText objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?QuestionWithText
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

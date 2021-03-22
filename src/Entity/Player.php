@@ -150,7 +150,6 @@ class Player extends Guest implements UserInterface
     public function removeQuestion(Question $question): self
     {
         if ($this->Question->removeElement($question)) {
-            // set the owning side to null (unless already changed)
             if ($question->getPlayer() === $this) {
                 $question->setPlayer(null);
             }
@@ -180,7 +179,6 @@ class Player extends Guest implements UserInterface
     public function removeRoomSetting(RoomSettings $roomSetting): self
     {
         if ($this->roomSettings->removeElement($roomSetting)) {
-            // set the owning side to null (unless already changed)
             if ($roomSetting->getHost() === $this) {
                 $roomSetting->setHost(null);
             }
@@ -218,7 +216,6 @@ class Player extends Guest implements UserInterface
     public function removeHostedRoom(Room $hostedRoom): self
     {
         if ($this->hostedRooms->removeElement($hostedRoom)) {
-            // set the owning side to null (unless already changed)
             if ($hostedRoom->getHost() === $this) {
                 $hostedRoom->setHost(null);
             }
