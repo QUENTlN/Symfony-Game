@@ -144,7 +144,7 @@ eventSource.onmessage = event => {
                     break;
                 case 'QuestionWithPicture':
                     $('#question-content').html('<img class="rounded mx-auto d-block w-auto unselectable" \n' +
-                        '                                 src="./../games_images/guess_the/44cafe894c519dc4595f2c4c47a6997c.jpg' /*+ data.link*/ + '" \n' +
+                        '                                 src="./../games_images/guess_the/' + data.link + '" \n' +
                         '                                 style="max-height: 70vh; max-width: 100%" alt="?Guess The?"> ')
                     $('#question-content-generated').html('De quel ' + data.subcategory + ' est tirée cette image ?')
                     break;
@@ -198,8 +198,24 @@ eventSource.onmessage = event => {
             $("#answerDiv").attr("hidden", true);
             if (hostId === playerId) {
                 $("#answerDiv").before("<div id=\"replay-game\" class=\"row w-100 justify-content-center\" >\n" +
-                    "                    <button class=\"btn btn-primary btn-lg\">Recommencer</button>\n" +
+                    "                    <form action='/restart' method='post'>" +
+                    "                       <button id='restart-btn' class=\"btn btn-primary btn-lg\">Recommencer</button>\n" +
+                    "                    </form>" +
                     "                </div>")
+                $("restart-btn").on('click', 'body', function () {
+                    const _restartForm = $(this).parent();
+                    $(".user-info").each(function () {
+                        $(this).find(".score").text("0")
+                    })
+                    fetch(_restartForm.action, {
+                        method: _restartForm.method,
+                        body: 'type=restart&idRoom=' + roomId,
+                        headers: new Headers({
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                        })
+                    }).then(() => {
+                    });
+                });
             }
             $("#question-content").html("\n" +
                 "                                <table class=\"table text-center w-50 mx-auto border-top-0\">\n" +
@@ -220,9 +236,9 @@ eventSource.onmessage = event => {
                     "                                        <td>" + $(userInfo).find(".pseudo").text() + "</td>\n" +
                     "                                        <td>" + $(userInfo).find(".score").text() + "</td>\n" +
                     "                                    </tr>")
+                $(userInfo).find(".score").text("0")
                 position++
             })
-            $("#gameCard").addClass('bg-gradient-primary');
             break;
     }
     if (!data.message) {

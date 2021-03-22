@@ -18,6 +18,7 @@ use App\Repository\RoomSettingsRepository;
 use App\Repository\RoundRepository;
 use App\Repository\ScoreRepository;
 use App\Service\RoundsGenerator;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -236,10 +237,13 @@ class RoomController extends AbstractController
      * @param Request $request
      * @param string $access
      * @param EntityManagerInterface $entityManager
+     * @param RoundsGenerator $roundsGenerator
+     * @param FormFactoryInterface $factory
+     * @param GameRepository $gameRepository
      * @return Response
      * @IsGranted("ROLE_USER")
      */
-    public function new(Request $request, string $access, EntityManagerInterface $entityManager,RoundsGenerator $roundsGenerator, FormFactoryInterface $factory, GameRepository $gameRepository): Response
+    public function new(Request $request, string $access, EntityManagerInterface $entityManager, RoundsGenerator $roundsGenerator, FormFactoryInterface $factory, GameRepository $gameRepository): Response
     {
         $room = new Room();
         if ($access === 'private') {
@@ -287,6 +291,7 @@ class RoomController extends AbstractController
     /**
      * @Route("/search_param", name="searchParam" , methods={"GET","POST"})
      * @param Request $request
+     * @param RoomSettingsRepository $roomSettingsRepository
      * @return Response
      */
     public function searchParam(Request $request, RoomSettingsRepository $roomSettingsRepository): Response
@@ -307,5 +312,33 @@ class RoomController extends AbstractController
         $response->headers->set('Content-Type', 'application/json');
         return $response;
 
+    }
+
+    /**
+     * @Route("/restart", name="restart")
+     * @param MessageBusInterface $bus
+     * @param EntityManager $entityManager
+     * @param Request $request
+     * @param RoundsGenerator $roundsGenerator
+     * @param RoomRepository $roomRepository
+     * @return RedirectResponse
+     */
+    public function restart(MessageBusInterface $bus, EntityManager $entityManager, Request $request, RoundsGenerator $roundsGenerator, RoomRepository $roomRepository): RedirectResponse
+    {
+
+        $room = $roomRepository->findOneBy(['id' => $request->request->get('room')]);
+        $roundsGenerator->roundsGenerator($room);
+        foreach ($room->getScores() as $score){
+            $score->setScore(0);
+            $entityManager->persist($score);
+        }
+        $entityManager->flush();
+        $update = new Update(
+            'http://mercure.hub/room/' . $request->request->get('room'),
+            json_encode([
+                'type' => 'startGame'
+            ]));
+        $bus->dispatch($update);
+        return $this->redirectToRoute('room', ['id' => $request->request->get('room')]);
     }
 }
