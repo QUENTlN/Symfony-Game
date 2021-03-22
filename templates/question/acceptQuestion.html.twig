@@ -22,31 +22,29 @@
                     </tr>
                     </thead>
                     <tbody class="text-justify">
-                    {% for question in questionsWithText %}
+                    {% for question in questions %}
                         <tr>
-                            <td><br>{{ question.subcategory.category.game.name }}<br>{{ question.subcategory.category.getLibCategory()}}<br>{{ question.getSubCategory() }}</td>
+                            <td><br>{{ question.subcategory.category.game.name }}
+                                <br>{{ question.subcategory.category.getLibCategory() }}
+                                <br>{{ question.getSubCategory() }}</td>
+                            {% if question.getType() == "QuestionWithText" %}
                             <td class="text">{{ question.getText() }}</td>
+                                {% else %}
+                            <td><img src="{{ asset('games_images/guess_the/'~question.getLinkPicture()) }} " alt=""
+                                     style="width:200px; height:auto;"></td>
+                            {% endif %}
                             <td>
                             {% for answer in question.answers %}
                                 {{ answer.getTextAnswer() }}<br>
                             {% endfor %}
                             </td>
-                            <td><a href="{{ path('acceptQuestion', {'id':question.getId()})}}" class="btn btn-success"><i class="fa fa-check"></i></a></td>
-                            <td><a href="{{ path('modify_question', {'id':question.getId()})}}" class="btn btn-info"></a></td>
-                            <td><a href="{{ path('delete_question', {'id':question.getId()})}}" class="btn btn-danger"></a></td>
-                        </tr>
-                    {% endfor %}
-                    {% for question in questionsWithPicture %}
-                        <tr>
-
-                            <td>{{ question.subcategory.category.game.name }}<br>{{ question.subcategory.category.getLibCategory()}}<br>{{ question.getSubCategory() }}</td>
-                            <td><img src="{{ asset('games_images/guess_the/JD.jpg') }} " alt="" style="width:200px; height:auto;"> </td>
-                            {% for answer in question.answers %}
-                                {{ answer.getTextAnswer() }}<br>
-                            {% endfor %}
-                            <td><a href="{{ path('acceptQuestion', {'id':question.getId()})}}" class="btn btn-success"><i class="fa fa-check"></i></a></td>
-                            <td><a href="{{ path('modify_question', {'id':question.getId()})}}" class="btn btn-info"></a></td>
-                            <td><a href="{{ path('delete_question', {'id':question.getId()})}}" class="btn btn-danger"></a></td>
+                            <td><a href="{{ path('acceptQuestion', {'id':question.getId()}) }}" class="btn btn-success"><i
+                                            class="fa fa-check"></i></a></td>
+                            <td><a href="{{ path('modify_question', {'id':question.getId()}) }}"
+                                   class="btn btn-info"></a></td>
+                            <td><a href="{{ path('delete_question', {'id':question.getId()}) }}"
+                                   class="btn btn-danger"></a></td>
+                            {# <td> <a href="" class="btn btn-primary"> Lire la suite </a></td> #}
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -58,7 +56,8 @@
     </section>
     <footer class="page-footer">
         <div class="container">
-            <div class="links"><a href="https://github.com/QUENTlN/game">Made with&nbsp;<i class="icon ion-heart"></i>&nbsp; by LeGroupe5</a></div>
+            <div class="links"><a href="https://github.com/QUENTlN/game">Made with&nbsp;<i class="icon ion-heart"></i>&nbsp;
+                    by LeGroupe5</a></div>
         </div>
     </footer>
     <script src="assets/js/jquery.min.js"></script>

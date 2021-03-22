@@ -103,18 +103,16 @@ class QuestionController extends AbstractController
      * @Route("/show_Question", name="showQuestion")
      * @IsGranted ("ROLE_MODERATEUR")
      */
-    public function show(GameRepository $gameRepository, CategoryRepository $categoryRepository,QuestionWithPictureRepository $questionWithPictureRepository, QuestionWithTextRepository $questionWithTextRepository){
+    public function show(GameRepository $gameRepository, CategoryRepository $categoryRepository,QuestionRepository $questionRepository, QuestionWithPictureRepository $questionWithPictureRepository, QuestionWithTextRepository $questionWithTextRepository){
         $games = $gameRepository->findAll();
+        $question = $questionRepository->findQuestionWithStatusPending();
         $category = $categoryRepository->findAll();
-        $questionWithText = $questionWithTextRepository->findQuestionWithStatusPending();
-        $questionWithPicture = $questionWithPictureRepository->findQuestionWithStatusPending();
 
 
         return $this->render('question/acceptQuestion.html.twig', [
             'game' => $games,
             'category' => $category,
-            'questionsWithText' => $questionWithText,
-            'questionsWithPicture' => $questionWithPicture,
+            'questions' => $question,
         ]);
     }
 
