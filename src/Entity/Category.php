@@ -80,7 +80,6 @@ class Category
     public function removeSubCategory(SubCategory $subCategory): self
     {
         if ($this->subCategories->removeElement($subCategory)) {
-            // set the owning side to null (unless already changed)
             if ($subCategory->getCategory() === $this) {
                 $subCategory->setCategory(null);
             }

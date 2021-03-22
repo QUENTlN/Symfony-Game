@@ -62,7 +62,6 @@ class Admin implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every admin at least has ROLE_ADMIN
         $roles[] = 'ROLE_ADMIN';
 
         return array_unique($roles);
@@ -91,9 +90,6 @@ class Admin implements UserInterface
     }
 
     /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
-     *
      * @see UserInterface
      */
     public function getSalt(): ?string
@@ -106,7 +102,6 @@ class Admin implements UserInterface
      */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+
     }
 }

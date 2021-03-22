@@ -35,8 +35,6 @@ class ChangePasswordFormType extends AbstractType
                     'label' => false,
                 ],
                 'invalid_message' => 'Les deux mots de passe doivent être identiques',
-                // Instead of being set onto the object directly,
-                // this is read and encoded in the controller
                 'mapped' => false,
             ])
         ;

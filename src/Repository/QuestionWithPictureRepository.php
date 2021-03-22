@@ -19,7 +19,6 @@ class QuestionWithPictureRepository extends ServiceEntityRepository
         parent::__construct($registry, QuestionWithPicture::class);
     }
 
-
     public function findQuestionWithStatusPending()
     {
         return $this->createQueryBuilder('q')
@@ -28,33 +27,4 @@ class QuestionWithPictureRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    // /**
-    //  * @return QuestionWithPicture[] Returns an array of QuestionWithPicture objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?QuestionWithPicture
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

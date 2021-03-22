@@ -157,7 +157,6 @@ class RoomSettings
     public function removeRoom(Room $room): self
     {
         if ($this->Room->removeElement($room)) {
-            // set the owning side to null (unless already changed)
             if ($room->getRoomSettings() === $this) {
                 $room->setRoomSettings(null);
             }
