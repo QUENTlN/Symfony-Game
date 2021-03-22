@@ -181,16 +181,16 @@
         <source>sont en cours de partie.</source>
         <target>are in game right now.</target>
       </trans-unit>
-      <trans-unit id="V.sqZbJ" resname="resetPasswordMail">
-        <source>resetPasswordMail</source>
+      <trans-unit id="V.sqZbJ" resname="Oups, il semble qu'il y ait un problème lors de l'envoi de mail, veuillez vérifier que votre mail est bien écrit.">
+        <source>Oups, il semble qu'il y ait un problème lors de l'envoi de mail, veuillez vérifier que votre mail est bien écrit.</source>
         <target>Oopsi... It seems that there is a problem while sending an email, do you check if your email is well written ?</target>
       </trans-unit>
       <trans-unit id="eNl1UWU" resname="tokenResetNotFound">
-        <source>tokenResetNotFound</source>
+        <source>Pas de token de réinitialisation de mot de passe dans l'URL ou dans la session</source>
         <target>No reset password token found in the URL or in the session.</target>
       </trans-unit>
-      <trans-unit id="J0ku_ms" resname="resetPasswordError">
-        <source>resetPasswordError</source>
+      <trans-unit id="J0ku_ms" resname="Oups... il semble qu'il y ait un problème lors de la réinitialisation de votre mot de passe, voici pourquoi : ">
+        <source>Oups... il semble qu'il y ait un problème lors de la réinitialisation de votre mot de passe, voici pourquoi : </source>
         <target>Oopsi.. It seems that there was a problem while resetting your password, here's why : </target>
       </trans-unit>
       <trans-unit id="VfLCcNl" resname="Proposer une question">
@@ -201,9 +201,151 @@
         <source>Accepter une question</source>
         <target>Accept a question</target>
       </trans-unit>
-      <trans-unit id="accountCreated" resname="accountCreated">
-        <source>Votre compte a bien été créé !Un e-mail vous a été envoyé, vous pouvez maintenant vous connecter !</source>
+      <trans-unit id="v99bfJC" resname="accountCreated">
+        <source>accountCreated</source>
         <target>Your account has been created with success ! We have been sending you an eamil, you can now sign in !</target>
+      </trans-unit>
+      <trans-unit id="TuMH9aB" resname="Modification des informations du profil">
+        <source>Modification des informations du profil</source>
+        <target>Change info's profile</target>
+      </trans-unit>
+      <trans-unit id="UzFhc1Y" resname="Accueil">
+        <source>Accueil</source>
+        <target>Home</target>
+      </trans-unit>
+      <trans-unit id="CXnqtUQ" resname="Créer un salon">
+        <source>Créer un salon</source>
+        <target>Create a room</target>
+      </trans-unit>
+      <trans-unit id="N5LqLjM" resname="Vous pouvez créer un salon en public pour jouer avec des inconnus ou un&#10;                        salon privée et inviter vos amis.">
+        <source>Vous pouvez créer un salon en public pour jouer avec des inconnus ou un
+                        salon privée et inviter vos amis.</source>
+        <target>You can now create a public room to play with strangers or a
+                        private room and invit your friends.</target>
+      </trans-unit>
+      <trans-unit id="WRk1sVs" resname="Public">
+        <source>Public</source>
+        <target>Public</target>
+      </trans-unit>
+      <trans-unit id="MKvkv4b" resname="Privée">
+        <source>Privée</source>
+        <target>Private</target>
+      </trans-unit>
+      <trans-unit id="ANuDgB6" resname="Jouer dans un salon public">
+        <source>Jouer dans un salon public</source>
+        <target>Play in a public room</target>
+      </trans-unit>
+      <trans-unit id="EWlDJN8" resname="Aucun salon publique n'est ouvert pour le moment">
+        <source>Aucun salon publique n'est ouvert pour le moment</source>
+        <target>No public room is open for now</target>
+      </trans-unit>
+      <trans-unit id="AvyqrPy" resname="CRéER UN SALON">
+        <source>CRéER UN SALON</source>
+        <target>CREATE A ROOM</target>
+      </trans-unit>
+      <trans-unit id="4TE76k." resname="Nom du salon :">
+        <source>Nom du salon :</source>
+        <target>Name of the room</target>
+      </trans-unit>
+      <trans-unit id="HAqAFSb" resname="Configurations enregistrées :">
+        <source>Configurations enregistrées :</source>
+        <target>Saved settings</target>
+      </trans-unit>
+      <trans-unit id="Bv2FSug" resname="Nombre de joueurs maximum :">
+        <source>Nombre de joueurs maximum :</source>
+        <target>Number max of players</target>
+      </trans-unit>
+      <trans-unit id="p_ZQDKA" resname="Nombre de tours">
+        <source>Nombre de tours</source>
+        <target>Rounds</target>
+      </trans-unit>
+      <trans-unit id="5uaesfW" resname="OUVRIR LE SALON">
+        <source>OUVRIR LE SALON</source>
+        <target>OPEN THE ROOM</target>
+      </trans-unit>
+      <trans-unit id="QSGom6X" resname="Changer le pseudo">
+        <source>Changer le pseudo</source>
+        <target>Change the pseudo</target>
+      </trans-unit>
+      <trans-unit id="W8cL3mf" resname="Changer l'e-mail">
+        <source>Changer l'e-mail</source>
+        <target>Change the email</target>
+      </trans-unit>
+      <trans-unit id="DUxkpsV" resname="Enregistrez vos modifications">
+        <source>Enregistrez vos modifications</source>
+        <target>Save your changes</target>
+      </trans-unit>
+      <trans-unit id="GtbKXv1" resname="Valider les questions et réponses proposées par les players">
+        <source>Valider les questions et réponses proposées par les players</source>
+        <target>Validate questions and answers proposed by players</target>
+      </trans-unit>
+      <trans-unit id="mnIiGid" resname="Questions">
+        <source>Questions</source>
+        <target>Questions</target>
+      </trans-unit>
+      <trans-unit id="IDXnQHm" resname="Réponses">
+        <source>Réponses</source>
+        <target>Answers</target>
+      </trans-unit>
+      <trans-unit id="g5O3vR6" resname="Accepter">
+        <source>Accepter</source>
+        <target>Accept</target>
+      </trans-unit>
+      <trans-unit id="QuN2BLY" resname="Modifier">
+        <source>Modifier</source>
+        <target>Modify</target>
+      </trans-unit>
+      <trans-unit id="Xl0CFs4" resname="Supprimer">
+        <source>Supprimer</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="vsXofTm" resname="Suggérer une question">
+        <source>Suggérer une question</source>
+        <target>Suggest a question</target>
+      </trans-unit>
+      <trans-unit id="aKU0H8a" resname="Catégorie">
+        <source>Catégorie</source>
+        <target>Category</target>
+      </trans-unit>
+      <trans-unit id="KJr.ErB" resname="Question">
+        <source>Question</source>
+        <target>Question</target>
+      </trans-unit>
+      <trans-unit id="GqTLC8y" resname="Image">
+        <source>Image</source>
+        <target>Picture</target>
+      </trans-unit>
+      <trans-unit id="4mfTQ4I" resname="Profil">
+        <source>Profil</source>
+        <target>Profile</target>
+      </trans-unit>
+      <trans-unit id="KZHitUq" resname="Modifier&#10;                            informations">
+        <source>Modifier
+                            informations</source>
+        <target>Modify
+                            information</target>
+      </trans-unit>
+      <trans-unit id="AkCwcNu" resname="Modifier&#10;                            mot de passe">
+        <source>Modifier
+                            mot de passe</source>
+        <target>Modify
+                            password</target>
+      </trans-unit>
+      <trans-unit id="_1_eksG" resname="Déconnexion">
+        <source>Déconnexion</source>
+        <target>Deconnection</target>
+      </trans-unit>
+      <trans-unit id="NepZ.7B" resname="Mes Paramètres de salons enregistrés">
+        <source>Mes Paramètres de salons enregistrés</source>
+        <target>My Room Settings</target>
+      </trans-unit>
+      <trans-unit id="hUqwD9T" resname="Edition des paramètres">
+        <source>Edition des paramètres</source>
+        <target>Edit settings</target>
+      </trans-unit>
+      <trans-unit id="APnFM0V" resname="Ajouter">
+        <source>Ajouter</source>
+        <target>Add</target>
       </trans-unit>
     </body>
   </file>

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Modification des informations du profil
+    {% trans %}Modification des informations du profil{% endtrans %}
 {% endblock %}
 
 {% block body %}
@@ -16,9 +16,9 @@
                 {{ error.message | striptags }}
             </div>
         {% endfor %}
-        <div class="form-group"><label for="email">Changer le pseudo</label>{{ form_row(form.pseudo, {'label':false, 'attr':{'class':'form-control form'}}) }}</div>
-        <div class="form-group"><label for="email">Changer l'e-mail</label>{{ form_row(form.login, {'label':false, 'attr':{'class':'form-control form'}}) }}</div>
-        <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Enregistrez vos modifications</button></div><a class="forgot" href="{{ path('account') }}">Annuler</a></form>
+        <div class="form-group"><label for="email">{% trans %}Changer le pseudo{% endtrans %}</label>{{ form_row(form.pseudo, {'label':false, 'attr':{'class':'form-control form'}}) }}</div>
+        <div class="form-group"><label for="email">{% trans %}Changer l'e-mail{% endtrans %}</label>{{ form_row(form.login, {'label':false, 'attr':{'class':'form-control form'}}) }}</div>
+        <div class="form-group"><button class="btn btn-primary btn-block" type="submit">{% trans %}Enregistrez vos modifications{% endtrans %}</button></div><a class="forgot" href="{{ path('account') }}">{% trans %}Annuler{% endtrans %}</a></form>
     </div>
     {{ form_end(form) }}
 {% endblock %}
