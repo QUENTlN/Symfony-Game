@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Guest;
-use App\Entity\Player;
 use App\Entity\Room;
 use App\Entity\Game;
 use App\Entity\RoomSettings;
@@ -202,7 +201,6 @@ class RoomController extends AbstractController
         } else {
             if ($this->getUser() !== null) {
                 $user = $this->getUser();
-                dd($this->getUser(),$this->get('security.token_storage')->getToken()->isAuthenticated(),$this->container->get('security.token_storage')->getToken()->getUser());
             } else {
                 $user = new Guest();
                 $user->setPseudo("Guest" . substr(hexdec(uniqid('', true)), 0, 5));
@@ -257,7 +255,6 @@ class RoomController extends AbstractController
         $form_c->handleRequest($request);
 
         if ($form_r->isSubmitted() && $form_r->isValid()) {
-            //$user = $this->get('security.context')->getToken()->getUser();
             $user = $this->container->get('security.token_storage')->getToken()->getUser();
             $roomSetting->setIdPlayer($user);
             $roomSetting->setOneAnswerOnly(false);

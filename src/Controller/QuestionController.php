@@ -89,9 +89,6 @@ class QuestionController extends AbstractController
         $question->setStatus(Question::STATUS["accepted"]);
         $this->getDoctrine()->getManager()->persist($question);
         $this->getDoctrine()->getManager()->flush();
-        /*return $this->render('question/acceptQuestion.html.twig', [
-            'question' => $question
-        ]);*/
         return $this->redirectToRoute("showQuestion");
     }
 
@@ -144,16 +141,6 @@ class QuestionController extends AbstractController
             'form' => $form->createView(),
             'boolean' => $boolean,
         ]);
-        /*
-        $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
-        $question = $this->getDoctrine()->getRepository(Question::class)->find($id);
-        $question->setStatus(Question::STATUS["accepted"]);
-        $this->getDoctrine()->getManager()->persist($question);
-        $this->getDoctrine()->getManager()->flush();
-        */
-        /*return $this->render('question/acceptQuestion.html.twig', [
-            'question' => $question
-        ]);*/
         return $this->redirectToRoute("showQuestion");
     }
 
@@ -169,9 +156,6 @@ class QuestionController extends AbstractController
         $question = $this->getDoctrine()->getRepository(Question::class)->find($id);
         $em->remove($question);
         $em->flush();
-        /*return $this->render('question/acceptQuestion.html.twig', [
-            'question' => $question
-        ]);*/
         return $this->redirectToRoute("showQuestion");
     }
 

@@ -67,7 +67,6 @@ class Game
     public function removeCategory(Category $category): self
     {
         if ($this->categories->removeElement($category)) {
-            // set the owning side to null (unless already changed)
             if ($category->getGame() === $this) {
                 $category->setGame(null);
             }

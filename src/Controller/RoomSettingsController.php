@@ -28,7 +28,6 @@ class RoomSettingsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-//            $roomSetting->setCreatedAt(new \DateTime());
             $idPlayer = $em->getRepository(Player::class)->findOneBy(['id' => $this->getUser()->getId()]);
             $roomSetting->setIdPlayer($idPlayer);
             $roomSetting->setOneAnswerOnly(false);

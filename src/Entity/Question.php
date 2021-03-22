@@ -124,7 +124,6 @@ class Question
     public function removeRound(Round $round): self
     {
         if ($this->rounds->removeElement($round)) {
-            // set the owning side to null (unless already changed)
             if ($round->getQuestion() === $this) {
                 $round->setQuestion(null);
             }
@@ -154,7 +153,6 @@ class Question
     public function removeAnswer(Answer $answer): self
     {
         if ($this->answers->removeElement($answer)) {
-            // set the owning side to null (unless already changed)
             if ($answer->getQuestion() === $this) {
                 $answer->setQuestion(null);
             }
