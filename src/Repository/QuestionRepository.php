@@ -19,6 +19,15 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
+    public function findQuestionWithStatusPending()
+    {
+        return $this->createQueryBuilder('q')
+            ->andWhere('q.status = :status')
+            ->setParameter('status', "pending")
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findBySubCategories($subCategories)
     {
         return $this->createQueryBuilder('q')
@@ -29,5 +38,6 @@ class QuestionRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
 
 }
