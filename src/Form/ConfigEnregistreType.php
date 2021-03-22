@@ -31,6 +31,7 @@ class ConfigEnregistreType extends AbstractType
                     return $repo->findAllByPlayer($this->security->getUser());
                 },
                 'choice_label' => 'nameProfil',
+                'placeholder' => 'choisir une des configurations enregistrées',
             ])
 
             ->add('nbMaxPlayer', IntegerType::class, array('attr' => array('min' => 1, 'max' => 20)))
