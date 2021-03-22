@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\RegistrationType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,6 +62,7 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/log_out", name="logOut")
+     * @IsGranted("ROLE_USER")
      */
     public function logout(){}
 

@@ -7,6 +7,7 @@ use App\Entity\RoomSettings;
 use App\Form\AccountType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,7 @@ class AccountController extends AbstractController
 {
     /**
      * @Route("/profile",name="profile")
+     * @IsGranted("ROLE_USER")
      */
     public function profile(Request $request, EntityManagerInterface $manager): Response
     {
@@ -39,6 +41,7 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/account", name="account")
+     * @IsGranted("ROLE_USER")
      */
     public function index(Request $request, PaginatorInterface $paginator): Response
     {

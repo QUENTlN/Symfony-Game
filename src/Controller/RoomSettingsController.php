@@ -5,6 +5,7 @@ use App\Entity\Game;
 use App\Entity\Player;
 use App\Entity\RoomSettings;
 use App\Form\RoomSettingsType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,7 @@ class RoomSettingsController extends AbstractController
 
     /**
      * @Route("/new", name="room_settings_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {
@@ -51,6 +53,7 @@ class RoomSettingsController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="room_settings_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, RoomSettings $roomSetting): Response
     {
@@ -78,7 +81,7 @@ class RoomSettingsController extends AbstractController
 
     /**
      * @Route("/{id}/delete", name="room_settings_delete")
-     *
+     * @IsGranted("ROLE_USER")
      */
     public function delete(RoomSettings $roomSetting): RedirectResponse
     {
