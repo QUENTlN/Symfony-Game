@@ -208,7 +208,7 @@ class RoomController extends AbstractController
                 $user = $this->getUser();
             } else {
                 $user = new Guest();
-                $user->setPseudo("Guest" . substr(hexdec(uniqid('', true)), 0, 5));
+                $user->setPseudo("Guest" . random_int(0, 9999));
                 $manager->persist($user);
             }
             $score = $scoreRepository->findOneBy(['guest' => $user, 'room' => $id]);
@@ -317,15 +317,14 @@ class RoomController extends AbstractController
     /**
      * @Route("/restart", name="restart")
      * @param MessageBusInterface $bus
-     * @param EntityManager $entityManager
+     * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @param RoundsGenerator $roundsGenerator
      * @param RoomRepository $roomRepository
      * @return RedirectResponse
      */
-    public function restart(MessageBusInterface $bus, EntityManager $entityManager, Request $request, RoundsGenerator $roundsGenerator, RoomRepository $roomRepository): RedirectResponse
+    public function restart(MessageBusInterface $bus, EntityManagerInterface $entityManager, Request $request, RoundsGenerator $roundsGenerator, RoomRepository $roomRepository): RedirectResponse
     {
-
         $room = $roomRepository->findOneBy(['id' => $request->request->get('room')]);
         $roundsGenerator->roundsGenerator($room);
         foreach ($room->getScores() as $score){
