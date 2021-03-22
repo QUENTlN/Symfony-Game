@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Game;
 use App\Entity\Room;
+use App\Repository\GameRepository;
+use App\Repository\RoomRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,16 +17,16 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(Request $request, PaginatorInterface $paginator): Response
+    public function index(Request $request, PaginatorInterface $paginator, RoomRepository $roomRepository, GameRepository $gameRepository): Response
     {
-        $rooms = $this->getDoctrine()->getRepository(Room::class)->findAllPublicRoom();
+        $rooms = $roomRepository->findAllPublicRoom();
         $rooms = $paginator->paginate(
             $rooms,
             $request->query->getInt('page', 1),
             10
         );
 
-        $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
+        $games = $gameRepository->findAll();
 
         return $this->render('home/index.html.twig', [
             'rooms' => $rooms,
