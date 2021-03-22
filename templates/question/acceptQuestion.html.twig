@@ -1,24 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Inscription
+    {% trans %}Inscription{% endtrans %}
 {% endblock %}
 
 {% block body %}
 
     <section class="portfolio-block contact text-center">
-        <h2 class="text-center font-weight-bold mt-5">Valider les questions et réponses proposées par les players</h2>
+        <h2 class="text-center font-weight-bold mt-5">{% trans %}Valider les questions et réponses proposées par les players{% endtrans %}</h2>
         <div class="container-fluid">
             <div class="table-responsive mt-5">
                 <table class="table">
                     <thead>
                     <tr>
                         <th>Game</th>
-                        <th class="w-50">Questions</th>
-                        <th class="w-50">Réponses</th>
-                        <th>Accepter</th>
-                        <th>Modifier</th>
-                        <th>Supprimer</th>
+                        <th class="w-50">{% trans %}Questions{% endtrans %}</th>
+                        <th class="w-50">{% trans %}Réponses{% endtrans %}</th>
+                        <th>{% trans %}Accepter{% endtrans %}</th>
+                        <th>{% trans %}Modifier{% endtrans %}</th>
+                        <th>{% trans %}Supprimer{% endtrans %}</th>
                     </tr>
                     </thead>
                     <tbody class="text-justify">
