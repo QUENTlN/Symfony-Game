@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Inscription
+    {% trans %}Inscription{% endtrans %}
 {% endblock %}
 
 {% block body %}
@@ -10,7 +10,7 @@
         <section class="portfolio-block hire-me">
             <div class="container">
                 <div class="heading">
-                    <h2>CRéER UN SALON</h2>
+                    <h2>{% trans %}CRéER UN SALON{% endtrans %}</h2>
                 </div>
 
 
@@ -18,21 +18,21 @@
                 {{ form_start(form_c) }}
 
                 <div class="form-group">
-                    {{ form_row(form_r.name,{'label':'Nom du salon :', 'attr':{'class':'form-control '}}) }}
+                    {{ form_row(form_r.name,{'label':'Nom du salon :'|trans, 'attr':{'class':'form-control '}}) }}
                 </div>
 
 
                 <div class="form-group">
-                    {{ form_row(form_c.nameProfil,{'label':'Configurations enregistrées :', 'attr':{'class':'form-control '}}) }}
+                    {{ form_row(form_c.nameProfil,{'label':'Configurations enregistrées :'|trans, 'attr':{'class':'form-control '}}) }}
 
 
                 </div>
                 <div class="form-group">
-                    {{ form_row(form_c.nbMaxPlayer,{'label':'Nombre de joueurs maximum :', 'attr':{'class':'form-control '}}) }}
+                    {{ form_row(form_c.nbMaxPlayer,{'label':'Nombre de joueurs maximum :'|trans, 'attr':{'class':'form-control '}}) }}
                 </div>
 
                 <div class="form-group">
-                    {{ form_row(form_c.numberRound,{'label':'Nombre de tours', 'attr':{'class':'form-control '}}) }}
+                    {{ form_row(form_c.numberRound,{'label':'Nombre de tours'|trans, 'attr':{'class':'form-control '}}) }}
                 </div>
                 <div class="form-group">
                     <div class="row">
@@ -76,7 +76,7 @@
                             {% set gameKey = gameKey + 1 %}
                         {% endfor %}
                     </div>
-                    <button class="btn btn-primary btn-block" type="submit">OUVRIR LE SALON</button>
+                    <button class="btn btn-primary btn-block" type="submit">{% trans %}OUVRIR LE SALON{% endtrans %}</button>
 
                     {{ form_end(form_c) }}
                     {{ form_end(form_r) }}

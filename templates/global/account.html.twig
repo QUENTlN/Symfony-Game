@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Inscription
+    {% trans %}Profil{% endtrans %}
 {% endblock %}
 
 {% block body %}
@@ -9,7 +9,7 @@
         <section class="portfolio-block project">
             <div class="container">
                 <div class="heading">
-                    <h2>Profil</h2>
+                    <h2>{% trans %}Profil{% endtrans %}</h2>
                 </div>
                 <div class="row">
                     <div class="col"><strong class="float-right">Email</strong></div>
@@ -24,27 +24,27 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col"><strong class="float-right">Mot de passe</strong></div>
+                    <div class="col"><strong class="float-right">{% trans %}Mot de passe{% endtrans %}</strong></div>
                     <div class="col">
-                        <p class="blur">Mot de passe</p>
+                        <p class="blur">{% trans %}Mot de passe{% endtrans %}</p>
                     </div>
                 </div>
                 <div class="row" style="margin-top: 30px;">
-                    <div class="col"><a href="{{ path('profile') }}" class="btn btn-primary float-right">Modifier
-                            informations</a></div>
-                    <div class="col"><a href="{{ path('changePassword') }}" class="btn btn-primary float-left">Modifier
-                            mot de passe</a></div>
+                    <div class="col"><a href="{{ path('profile') }}" class="btn btn-primary float-right">{% trans %}Modifier
+                            informations{% endtrans %}</a></div>
+                    <div class="col"><a href="{{ path('changePassword') }}" class="btn btn-primary float-left">{% trans %}Modifier
+                            mot de passe{% endtrans %}</a></div>
                 </div>
                 <div class="text-center" style="margin-top: 30px;"><a href="{{ path('logOut') }}"
-                                                                      class="btn btn-primary btn-danger">Déconnexion</a>
+                                                                      class="btn btn-primary btn-danger">{% trans %}Déconnexion{% endtrans %}</a>
                 </div>
                 <div class="more-projects">
-                    <h3 class="text-center">Mes Paramètres de salons enregistrés</h3>
+                    <h3 class="text-center">{% trans %}Mes Paramètres de salons enregistrés{% endtrans %}</h3>
                     <div class="modal fade" role="dialog" tabindex="-1" id="modalCreateSettings">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Edition des paramètres</h4>
+                                    <h4 class="modal-title">{% trans %}Edition des paramètres{% endtrans %}</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                                 aria-hidden="true">×</span></button>
                                 </div>
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <a href="{{ path('room_settings_new') }}"  class="btn btn-primary btn-success" type="button">Ajouter&nbsp;&nbsp;<i class="fa fa-plus"></i></a></div>
+                        <a href="{{ path('room_settings_new') }}"  class="btn btn-primary btn-success" type="button">{% trans %}Ajouter{% endtrans %}&nbsp;&nbsp;<i class="fa fa-plus"></i></a></div>
                 </div>
                 <div class="row gallery">
                     {% for room_setting in room_settings %}

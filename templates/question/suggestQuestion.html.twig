@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Suggérer une question{% endblock %}
+{% block title %}{% trans %}Suggérer une question{% endtrans %}{% endblock %}
 
 {% block body %}
     <main class="page contact-page">
         <section class="portfolio-block contact">
             <div class="container">
                 <div class="heading">
-                    <h2>Proposer une question</h2>
+                    <h2>{% trans %}Proposer une question{% endtrans %}</h2>
                 </div>
                 {{ form_start(form_quiz) }}
                 <div class="form-group text-center">
@@ -18,11 +18,11 @@
                         <button class="btn btn-info GuessTheBtn" type="button">Guess the</button>
                     </div>
                 </div>
-                {{ form_label(form_quiz.subCategory, 'Catégorie') }}
+                {{ form_label(form_quiz.subCategory, 'Catégorie'|trans) }}
                 {{ form_row(form_quiz.subCategory, {'label':false}) }}
-                {{ form_label(form_quiz.text, 'Question') }}
+                {{ form_label(form_quiz.text, 'Question'|trans) }}
                 {{ form_row(form_quiz.text, {'label':false}) }}
-                {{ form_label(form_quiz.answers, 'Réponses') }}
+                {{ form_label(form_quiz.answers, 'Réponses'|trans) }}
                 <div id="answersDiv"
                      data-prototype="{{ form_widget(form_quiz.answers.vars.prototype)|e('html_attr') }}">
                     <div class="mb-2">
@@ -42,11 +42,11 @@
                         <button class="btn btn-info active GuessTheBtn" type="button">Guess the</button>
                     </div>
                 </div>
-                {{ form_label(form_guessThe.subCategory, 'Catégorie') }}
+                {{ form_label(form_guessThe.subCategory, 'Catégorie'|trans) }}
                 {{ form_row(form_guessThe.subCategory, {'label':false}) }}
-                {{ form_label(form_guessThe.linkPicture, 'Image') }}
+                {{ form_label(form_guessThe.linkPicture, 'Image'|trans) }}
                 {{ form_row(form_guessThe.linkPicture, {'label':false}) }}
-                {{ form_label(form_guessThe.answers, 'Réponses') }}
+                {{ form_label(form_guessThe.answers, 'Réponses'|trans) }}
                 <div id="guessTheAnswersDiv"
                      data-prototype="{{ form_widget(form_guessThe.answers.vars.prototype)|e('html_attr') }}">
                     <div class="mb-2">
