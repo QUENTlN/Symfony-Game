@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Player;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,9 +34,9 @@ class ResetPasswordController extends AbstractController
     /**
      * @Route("/forgot_password_request", name="forgotPasswordRequest")
      */
-    public function request(Request $request, Mailer $mailer): Response
+    public function request(Request $request, Mailer $mailer, FormFactoryInterface $factory): Response
     {
-        $form = $this->createForm(ResetPasswordRequestFormType::class);
+        $form = $factory->create(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -69,7 +71,7 @@ class ResetPasswordController extends AbstractController
      * Validates and process the reset URL that the user clicked in their email.
      * @Route("/reset/{token}", name="resetPassword")
      */
-    public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, string $token = null, TranslatorInterface $translator): Response
+    public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, string $token = null, TranslatorInterface $translator, FormFactoryInterface $factory, EntityManager $manager): Response
     {
         if ($token) {
 
@@ -93,7 +95,7 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('forgotPasswordRequest');
         }
 
-        $form = $this->createForm(ChangePasswordFormType::class);
+        $form = $factory->create(ChangePasswordFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -105,7 +107,7 @@ class ResetPasswordController extends AbstractController
             );
 
             $user->setPassword($encodedPassword);
-            $this->getDoctrine()->getManager()->flush();
+            $manager->flush();
 
             $this->cleanSessionAfterReset();
 
