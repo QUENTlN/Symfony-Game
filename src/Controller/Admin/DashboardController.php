@@ -23,10 +23,6 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        /*$route = $this->get(CrudUrlGenerator::class)->build();
-        $url = $route->setController(PlayerCrudController::class)->generateUrl();
-        return $this->redirect($url);
-        */
         $accountsPlayer = $this->getDoctrine()->getRepository(Player::class)->findNumberPlayer();
         $numberGuest = $this->getDoctrine()->getRepository(Guest::class)->findNumberGuest();
         $numberRoomSettings = $this->getDoctrine()->getRepository(RoomSettings::class)->findNumberRoomSettings();
@@ -50,8 +46,6 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        // yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
        return[
             MenuItem::linktoDashboard('Dashboard', 'fa fa-home'),
             MenuItem::linkToCrud('Players', 'fas fa-address-book', Player::class),
