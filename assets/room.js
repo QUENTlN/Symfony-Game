@@ -40,6 +40,7 @@ if (hostId === playerId && _startForm !== null) {
 }
 
 const sendMessage = (typeMsg) => {
+    console.log("1")
     fetch(_sendForm.action, {
         method: _sendForm.method,
         body: 'type=' + typeMsg + '&idUser=' + playerId + '&idRoom=' + roomId + '&username=' + username,
@@ -92,6 +93,7 @@ url.searchParams.append('topic', 'http://mercure.hub/room/'.concat(roomId));
 const eventSource = new EventSource(url);
 eventSource.onmessage = event => {
     const data = JSON.parse(event.data);
+    console.log(data);
     switch (data.type) {
         case 'answer':
             if (data.isCorrect === true) {
@@ -126,10 +128,10 @@ eventSource.onmessage = event => {
         case 'join':
             if ($("#div-user-" + data.idUser).length === 0) {
                 $("#accordionSidebar").append('<li class="nav-item" id="div-user-' + data.idUser + '">\n' +
-                    '                        <div class="nav-link active">\n' +
+                    '                        <div class="nav-link active user-info" data-id-player="' + data.idUser + '">\n' +
                     '                            <i class="icon ion-happy"></i>\n' +
-                    '                            <span>' + data.username + '</span>\n' +
-                    '                            <span class="badge badge-primary float-right">0</span>\n' +
+                    '                            <span class="pseudo">' + data.username + '</span>\n' +
+                    '                            <span id="score-user-' + data.idUser + '" class="badge badge-primary float-right score">0</span>\n' +
                     '                        </div>\n' +
                     '                    </li>');
             }
@@ -191,31 +193,29 @@ eventSource.onmessage = event => {
             $('#gameCard').removeClass("bg-gradient-primary");
             if (hostId === playerId) {
                 nextQuestion();
-                $("#replay-game").remove();
+                $("#replay-game").attr("hidden", true)
             }
             break;
         case 'showResult':
+            $("#gameCard").addClass("bg-gradient-primary");
             $("#answerDiv").attr("hidden", true);
             if (hostId === playerId) {
-                $("#answerDiv").before("<div id=\"replay-game\" class=\"row w-100 justify-content-center\" >\n" +
-                    "                    <form action='/restart' method='post'>" +
-                    "                       <button id='restart-btn' class=\"btn btn-primary btn-lg\">Recommencer</button>\n" +
-                    "                    </form>" +
-                    "                </div>")
-                $("restart-btn").on('click', 'body', function () {
-                    const _restartForm = $(this).parent();
+                $("#replay-game").attr("hidden", false)
+                const _restartForm = $("restart-form");
+                _restartForm.onsubmit = event => {
+                    event.preventDefault();
                     $(".user-info").each(function () {
                         $(this).find(".score").text("0")
                     })
                     fetch(_restartForm.action, {
                         method: _restartForm.method,
-                        body: 'type=restart&idRoom=' + roomId,
+                        body: 'type=restart&room=' + roomId,
                         headers: new Headers({
                             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                         })
                     }).then(() => {
                     });
-                });
+                }
             }
             $("#question-content").html("\n" +
                 "                                <table class=\"table text-center w-50 mx-auto border-top-0\">\n" +
