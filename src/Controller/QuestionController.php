@@ -26,6 +26,7 @@ class QuestionController extends AbstractController
 {
     /**
      * @Route("/suggest_question", name="suggestQuestion")
+     * @IsGranted("ROLE_USER")
      */
     public function suggestQuestion(Request $request, EntityManagerInterface $manager): Response
     {
