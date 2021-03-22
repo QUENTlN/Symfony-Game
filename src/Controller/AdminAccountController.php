@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,6 +25,7 @@ class AdminAccountController extends AbstractController
 
     /**
      * @Route("/admin/logOut", name="adminlogOut")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function logOutAdmin()
     {
