@@ -64,6 +64,12 @@
                     </div>
                 </div>
 
+                <div id="replay-game" class="row w-100 justify-content-center" hidden>
+                    <form id="restart-form" action="{{ path('restart') }}" method="post">
+                        <button id='restart-btn' class="btn btn-primary btn-lg">Recommencer</button>
+                    </form>
+                </div>
+
                 <div id="answerDiv" class="card shadow mt-auto mb-4 w-100" hidden>
                     <div class="card-body p-0 m-0">
                         <form action="{{ path('answerQuestion') }}" method="POST" id="answer-form">
