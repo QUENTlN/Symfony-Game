@@ -13,9 +13,15 @@ use App\Form\GuessTheQuestionType;
 use App\Form\ModifyQuestionWithTextType;
 use App\Form\ModifyQuestionWithPictureType;
 use App\Form\QuizQuestionType;
+use App\Repository\CategoryRepository;
+use App\Repository\GameRepository;
+use App\Repository\QuestionRepository;
+use App\Repository\QuestionWithPictureRepository;
+use App\Repository\QuestionWithTextRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\True_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,8 +32,9 @@ class QuestionController extends AbstractController
 {
     /**
      * @Route("/suggest_question", name="suggestQuestion")
+     * @IsGranted("ROLE_USER")
      */
-    public function suggestQuestion(Request $request, EntityManagerInterface $manager): Response
+    public function suggestQuestion(Request $request, EntityManagerInterface $manager, FormFactoryInterface $factory): Response
     {
         $questionWithText = new QuestionWithText();
         $answer = new Answer();
@@ -36,7 +43,7 @@ class QuestionController extends AbstractController
         $questionWithText->addAnswer($answer)
             ->setStatus("pending")
             ->setPlayer($this->container->get('security.token_storage')->getToken()->getUser());
-        $quiz_form = $this->createForm(QuizQuestionType::class, $questionWithText);
+        $quiz_form = $factory->create(QuizQuestionType::class, $questionWithText);
         $quiz_form->handleRequest($request);
 
         if ($quiz_form->isSubmitted() && $quiz_form->isValid()) {
@@ -51,7 +58,7 @@ class QuestionController extends AbstractController
         $questionWithPicture->addAnswer($answer2)
             ->setStatus("pending")
             ->setPlayer($this->container->get('security.token_storage')->getToken()->getUser());
-        $guessthe_form = $this->createForm(GuessTheQuestionType::class, $questionWithPicture);
+        $guessthe_form = $factory->create(GuessTheQuestionType::class, $questionWithPicture);
         $guessthe_form->handleRequest($request);
 
         if ($guessthe_form->isSubmitted() && $guessthe_form->isValid()) {
@@ -82,16 +89,13 @@ class QuestionController extends AbstractController
      * @Route("/accept_Question/{id}", name="acceptQuestion")
      * @IsGranted ("ROLE_MODERATEUR")
      */
-    public function acceptQuestion($id)
+    public function acceptQuestion($id, EntityManagerInterface $manager, GameRepository $gameRepository, QuestionRepository $questionRepository)
     {
-        $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
-        $question = $this->getDoctrine()->getRepository(Question::class)->find($id);
+        $games = $gameRepository->findAll();
+        $question = $questionRepository->find($id);
         $question->setStatus(Question::STATUS["accepted"]);
-        $this->getDoctrine()->getManager()->persist($question);
-        $this->getDoctrine()->getManager()->flush();
-        /*return $this->render('question/acceptQuestion.html.twig', [
-            'question' => $question
-        ]);*/
+        $manager->persist($question);
+        $manager->flush();
         return $this->redirectToRoute("showQuestion");
     }
 
@@ -99,18 +103,16 @@ class QuestionController extends AbstractController
      * @Route("/show_Question", name="showQuestion")
      * @IsGranted ("ROLE_MODERATEUR")
      */
-    public function show(){
-        $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
-        $category = $this->getDoctrine()->getRepository(Category::class)->findAll();
-        $questionWithText = $this->getDoctrine()->getRepository(QuestionWithText::class)->findQuestionWithStatusPending();
-        $questionWithPicture = $this->getDoctrine()->getRepository(QuestionWithPicture::class)->findQuestionWithStatusPending();
+    public function show(GameRepository $gameRepository, CategoryRepository $categoryRepository,QuestionRepository $questionRepository, QuestionWithPictureRepository $questionWithPictureRepository, QuestionWithTextRepository $questionWithTextRepository){
+        $games = $gameRepository->findAll();
+        $category = $categoryRepository->findAll();
+        $question = $questionRepository->findQuestionWithStatusPending();
 
 
         return $this->render('question/acceptQuestion.html.twig', [
             'game' => $games,
             'category' => $category,
-            'questionsWithText' => $questionWithText,
-            'questionsWithPicture' => $questionWithPicture,
+            'questions' => $question,
         ]);
     }
 
@@ -121,22 +123,21 @@ class QuestionController extends AbstractController
      * @param $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function modify($id, Request $request)
+    public function modify($id, Request $request, QuestionRepository $questionRepository, FormFactoryInterface $factory, EntityManagerInterface $manager)
     {
-        $question = $this->getDoctrine()->getRepository(Question::class)->find($id);
+        $question = $questionRepository->find($id);
         if (strcmp($question->getType(), 'QuestionWithText') == 0) {
             $boolean = true;
-            $form = $this->createForm(ModifyQuestionWithTextType::class, $question);
+            $form = $factory->create(ModifyQuestionWithTextType::class, $question);
         }else {
             $boolean = false;
-            $form = $this->createForm(ModifyQuestionWithPictureType::class, $question);
+            $form = $factory->create(ModifyQuestionWithPictureType::class, $question);
         }
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($question);
-            $em->flush();
+            $manager->persist($question);
+            $manager->flush();
 
             return $this->redirectToRoute('showQuestion');
         }
@@ -144,16 +145,6 @@ class QuestionController extends AbstractController
             'form' => $form->createView(),
             'boolean' => $boolean,
         ]);
-        /*
-        $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
-        $question = $this->getDoctrine()->getRepository(Question::class)->find($id);
-        $question->setStatus(Question::STATUS["accepted"]);
-        $this->getDoctrine()->getManager()->persist($question);
-        $this->getDoctrine()->getManager()->flush();
-        */
-        /*return $this->render('question/acceptQuestion.html.twig', [
-            'question' => $question
-        ]);*/
         return $this->redirectToRoute("showQuestion");
     }
 
@@ -163,15 +154,11 @@ class QuestionController extends AbstractController
      * @IsGranted ("ROLE_MODERATEUR")
      *
      */
-    public function delete($id)
+    public function delete($id, EntityManagerInterface $manager)
     {
-        $em = $this->getDoctrine()->getManager();
         $question = $this->getDoctrine()->getRepository(Question::class)->find($id);
-        $em->remove($question);
-        $em->flush();
-        /*return $this->render('question/acceptQuestion.html.twig', [
-            'question' => $question
-        ]);*/
+        $manager->remove($question);
+        $manager->flush();
         return $this->redirectToRoute("showQuestion");
     }
 

@@ -19,6 +19,15 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
+    public function findQuestionWithStatusPending()
+    {
+        return $this->createQueryBuilder('q')
+            ->andWhere('q.status = :status')
+            ->setParameter('status', "pending")
+            ->getQuery()
+            ->getResult();
+    }
+
     /*public function findById($id)
     {
         return $this->createQueryBuilder('q')
