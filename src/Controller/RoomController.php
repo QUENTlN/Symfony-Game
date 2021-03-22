@@ -17,6 +17,7 @@ use App\Repository\RoundRepository;
 use App\Repository\ScoreRepository;
 use App\Service\RoundsGenerator;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -233,6 +234,7 @@ class RoomController extends AbstractController
      * @param string $access
      * @param EntityManagerInterface $entityManager
      * @return Response
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request, string $access, EntityManagerInterface $entityManager,RoundsGenerator $roundsGenerator): Response
     {
