@@ -49,7 +49,6 @@
                 {{ form_label(form_guessThe.answers, 'Réponses') }}
                 <div id="guessTheAnswersDiv"
                      data-prototype="{{ form_widget(form_guessThe.answers.vars.prototype)|e('html_attr') }}">
-                    {# {% for answer in form_quiz.answers[0] %} #}
                     <div class="mb-2">
                         {{ form_row(form_guessThe.answers[0]) }}
                     </div>

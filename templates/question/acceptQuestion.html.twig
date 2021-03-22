@@ -34,7 +34,6 @@
                             <td><a href="{{ path('acceptQuestion', {'id':question.getId()})}}" class="btn btn-success"><i class="fa fa-check"></i></a></td>
                             <td><a href="{{ path('modify_question', {'id':question.getId()})}}" class="btn btn-info"></a></td>
                             <td><a href="{{ path('delete_question', {'id':question.getId()})}}" class="btn btn-danger"></a></td>
-                            {#  <td> <a href="" class="btn btn-primary"> Lire la suite </a></td>#}
                         </tr>
                     {% endfor %}
                     {% for question in questionsWithPicture %}
