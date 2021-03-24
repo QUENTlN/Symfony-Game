@@ -38,9 +38,20 @@ if (hostId === playerId && _startForm !== null) {
         return false;
     }
 }
+if (hostId === playerId) {
+    $("#restart-btn").on("click", function () {
+        $.ajax({
+            method: "POST",
+            url: "/restart",
+            data: {room: roomId}
+        });
+        $(".user-info").each(function () {
+            $(this).find(".score").text("0")
+        });
+    });
+}
 
 const sendMessage = (typeMsg) => {
-    console.log("1")
     fetch(_sendForm.action, {
         method: _sendForm.method,
         body: 'type=' + typeMsg + '&idUser=' + playerId + '&idRoom=' + roomId + '&username=' + username,
@@ -60,6 +71,7 @@ _sendForm.onsubmit = (evt) => {
 
 const nextQuestion = () => {
     let currentRound = $('#current-round').val();
+    console.log(currentRound + " <= " + nbRound)
     if (currentRound <= nbRound) {
         fetch(_nextQuestionForm.action, {
             method: _nextQuestionForm.method,
@@ -199,23 +211,9 @@ eventSource.onmessage = event => {
         case 'showResult':
             $("#gameCard").addClass("bg-gradient-primary");
             $("#answerDiv").attr("hidden", true);
+            $("#current-round").val(1);
             if (hostId === playerId) {
                 $("#replay-game").attr("hidden", false)
-                const _restartForm = $("restart-form");
-                _restartForm.onsubmit = event => {
-                    event.preventDefault();
-                    $(".user-info").each(function () {
-                        $(this).find(".score").text("0")
-                    })
-                    fetch(_restartForm.action, {
-                        method: _restartForm.method,
-                        body: 'type=restart&room=' + roomId,
-                        headers: new Headers({
-                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-                        })
-                    }).then(() => {
-                    });
-                }
             }
             $("#question-content").html("\n" +
                 "                                <table class=\"table text-center w-50 mx-auto border-top-0\">\n" +
@@ -229,14 +227,13 @@ eventSource.onmessage = event => {
                 "                                </table>")
             let position = 1;
             $(".user-info").each(function () {
-                let userInfo = this
                 $("tbody").append("\n" +
                     "                                    <tr>\n" +
                     "                                        <th scope=\"row\">" + position + "</th>\n" +
-                    "                                        <td>" + $(userInfo).find(".pseudo").text() + "</td>\n" +
-                    "                                        <td>" + $(userInfo).find(".score").text() + "</td>\n" +
+                    "                                        <td>" + $(this).find(".pseudo").text() + "</td>\n" +
+                    "                                        <td>" + $(this).find(".score").text() + "</td>\n" +
                     "                                    </tr>")
-                $(userInfo).find(".score").text("0")
+                $(this).find(".score").text("0")
                 position++
             })
             break;

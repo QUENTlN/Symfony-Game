@@ -20,7 +20,7 @@ class RoundsGenerator
     public function roundsGenerator(Room $room)
     {
         foreach($room->getRounds() as $round){
-            $room->getRounds()->remove($round);
+            $room->removeRound($round);
         }
         $nbRound = $room->getRoomSettings()->getNumberRound();
         $subCategories = $room->getRoomSettings()->getSubCategories();
