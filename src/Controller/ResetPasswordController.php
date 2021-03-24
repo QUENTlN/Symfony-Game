@@ -58,7 +58,7 @@ class ResetPasswordController extends AbstractController
     {
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
             $this->addFlash('reset_password_error',
-                $translator->trans('resetPasswordMail'));
+                $translator->trans('Oups, il semble qu\'il y ait un problème lors de l\'envoi de mail, veuillez vérifier que votre mail est bien écrit.'));
             return $this->redirectToRoute('forgotPasswordRequest');
         }
 
@@ -89,7 +89,7 @@ class ResetPasswordController extends AbstractController
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
         } catch (ResetPasswordExceptionInterface $e) {
             $this->addFlash('reset_password_error',
-                $translator->trans('resetPasswordError').$e->getReason()
+                $translator->trans('Oups... il semble qu\'il y ait un problème lors de la réinitialisation de votre mot de passe, voici pourquoi : ').$e->getReason()
             );
 
             return $this->redirectToRoute('forgotPasswordRequest');
