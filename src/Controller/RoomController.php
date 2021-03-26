@@ -91,8 +91,8 @@ class RoomController extends AbstractController
     public function answerQuestion(MessageBusInterface $bus, EntityManagerInterface $entityManager, Request $request, ScoreRepository $scoreRepository, GuestRepository $guestRepository, QuestionRepository $questionRepository, RoomRepository $roomRepository, AnswerRepository $answerRepository): RedirectResponse
     {
         $question = $questionRepository->findOneBy(['id' => $request->request->get('question')]);
-        $answer = $answerRepository->findOneBy(['question' => $question, 'textAnswer' => $request->request->get('message')]);
-        if ($answer !== null) {
+        $answer = $answerRepository->findRightAnswer( $question, $request->request->get('message'));
+        if ($answer > 0) {
             $newPoints = $request->request->get('time');
 
             $body = json_encode([
@@ -115,7 +115,7 @@ class RoomController extends AbstractController
             $body
         );
         $bus->dispatch($update);
-        if ($answer !== null) {
+        if ($answer > 0) {
             $room = $roomRepository->findOneBy(['id' => $request->request->get('idRoom')]);
             $guest = $guestRepository->findOneBy(['id' => $request->request->get('idUser')]);
             $score = $scoreRepository->findOneBy(['guest' => $guest, 'room' => $room]);

@@ -18,4 +18,16 @@ class AnswerRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Answer::class);
     }
+
+    public function findRightAnswer($question,$answer)
+    {
+        return $this->createQueryBuilder('a')
+            ->select('COUNT(a.id)')
+            ->Where('a.question = :question')
+            ->andWhere('LOWER(a.textAnswer) = :text' )
+            ->setParameter('question', $question)
+            ->setParameter('text', strtolower($answer) )
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }
