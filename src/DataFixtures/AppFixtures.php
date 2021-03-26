@@ -417,11 +417,11 @@ class AppFixtures extends Fixture
                         "Qui est l'entraineur du Real de l'équipe de France de foot 2020-2021 ?" => [
                             "Didier Deschamps", "didier deschamps"
                         ],
-                        "Combien de temps dure un match avec prolongation ?" => [
-                            "Zizou", "Zinédine Zidane", "Zinedine Zidane",
+                        "Combien de temps dure un match de foot avec prolongation ?" => [
+                            "120 minutes", "120"
                         ],
                         "Qui est l'entraineur du Real de Madrid 2020-2021 ?" => [
-                            "Zizou", "Zinédine Zidane", "Zinedine Zidane",
+                             "Zinédine Zidane", "Zinedine Zidane", "Zizou",
                         ],
                         "Qui est l'officiel qui fait respecter les règles ?" => [
                             "l'arbitre", "L'arbitre", "arbitre", "Arbitre"
@@ -601,13 +601,9 @@ class AppFixtures extends Fixture
                             $answer = new Answer();
                             $answer->setTextAnswer($answerTab);
                             $question->addAnswer($answer);
-
-                            $manager->persist($answer);
-                            $manager->persist($question);
                         }
-
+                        $manager->persist($question);
                     }
-
                 }
             }
         }
