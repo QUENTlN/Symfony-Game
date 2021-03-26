@@ -27,9 +27,9 @@ class RoundsGenerator
         $questions = $this->questionRepository->findBySubCategories($subCategories);
         $questionsAlreadyUsed=[];
         for ($i = 1; $i <= $nbRound; $i++) {
-           // do{
-                $chosenQuestion = $questions[rand(0, count($questions) - 1)];
-           // }while(in_array($chosenQuestion,$questionsAlreadyUsed));
+            do{
+                $chosenQuestion = $questions[random_int(0, count($questions) - 1)];
+            }while(in_array($chosenQuestion, $questionsAlreadyUsed, true));
             $questionsAlreadyUsed[]=$chosenQuestion;
             $round = new Round();
             $round->setQuestion($chosenQuestion);

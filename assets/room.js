@@ -71,7 +71,6 @@ _sendForm.onsubmit = (evt) => {
 
 const nextQuestion = () => {
     let currentRound = $('#current-round').val();
-    console.log(currentRound + " <= " + nbRound)
     if (currentRound <= nbRound) {
         fetch(_nextQuestionForm.action, {
             method: _nextQuestionForm.method,
@@ -105,7 +104,6 @@ url.searchParams.append('topic', 'http://mercure.hub/room/'.concat(roomId));
 const eventSource = new EventSource(url);
 eventSource.onmessage = event => {
     const data = JSON.parse(event.data);
-    console.log(data);
     switch (data.type) {
         case 'answer':
             if (data.isCorrect === true) {
