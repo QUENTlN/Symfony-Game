@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% trans %}Inscription{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+    <section class="portfolio-block contact text-center">
+        <h2 class="text-center font-weight-bold mt-5">{% trans %}Valider les questions et réponses proposées par les players{% endtrans %}</h2>
+        <div class="container-fluid">
+            <div class="table-responsive mt-5">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Game</th>
+                        <th class="w-50">{% trans %}Questions{% endtrans %}</th>
+                        <th class="w-50">{% trans %}Réponses{% endtrans %}</th>
+                        <th>{% trans %}Accepter{% endtrans %}</th>
+                        <th>{% trans %}Modifier{% endtrans %}</th>
+                        <th>{% trans %}Supprimer{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-justify">
+                    {% for question in questions %}
+                        <tr>
+                            <td><br>{{ question.subcategory.category.game.name }}
+                                <br>{{ question.subcategory.category.getLibCategory() }}
+                                <br>{{ question.getSubCategory() }}</td>
+                            {% if question.getType() == "QuestionWithText" %}
+                            <td class="text">{{ question.getText() }}</td>
+                                {% else %}
+                            <td><img src="{{ asset('games_images/guess_the/'~question.getLinkPicture()) }} " alt=""
+                                     style="width:200px; height:auto;"></td>
+                            {% endif %}
+                            <td>
+                            {% for answer in question.answers %}
+                                {{ answer.getTextAnswer() }}<br>
+                            {% endfor %}
+                            </td>
+                            <td><a href="{{ path('acceptQuestion', {'id':question.getId()}) }}" class="btn btn-success"><i
+                                            class="fa fa-check"></i></a></td>
+                            <td><a href="{{ path('modify_question', {'id':question.getId()}) }}"
+                                   class="btn btn-info"></a></td>
+                            <td><a href="{{ path('delete_question', {'id':question.getId()}) }}"
+                                   class="btn btn-danger"></a></td>
+                            {# <td> <a href="" class="btn btn-primary"> Lire la suite </a></td> #}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <section></section>
+    </section>
+    <footer class="page-footer">
+        <div class="container">
+            <div class="links"><a href="https://github.com/QUENTlN/game">Made with&nbsp;<i class="icon ion-heart"></i>&nbsp;
+                    by LeGroupe5</a></div>
+        </div>
+    </footer>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
+    <script src="assets/js/theme.js"></script>
+
+{% endblock %}

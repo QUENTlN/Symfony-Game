@@ -24,12 +24,23 @@ class Category
      */
     private $libCategory;
 
+    /**
+     * @ORM\OneToMany(targetEntity=SubCategory::class, mappedBy="category", orphanRemoval=true)
+     */
+    private $subCategories;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Game::class, inversedBy="categories")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $game;
 
     public function __construct()
     {
-        $this->SubTheme = new ArrayCollection();
+        $this->subCategories = new ArrayCollection();
     }
+
+
 
     public function getId(): ?int
     {
@@ -46,6 +57,52 @@ class Category
         $this->libCategory = $libCategory;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|SubCategory[]
+     */
+    public function getSubCategories(): Collection
+    {
+        return $this->subCategories;
+    }
+
+    public function addSubCategory(SubCategory $subCategory): self
+    {
+        if (!$this->subCategories->contains($subCategory)) {
+            $this->subCategories[] = $subCategory;
+            $subCategory->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubCategory(SubCategory $subCategory): self
+    {
+        if ($this->subCategories->removeElement($subCategory)) {
+            if ($subCategory->getCategory() === $this) {
+                $subCategory->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getGame(): ?Game
+    {
+        return $this->game;
+    }
+
+    public function setGame(?Game $game): self
+    {
+        $this->game = $game;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getLibCategory();
     }
 
 

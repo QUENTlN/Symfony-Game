@@ -17,39 +17,24 @@ class Answer
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $idAnswer;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $textAnswer;
 
-
     /**
-     * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="relation")
+     * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="answers", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $question;
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdAnswer(): ?int
-    {
-        return $this->idAnswer;
-    }
-
-    public function setIdAnswer(int $idAnswer): self
-    {
-        $this->idAnswer = $idAnswer;
-
-        return $this;
-    }
 
     public function getTextAnswer(): ?string
     {

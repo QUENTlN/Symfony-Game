@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=RoomSettingsRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class RoomSettings
 {
@@ -25,7 +26,7 @@ class RoomSettings
     private $nbMaxPlayer;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="boolean")
      */
     private $showScore;
 
@@ -40,12 +41,6 @@ class RoomSettings
     private $oneAnswerOnly;
 
     /**
-     * @ORM\Column(type="string", length=1000, nullable=true)
-     */
-    private $idGameSettings;
-
-
-    /**
      * @ORM\OneToMany(targetEntity=Room::class, mappedBy="roomSettings")
      */
     private $Room;
@@ -56,20 +51,34 @@ class RoomSettings
     private $subCategories;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Game::class, inversedBy="ManyToMany")
+     * @ORM\ManyToMany(targetEntity=Game::class, inversedBy="roomSettings")
      */
-    private $Game;
+    protected $game;
+
 
     /**
-     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="RoomSettings")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $OneToMany;
+    private $deletedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="roomSettings")
+     */
+    private $idPlayer;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nameProfil;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numberRound;
 
     public function __construct()
     {
-        $this->Game = new ArrayCollection();
-        $this->RoomSettings = new ArrayCollection();
+        $this->game = new ArrayCollection();
         $this->Room = new ArrayCollection();
         $this->subCategories = new ArrayCollection();
     }
@@ -91,7 +100,7 @@ class RoomSettings
         return $this;
     }
 
-    public function getShowScore(): ?int
+    public function getShowScore(): ?bool
     {
         return $this->showScore;
     }
@@ -127,74 +136,6 @@ class RoomSettings
         return $this;
     }
 
-    public function getIdGameSettings(): ?string
-    {
-        return $this->idGameSettings;
-    }
-
-    public function setIdGameSettings(?string $idGameSettings): self
-    {
-        $this->idGameSettings = $idGameSettings;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Game[]
-     */
-    public function getGame(): Collection
-    {
-        return $this->Game;
-    }
-
-    public function addGame(Game $game): self
-    {
-        if (!$this->Game->contains($game)) {
-            $this->Game[] = $game;
-            $game->setRoomSettings($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGame(Game $game): self
-    {
-        if ($this->Game->removeElement($game)) {
-            // set the owning side to null (unless already changed)
-            if ($game->getRoomSettings() === $this) {
-                $game->setRoomSettings(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SubTheme[]
-     */
-    public function getRoomSettings(): Collection
-    {
-        return $this->RoomSettings;
-    }
-
-    public function addRoomSetting(SubTheme $roomSetting): self
-    {
-        if (!$this->RoomSettings->contains($roomSetting)) {
-            $this->RoomSettings[] = $roomSetting;
-        }
-
-        return $this;
-    }
-
-    public function removeRoomSetting(SubTheme $roomSetting): self
-    {
-        $this->RoomSettings->removeElement($roomSetting);
-
-        return $this;
-    }
-
-
-
     /**
      * @return Collection|Room[]
      */
@@ -216,7 +157,6 @@ class RoomSettings
     public function removeRoom(Room $room): self
     {
         if ($this->Room->removeElement($room)) {
-            // set the owning side to null (unless already changed)
             if ($room->getRoomSettings() === $this) {
                 $room->setRoomSettings(null);
             }
@@ -252,15 +192,64 @@ class RoomSettings
         return $this;
     }
 
-    public function getOneToMany(): ?Player
+    public function getDeletedAt(): ?\DateTimeInterface
     {
-        return $this->OneToMany;
+        return $this->deletedAt;
     }
 
-    public function setOneToMany(?Player $OneToMany): self
+    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
-        $this->OneToMany = $OneToMany;
+        $this->deletedAt = $deletedAt;
 
         return $this;
+    }
+
+    public function getIdPlayer(): ?Player
+    {
+        return $this->idPlayer;
+    }
+
+    public function setIdPlayer(?Player $idPlayer): self
+    {
+        $this->idPlayer = $idPlayer;
+
+        return $this;
+    }
+
+    public function getNameProfil(): ?string
+    {
+        return $this->nameProfil;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    public function setNameProfil(?string $nameProfil): self
+    {
+        $this->nameProfil = $nameProfil;
+
+        return $this;
+    }
+
+    public function getNumberRound(): ?int
+    {
+        return $this->numberRound;
+    }
+
+    public function setNumberRound(int $numberRound): self
+    {
+        $this->numberRound = $numberRound;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return 'Id des paramètres de room sauvegardés : '.$this->getId();
     }
 }

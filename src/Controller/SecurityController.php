@@ -3,41 +3,55 @@
 namespace App\Controller;
 
 use App\Form\RegistrationType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Player;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use App\Service\Mailer;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/sign_in", name="signIn")
      */
-    public function signIn(): Response
+    public function signIn(AuthenticationUtils $authenticationUtils): Response
     {
-        return $this->render('security/signIn.html.twig');
+        $error = $authenticationUtils -> getLastAuthenticationError();
+        return $this->render('security/signIn.html.twig', [
+            'error' => $error
+        ]);
     }
 
     /**
      * @Route("/sign_up", name="signUp")
      */
-    public function signUp(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    public function signUp(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, Mailer $mailer, TranslatorInterface $translator, FormFactoryInterface $factory)
     {
         $player = new Player();
 
-        $form = $this->createForm(RegistrationType::class, $player);
+        $form = $factory->create(RegistrationType::class, $player);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $player->setIsAdmin(false);
             $hash = $encoder->encodePassword($player, $player->getPassword());
             $player->setPassword($hash);
             $manager->persist($player);
             $manager->flush();
+
+            $mailer->sendRegistrationMail($player);
+
+            $this->addFlash(
+                'success',
+                $translator->trans('accountCreated')
+            );
 
             return $this->redirectToRoute('signIn');
         }
@@ -49,6 +63,7 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/log_out", name="logOut")
+     * @IsGranted("ROLE_USER")
      */
     public function logout(){}
 
