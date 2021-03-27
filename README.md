@@ -2,7 +2,7 @@
 
 ## Site : ## 
 https://magma-mercurehub.herokuapp.com/ 
-(les parties ne fonctionne pas car il fallait un hébergeur qui supporte le GO et qui a un accès SSH mais il fonctionne en local, pour jouer avec plusieurs comptes vous pouvez ouvrir une fenêtre en navigation privée)
+(les parties ne fonctionnent pas car il fallait un hébergeur qui supporte le GO et qui a un accès SSH mais il fonctionne en local, pour jouer avec plusieurs comptes vous pouvez ouvrir une fenêtre en navigation privée)
 
 ## Script SQL : ##
 [SQL](doc/game.sql) 
@@ -105,13 +105,14 @@ https://github.com/QUENTlN/game/projects/1
         - Room Settings
         - Category
         - SubCategory
+    - Un eventSubscriber a été implémenté afin de gérer le hachage du mot de passe, EasyAdmin laissant le mot de passe en clair. Cet eventSUbscriber intervient juste avant le persist d’un objet d’une entité, et vérifie si l’entité persistée est de type Player, si oui alors une fonction permettant le hachage du mdp est appelée.
 - Page de suggestion de question
     - Uniquement si l’utilisateur a un compte et est connecté
     - Formulaire permettant le choix du jeu et de la catégorie/sous-catégorie de questions qui seraient liées à cette question, l’énoncé de la question et sa/ses réponses.
     - Un bouton “ajouter” permet de, dynamiquement, ajouter un champ pour ajouter une réponse.
 - Page de gestion des questions en attente de validation
     - Uniquement accessible si l’utilisateur connecté a un rôle de modérateur
-    - Vue des différentes questions avec le statut “Pending” ainsi que leur jeu/catégorie/sous-catégorie associé
+    - Vue des différentes questions avec le statut “Pending” ainsi que leur jeu/catégorie/sous-catégorie associé(e)(s)
     - 3 possibilités d’actions :
     - Modifier la question
     - Accepter la question (la question passe en statut “Accepted”)
@@ -127,18 +128,17 @@ https://github.com/QUENTlN/game/projects/1
 - Page de création de paramètres de salon
     - Accessible uniquement si l’utilisateur est connecté
     - Formulaire permettant de remplir les différents paramètres de la room (nom du profil, nombre de joueurs maximum, nombre de tours, et les sous catégories de questions présentes dans la salle)
-    - Auto-complétion lors de la saisie du choix des questions : lorsqu’un jeux est coché, tout ce qui est lié à lui l’est aussi, de même pour les catégories et sous catégories.
+    - Auto-complétion lors de la saisie du choix des questions : lorsqu’un jeu est coché, tout ce qui est lié à lui l’est aussi, de même pour les catégories et sous catégories.
 - Salon de jeu
-    - Rejoindre un salon et prévenir tout les autres participant que vous êtes présent
-    - L’host peut lancer la partie pendant que les autres joueurs on un écran d’attente
+    - Rejoindre un salon et prévenir tous les autres participants que vous êtes présent
+    - L’host peut lancer la partie pendant que les autres joueurs ont un écran d’attente
     - Les joueurs peuvent répondre à la question jusqu'à la fin du temps imparti ou jusqu'à ce qu’il réponde correctement
-    - Lorsque tous les rounds sont terminé le tableau des scores s’affiche
-    - Une fois le score afficher l’host peut relancer la partie
+    - Lorsque tous les rounds sont terminés le tableau des scores s’affiche
+    - Une fois le score affiché l’host peut relancer la partie
 - Autre
     - Page d’erreurs personnalisée par une API
-    - La traduction est disponible en anglais sur tout le site depuis la barre de navigation
+    - La traduction est disponible en anglais sur tout le site depuis la barre de navigation, et grâce à une gestion d’événements qui permet de changer la langue de la session.
     - Gestion des différents rôles, restriction d’accès à travers les pages : modérateur, player et anonyme / guest.
   
 
 
-Pardon pour les questions c’est Isouri qui les as écrite.
