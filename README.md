@@ -70,7 +70,8 @@ https://github.com/QUENTlN/game/projects/1
 
 ## Compte: ##
 - Rôle d'utilisateur :
-  - Nom d’utilisateur : 
+  Vous pouvez en créer un propre à vous en choisissant de vous inscrire, sinon voici des identifiants déja disponibles !
+  - Nom d’utilisateur :
   - Mot de passe : azerty
 
 - Rôle de modérateur :
@@ -81,13 +82,20 @@ https://github.com/QUENTlN/game/projects/1
   - Le formulaire de connexion se trouve sur la route “/admin/login”.
   - Nom d’utilisateur : admin
   - Mot de passe : admin
-  
+- Serveur SMTP : pour l'envoi de mail nous utilisons un faux serveur SMTP fourni par mailtrap.io, pour visualiser les différents mails envoyés, veuillez suivre ces étapes :
+  - Dirigez vous vers le site : https://mailtrap.io
+  - Cliquez sur "Log in" situé en haut à droite
+  - "Use Google account"
+  - @mail : symfonytest69@gmail.com
+  - mot de passe : KeFg7JfPOneffc9E
+  - Vous voilà connecté ! Vous pouvez visualiser vos mails dans la section "Inboxes" puis dans "My inbox"
 
 ## Fonctionnalités: ##
 - Page d'accueil
     - Consulter les Room publiques ouvertes
     - Rejoindre une Room publique
     - Aller vers la page de création de Room publique ou privé si l’on est connecté
+    - Un système de pagination affiche 10 salons par pages
 - Page connexion
     - Authentification à l’aide du mail et du mot de passe de l’utilisateur
     - Mot de passe oublié : envoi d’un mail avec un lien qui expire au bout d’une heure. Ce lien amène l’utilisateur vers une page lui permettant de changer de mot de passe. Gestion des erreurs : si le lien n’est plus valide, si les mots de passe ne correspondent pas, si le mot de passe est trop court, si le mail ne correspond à aucun mail déjà enregistré. 
