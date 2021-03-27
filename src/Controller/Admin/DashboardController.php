@@ -6,6 +6,8 @@ use App\Entity\Category;
 use App\Entity\Guest;
 use App\Entity\Player;
 use App\Entity\Question;
+use App\Entity\QuestionWithPicture;
+use App\Entity\QuestionWithText;
 use App\Entity\Room;
 use App\Entity\RoomSettings;
 use App\Entity\SubCategory;
@@ -51,7 +53,9 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Players', 'fas fa-address-book', Player::class),
             MenuItem::linkToCrud('Guests', 'far fa-address-book', Guest::class),
             MenuItem::linkToCrud('Question', 'far fa-question-circle', Question::class),
-            MenuItem::linkToCrud('Rooms', 'fas fa-dice', Room::class),
+            MenuItem::linkToCrud('Question with picture', 'far fa-question-circle', QuestionWithPicture::class),
+           MenuItem::linkToCrud('Question with text', 'far fa-question-circle', QuestionWithText::class),
+           MenuItem::linkToCrud('Rooms', 'fas fa-dice', Room::class),
             MenuItem::linkToCrud('Fiches de paramètres des rooms', 'fas fa-users-cog', RoomSettings::class),
             MenuItem::linkToCrud('Catégorie', 'fas fa-list', Category::class),
             MenuItem::linkToCrud('Sous-catégorie', 'fas fa-th-list', SubCategory::class),
