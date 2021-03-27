@@ -31,6 +31,7 @@ class ConfigEnregistreType extends AbstractType
                     return $repo->findAllByPlayer($this->security->getUser());
                 },
                 'choice_label' => 'nameProfil',
+                'required'=>false,
                 'placeholder' => 'choisir une des configurations enregistrées',
             ])
 
