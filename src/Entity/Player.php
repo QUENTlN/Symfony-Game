@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=PlayerRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(
  *  fields= {"login"},
  *  message= "Email déjà utilisé, veuillez réessayer"
@@ -24,7 +25,7 @@ class Player extends Guest implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -44,29 +45,27 @@ class Player extends Guest implements UserInterface
     private $isAdmin;
 
     /**
-     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="player")
-     */
-    private $Room;
-
-    /**
      * @ORM\OneToMany(targetEntity=Question::class, mappedBy="player")
      */
     private $Question;
 
-
-    private $Answer;
+    /**
+     * @ORM\OneToMany(targetEntity=RoomSettings::class, mappedBy="idPlayer")
+     */
+    private $roomSettings;
 
     /**
-     * @ORM\OneToMany(targetEntity=RoomSettings::class, mappedBy="OneToMany")
+     * @ORM\OneToMany(targetEntity=Room::class, mappedBy="host", orphanRemoval=true)
      */
-    private $RoomSettings;
+    private $hostedRooms;
+
 
     public function __construct()
     {
-        $this->Room = new ArrayCollection();
         $this->Question = new ArrayCollection();
         $this->Answer = new ArrayCollection();
-        $this->RoomSettings = new ArrayCollection();
+        $this->roomSettings = new ArrayCollection();
+        $this->hostedRooms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,7 +111,13 @@ class Player extends Guest implements UserInterface
 
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        if($this->getIsAdmin()==true)
+        {
+            return ['ROLE_USER', 'ROLE_MODERATEUR'];
+        }
+        else{
+            return ['ROLE_USER'];
+        }
     }
 
     public function getSalt()
@@ -120,43 +125,8 @@ class Player extends Guest implements UserInterface
         return null;
     }
 
-    public function getUsername()
-    {
-        return $this->login;
-    }
-
     public function eraseCredentials()
     {
-    }
-
-    /**
-     * @return Collection|Room[]
-     */
-    public function getRoom(): Collection
-    {
-        return $this->Room;
-    }
-
-    public function addRoom(Room $room): self
-    {
-        if (!$this->Room->contains($room)) {
-            $this->Room[] = $room;
-            $room->setPlayer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRoom(Room $room): self
-    {
-        if ($this->Room->removeElement($room)) {
-            // set the owning side to null (unless already changed)
-            if ($room->getPlayer() === $this) {
-                $room->setPlayer(null);
-            }
-        }
-
-        return $this;
     }
 
     /**
@@ -180,39 +150,8 @@ class Player extends Guest implements UserInterface
     public function removeQuestion(Question $question): self
     {
         if ($this->Question->removeElement($question)) {
-            // set the owning side to null (unless already changed)
             if ($question->getPlayer() === $this) {
                 $question->setPlayer(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Answer[]
-     */
-    public function getAnswer(): Collection
-    {
-        return $this->Answer;
-    }
-
-    public function addAnswer(Answer $answer): self
-    {
-        if (!$this->Answer->contains($answer)) {
-            $this->Answer[] = $answer;
-            $answer->setPlayer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnswer(Answer $answer): self
-    {
-        if ($this->Answer->removeElement($answer)) {
-            // set the owning side to null (unless already changed)
-            if ($answer->getPlayer() === $this) {
-                $answer->setPlayer(null);
             }
         }
 
@@ -224,14 +163,14 @@ class Player extends Guest implements UserInterface
      */
     public function getRoomSettings(): Collection
     {
-        return $this->RoomSettings;
+        return $this->roomSettings;
     }
 
     public function addRoomSetting(RoomSettings $roomSetting): self
     {
-        if (!$this->RoomSettings->contains($roomSetting)) {
-            $this->RoomSettings[] = $roomSetting;
-            $roomSetting->setOneToMany($this);
+        if (!$this->roomSettings->contains($roomSetting)) {
+            $this->roomSettings[] = $roomSetting;
+            $roomSetting->setHost($this);
         }
 
         return $this;
@@ -239,13 +178,59 @@ class Player extends Guest implements UserInterface
 
     public function removeRoomSetting(RoomSettings $roomSetting): self
     {
-        if ($this->RoomSettings->removeElement($roomSetting)) {
-            // set the owning side to null (unless already changed)
-            if ($roomSetting->getOneToMany() === $this) {
-                $roomSetting->setOneToMany(null);
+        if ($this->roomSettings->removeElement($roomSetting)) {
+            if ($roomSetting->getHost() === $this) {
+                $roomSetting->setHost(null);
             }
         }
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setIsAdminValue(): void
+    {
+        $this->isAdmin = false;
+    }
+
+    /**
+     * @return Collection|Room[]
+     */
+    public function getHostedRooms(): Collection
+    {
+        return $this->hostedRooms;
+    }
+
+    public function addHostedRoom(Room $hostedRoom): self
+    {
+        if (!$this->hostedRooms->contains($hostedRoom)) {
+            $this->hostedRooms[] = $hostedRoom;
+            $hostedRoom->setHost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHostedRoom(Room $hostedRoom): self
+    {
+        if ($this->hostedRooms->removeElement($hostedRoom)) {
+            if ($hostedRoom->getHost() === $this) {
+                $hostedRoom->setHost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->login;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getUsername();
     }
 }

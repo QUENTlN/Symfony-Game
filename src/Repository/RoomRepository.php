@@ -19,32 +19,34 @@ class RoomRepository extends ServiceEntityRepository
         parent::__construct($registry, Room::class);
     }
 
-    // /**
-    //  * @return Room[] Returns an array of Room objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Room
+    /**
+     * @return Room[] Returns an array of Room objects
+     */
+    public function findAllPublicRoom()
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('r, (SELECT count(s.id) FROM \App\Entity\Score AS s WHERE r=s.room) AS HIDDEN nbPlayer')
+            ->where('r.isPrivate = false')
+            ->orderBy('nbPlayer', 'DESC')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->execute();
     }
-    */
+
+    public function findNumberRoom(): ?int
+    {
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(r)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function findNumberRoomActive(): ?int
+    {
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(r)')
+            ->andWhere('r.finishedAt is NULL')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

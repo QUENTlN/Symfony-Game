@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit RoomSettings{% endblock %}
+
+{% block body %}
+    <main class="page project-page">
+        <section class="portfolio-block project">
+            <div class="container">
+                <div class="heading">
+                    <h2>{% trans %}Modification des paramètres{% endtrans %}</h2>
+                </div>
+                {{ include('room_settings/_form.html.twig', {form:form,button:'Sauvegarder'|trans })}}
+
+                {# {{ include('room_settings/_delete_form.html.twig') }} #}
+            </div>
+        </section>
+    </main>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('account') }}
+{% endblock %}
+

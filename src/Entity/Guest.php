@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=GuestRepository::class)
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({"guest" = "Guest", "player" = "Player"})
  */
 class Guest
 {
@@ -17,62 +20,60 @@ class Guest
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=25)
      */
-    private $idGuest;
+    protected $pseudo;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Room::class, mappedBy="Guest")
+     * @ORM\OneToMany(targetEntity=Score::class, mappedBy="guest", orphanRemoval=true)
      */
-    private $rooms;
+    protected $scores;
 
-    public function __construct()
-    {
-        $this->rooms = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdGuest(): ?int
+    public function getPseudo(): ?string
     {
-        return $this->idGuest;
+        return $this->pseudo;
     }
 
-    public function setIdGuest(int $idGuest): self
+    public function setPseudo(string $pseudo): self
     {
-        $this->idGuest = $idGuest;
+        $this->pseudo = $pseudo;
 
         return $this;
     }
 
     /**
-     * @return Collection|Room[]
+     * @return Collection|Score[]
      */
     public function getRooms(): Collection
     {
         return $this->rooms;
     }
 
-    private function addRoom(Room $room): self
+    public function addRoom(Score $room): self
     {
         if (!$this->rooms->contains($room)) {
             $this->rooms[] = $room;
-            $room->addGuest($this);
+            $room->setGuest($this);
         }
 
         return $this;
     }
 
-    private function removeRoom(Room $room): self
+    public function removeRoom(Score $room): self
     {
         if ($this->rooms->removeElement($room)) {
-            $room->removeGuest($this);
+            if ($room->getGuest() === $this) {
+                $room->setGuest(null);
+            }
         }
 
         return $this;

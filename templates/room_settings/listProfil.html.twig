@@ -1,0 +1,50 @@
+<div class="col-md-4 col-lg-3">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{{ room_setting.nameProfil }}</h4>
+            <p class="card-text">{% trans %}joueurs{% endtrans %} : {{ room_setting.nbMaxPlayer }}<br>{% trans %}tours{% endtrans %}
+                : {{ room_setting.numberRound }}</p>
+            <ul style="margin-bottom: 2em;">
+                {% for game in games %}
+                    {% set subCats = [] %}
+                    {% for category in game.categories %}
+                        {% for subCat in category.subCategories %}
+                            {% if subCat in room_setting.subCategories %}
+                                {% set subCats = subCats|merge([subCat.libSubCategory]) %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    {% if subCats is not empty %}
+                        <li>{{ game.name }} ( {{ subCats|join(', ') }} )</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <div class="modal fade" role="dialog" tabindex="-1" id="modalSupSettings{{ room_setting.id }}">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">{% trans %}Êtes vous sûr de vouloir supprimer ?{% endtrans %}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">×</span></button>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-light" type="button" data-dismiss="modal">{% trans %}Non{% endtrans %}</button>
+                            <a href="{{ path('room_settings_delete', {'id': room_setting.id}) }}"
+                               class="btn btn-primary btn-danger" role="button">{% trans %}Oui{% endtrans %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-danger" type="button"
+                    style="margin-right: 0.25em;margin-bottom: 4px;" data-toggle="modal"
+                    data-target="#modalSupSettings{{ room_setting.id }}">{% trans %}Supprimer{% endtrans %}
+            </button>
+            <div class="modal fade" role="dialog" tabindex="-1"
+                 id="modalEditSettings{{ room_setting.id }}">
+            </div>
+            <a href="{{ path('room_settings_edit', {'id': room_setting.id}) }}" class="btn btn-primary" role="button">{% trans %}Modifier{% endtrans %}</a>
+        </div>
+    </div>
+</div>
+
+

@@ -25,26 +25,20 @@ class SubCategory
     private $libSubCategory;
 
     /**
-     * @ORM\OneToOne(targetEntity=Category::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $Category;
-
-    /**
      * @ORM\ManyToMany(targetEntity=RoomSettings::class, inversedBy="subCategories")
      */
     private $RoomSettings;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Game::class, inversedBy="subCategories")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $Game;
-
-    /**
      * @ORM\OneToMany(targetEntity=Question::class, mappedBy="subCategory")
      */
     private $Question;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="subCategories")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
     public function __construct()
     {
@@ -69,18 +63,6 @@ class SubCategory
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->Category;
-    }
-
-    public function setCategory(Category $Category): self
-    {
-        $this->Category = $Category;
-
-        return $this;
-    }
-
     /**
      * @return Collection|RoomSettings[]
      */
@@ -101,18 +83,6 @@ class SubCategory
     public function removeRoomSetting(RoomSettings $roomSetting): self
     {
         $this->RoomSettings->removeElement($roomSetting);
-
-        return $this;
-    }
-
-    public function getGame(): ?Game
-    {
-        return $this->Game;
-    }
-
-    public function setGame(?Game $Game): self
-    {
-        $this->Game = $Game;
 
         return $this;
     }
@@ -145,5 +115,22 @@ class SubCategory
         }
 
         return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getLibSubCategory();
     }
 }

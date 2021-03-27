@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=QuestionRepository::class)
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({"question" = "Question", "questionWithPicture" = "QuestionWithPicture", "questionWithText" = "QuestionWithText"})
  */
 class Question
 {
@@ -24,87 +27,45 @@ class Question
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $idQuestion;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $textQuestion;
-
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="Question")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $player;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="question")
-     */
-    private $relation;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Category::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $Category;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Room::class, mappedBy="Question")
-     */
-    private $rooms;
+    protected $player;
 
     /**
      * @ORM\ManyToOne(targetEntity=SubCategory::class, inversedBy="Question")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $subCategory;
+    protected $subCategory;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $status;
+    protected $status;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Round::class, mappedBy="question", orphanRemoval=true)
+     */
+    protected $rounds;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="question", cascade={"persist"}, orphanRemoval=true)
+     */
+    protected $answers;
 
     public function __construct()
     {
-        $this->relation = new ArrayCollection();
-        $this->rooms = new ArrayCollection();
+        $this->rounds = new ArrayCollection();
+        $this->answers = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
-    public function getIdQuestion(): ?int
-    {
-        return $this->idQuestion;
-    }
-
-    public function setIdQuestion(int $idQuestion): self
-    {
-        $this->idQuestion = $idQuestion;
-
-        return $this;
-    }
-
-    public function getTextQuestion(): ?string
-    {
-        return $this->textQuestion;
-    }
-
-    public function setTextQuestion(string $textQuestion): self
-    {
-        $this->textQuestion = $textQuestion;
-
-        return $this;
-    }
-
 
     public function getPlayer(): ?Player
     {
@@ -114,75 +75,6 @@ class Question
     public function setPlayer(?Player $player): self
     {
         $this->player = $player;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Answer[]
-     */
-    public function getRelation(): Collection
-    {
-        return $this->relation;
-    }
-
-    public function addRelation(Answer $relation): self
-    {
-        if (!$this->relation->contains($relation)) {
-            $this->relation[] = $relation;
-            $relation->setQuestion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRelation(Answer $relation): self
-    {
-        if ($this->relation->removeElement($relation)) {
-            // set the owning side to null (unless already changed)
-            if ($relation->getQuestion() === $this) {
-                $relation->setQuestion(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->Category;
-    }
-
-    public function setCategory(Category $Category): self
-    {
-        $this->Category = $Category;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Room[]
-     */
-    public function getRooms(): Collection
-    {
-        return $this->rooms;
-    }
-
-    public function addRoom(Room $room): self
-    {
-        if (!$this->rooms->contains($room)) {
-            $this->rooms[] = $room;
-            $room->addQuestion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRoom(Room $room): self
-    {
-        if ($this->rooms->removeElement($room)) {
-            $room->removeQuestion($this);
-        }
 
         return $this;
     }
@@ -207,6 +99,64 @@ class Question
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Round[]
+     */
+    public function getRounds(): Collection
+    {
+        return $this->rounds;
+    }
+
+    public function addRound(Round $round): self
+    {
+        if (!$this->rounds->contains($round)) {
+            $this->rounds[] = $round;
+            $round->setQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRound(Round $round): self
+    {
+        if ($this->rounds->removeElement($round)) {
+            if ($round->getQuestion() === $this) {
+                $round->setQuestion(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Answer[]
+     */
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(Answer $answer): self
+    {
+        if (!$this->answers->contains($answer)) {
+            $this->answers[] = $answer;
+            $answer->setQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): self
+    {
+        if ($this->answers->removeElement($answer)) {
+            if ($answer->getQuestion() === $this) {
+                $answer->setQuestion(null);
+            }
+        }
 
         return $this;
     }

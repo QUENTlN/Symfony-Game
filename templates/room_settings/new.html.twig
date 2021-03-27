@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New RoomSettings{% endblock %}
+
+{% block body %}
+    <main class="page project-page">
+        <section class="portfolio-block project">
+            <div class="container">
+                <div class="heading">
+                    <h2>{% trans %}Edition des paramètres{% endtrans %}</h2>
+                </div>
+                {{ include('room_settings/_form.html.twig') }}
+            </div>
+        </section>
+    </main>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('account') }}
+{% endblock %}

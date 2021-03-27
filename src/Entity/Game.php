@@ -19,25 +19,26 @@ class Game
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $idGame;
 
     /**
-     * @ORM\OneToMany(targetEntity=SubCategory::class, mappedBy="Game")
+     * @ORM\ManyToMany(targetEntity=RoomSettings::class, mappedBy="game")
      */
-    private $subCategories;
+    private $roomSettings;
 
     /**
-     * @ORM\ManyToMany(targetEntity=RoomSettings::class, mappedBy="Game")
+     * @ORM\OneToMany(targetEntity=Category::class, mappedBy="game", orphanRemoval=true)
      */
-    private $ManyToMany;
+    private $categories;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
 
     public function __construct()
     {
-        $this->subCategories = new ArrayCollection();
-        $this->ManyToMany = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->roomSettings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -45,74 +46,50 @@ class Game
         return $this->id;
     }
 
-    public function getIdGame(): ?int
-    {
-        return $this->idGame;
-    }
-
-    public function setIdGame(int $idGame): self
-    {
-        $this->idGame = $idGame;
-
-        return $this;
-    }
-
-
-
     /**
-     * @return Collection|SubCategory[]
+     * @return Collection|Category[]
      */
-    public function getSubCategories(): Collection
+    public function getCategories(): Collection
     {
-        return $this->subCategories;
+        return $this->categories;
     }
 
-    public function addSubCategory(SubCategory $subCategory): self
+    public function addCategory(Category $category): self
     {
-        if (!$this->subCategories->contains($subCategory)) {
-            $this->subCategories[] = $subCategory;
-            $subCategory->setGame($this);
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setGame($this);
         }
 
         return $this;
     }
 
-    public function removeSubCategory(SubCategory $subCategory): self
+    public function removeCategory(Category $category): self
     {
-        if ($this->subCategories->removeElement($subCategory)) {
-            // set the owning side to null (unless already changed)
-            if ($subCategory->getGame() === $this) {
-                $subCategory->setGame(null);
+        if ($this->categories->removeElement($category)) {
+            if ($category->getGame() === $this) {
+                $category->setGame(null);
             }
         }
 
         return $this;
     }
 
-    /**
-     * @return Collection|RoomSettings[]
-     */
-    public function getManyToMany(): Collection
+    public function getName(): ?string
     {
-        return $this->ManyToMany;
+        return $this->name;
     }
 
-    public function addManyToMany(RoomSettings $manyToMany): self
+    public function setName(string $name): self
     {
-        if (!$this->ManyToMany->contains($manyToMany)) {
-            $this->ManyToMany[] = $manyToMany;
-            $manyToMany->addGame($this);
-        }
+        $this->name = $name;
 
         return $this;
     }
 
-    public function removeManyToMany(RoomSettings $manyToMany): self
+    public function __toString(): string
     {
-        if ($this->ManyToMany->removeElement($manyToMany)) {
-            $manyToMany->removeGame($this);
-        }
-
-        return $this;
+        return $this->getName();
     }
+
 }

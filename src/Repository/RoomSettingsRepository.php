@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Player;
 use App\Entity\RoomSettings;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -18,33 +19,25 @@ class RoomSettingsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, RoomSettings::class);
     }
+    /**
+     * @return RoomSettings[] Returns an array of RoomSettings objects
+     */
+    public function findAllByPlayer(Player $user)
+    {
+        return $this->createQueryBuilder('rs')
+            ->select('rs' )
+            ->where('rs.idPlayer = :idPlayer')
+            ->andWhere('rs.nameProfil IS NOT NULL')
+            ->andwhere('rs.deletedAt IS NULL')
+            ->setParameter('idPlayer', $user->getId());
 
-    // /**
-    //  * @return RoomSettings[] Returns an array of RoomSettings objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    }
+
+    public function findNumberRoomSettings(): ?int
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('COUNT(r)')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getSingleScalarResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?RoomSettings
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

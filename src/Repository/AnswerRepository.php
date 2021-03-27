@@ -19,32 +19,15 @@ class AnswerRepository extends ServiceEntityRepository
         parent::__construct($registry, Answer::class);
     }
 
-    // /**
-    //  * @return Answer[] Returns an array of Answer objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findRightAnswer($question,$answer)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('COUNT(a.id)')
+            ->Where('a.question = :question')
+            ->andWhere('LOWER(a.textAnswer) = :text' )
+            ->setParameter('question', $question)
+            ->setParameter('text', strtolower($answer) )
             ->getQuery()
-            ->getResult()
-        ;
+            ->getSingleScalarResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Answer
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

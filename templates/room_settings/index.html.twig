@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RoomSettings index{% endblock %}
+
+{% block body %}
+    <h1>{% trans %}Mes Paramètres de salon enregistrés{% endtrans %}</h1>
+    <div class="container">
+        <div class="row">
+            {% for room_setting in room_settings %}
+                {{ include('room_settings/listProfil.html.twig') }}
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}
+
+

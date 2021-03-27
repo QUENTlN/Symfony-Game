@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RoomController!{% endblock %}
+
+{% block stylesheets %} {{ encore_entry_link_tags('room') }} {% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+            <div class="container-fluid d-flex flex-column p-0 h-100"><a
+                        class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+                        href="#">
+                    <div class="sidebar-brand-icon rotate-n-15"><i class="icon ion-ios-game-controller-a"></i></div>
+                    <div class="sidebar-brand-text mx-3"><span>Magma</span></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <ul class="navbar-nav text-light h-75 d-inline-block" id="accordionSidebar">
+                    {% for score in room.scores %}
+                        <li class="nav-item" id="div-user-{{ score.guest.id }}">
+                            <div class="nav-link active user-info" data-id-player="{{ score.guest.id }}">
+                                <i class="icon ion-happy"></i>
+                                <span class="pseudo">{{ score.guest.pseudo }}</span>
+                                <span id="score-user-{{ score.guest.id }}"
+                                      class="badge badge-primary float-right score">{{ score.score }}</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="text-center d-none d-md-inline">
+                    <button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button>
+                </div>
+            </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div class="container-fluid h-100 d-flex align-items-end flex-column">
+                <div id="gameCard"
+                     class="card {% if room.startedAt == null %}bg-gradient-primary{% endif %} shadow my-4 w-100"
+                     onselectstart="return false"
+                     oncontextmenu="return false"
+                     ondragstart="return false">
+                    <div class="card-body {# overflow-auto #} overflow-hidden mb-4" style="height: 80vh;">
+                        <h1 id="question-content-generated" class="h4 unselectable"></h1>
+                        <div class="row h-100">
+                            <div id="question-content" class="col-md-12 my-auto">
+                                {% if room.startedAt == null %}
+                                    {% if room.host == app.user %}
+                                        <form id="start-game-form" action="{{ path('startGame', {id: room.id}) }}"
+                                              method="POST">
+                                            <button type="submit" id="start-game-btn"
+                                                    class="btn btn-light btn-lg rounded-pill mx-auto d-block text-primary">
+                                                <strong>Commencer</strong>
+                                            </button>
+                                        </form>
+                                    {% else %}
+                                        <h2 id="waiting-text" class="text-center text-light">Attendre que l'hôte lance
+                                            la
+                                            partie</h2>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="replay-game" class="row w-100 justify-content-center" hidden>
+{#                    <form id="restart-form" action="{{ path('restart') }}" method="post">#}
+                        <button id='restart-btn' class="btn btn-primary btn-lg">Recommencer</button>
+{#                    </form>#}
+                </div>
+
+                <div id="answerDiv" class="card shadow mt-auto mb-4 w-100" hidden>
+                    <div class="card-body p-0 m-0">
+                        <form action="{{ path('answerQuestion') }}" method="POST" id="answer-form">
+                            <div class="input-group input-group-lg">
+                                <input id="answer-input" type="text" class="form-control" placeholder="Réponse"
+                                       aria-label="Answer" aria-describedby="time-addon">
+                                <div class="input-group-append">
+                                    <p class="input-group-text bg-primary text-light" id="time-addon">15</p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form id="next-question-form" action="{{ path('nextQuestion') }}" method="post" hidden>
+        <input id="current-round" type="number" value="1">
+        <button type="submit" id="start-game-btn"
+                class="btn btn-light btn-lg rounded-pill mx-auto d-block text-primary">
+        </button>
+    </form>
+    <div id="mercure-content-receiver" hidden></div>
+    <form id="mercure-message-form" action="{{ path('quentin') }}" method="post" hidden>
+        <label for="mercure-message-input">Message:</label>
+        <input type="text" id="mercure-message-input" name="message"/>
+        <input type="submit" id="mercure-message-btn" value="Send"/>
+    </form>
+    <form id="call-answer-form" action="{{ path('pushAnswer') }}" method="post" hidden></form>
+    {% if app.user is not same as null %}
+        <div id="js-get-id-player" data-player-id="{{ app.user.id }}"></div>
+        <div id="js-get-username" data-username="{{ app.user.pseudo }}"></div>
+    {% else %}
+        <div id="js-get-id-player" data-player-id="{{ guest.id }}"></div>
+        <div id="js-get-username" data-username="{{ guest.pseudo }}"></div>
+    {% endif %}
+    <div id="js-get-id-room" data-room-id="{{ room.id }}"></div>
+    <div id="js-get-id-host" data-host-id="{{ room.host.id }}"></div>
+    <div id="js-get-nb-round" data-nb-round="{{ room.roomSettings.numberRound }}"></div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('room') }}
+{% endblock %}

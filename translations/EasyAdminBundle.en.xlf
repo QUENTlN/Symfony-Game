@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="rSWmi1r" resname="label.form.empty_value">
+        <source>label.form.empty_value</source>
+        <target>__label.form.empty_value</target>
+      </trans-unit>
+      <trans-unit id="lFv02A7" resname="Quelques statistiques pour commencer:">
+        <source>Quelques statistiques pour commencer:</source>
+        <target>Some stats to start with :</target>
+      </trans-unit>
+      <trans-unit id="5PVVrC2" resname="compte(s) de joueur(s) ont été créé(s).">
+        <source>compte(s) de joueur(s) ont été créé(s).</source>
+        <target>player's account(s) have been created.</target>
+      </trans-unit>
+      <trans-unit id="AxEjXGa" resname="invité(s) ont joué au moins une fois.">
+        <source>invité(s) ont joué au moins une fois.</source>
+        <target>guest(s) have played at least one time.</target>
+      </trans-unit>
+      <trans-unit id="FW05AFt" resname="profil(s) de room ont été créée(s).">
+        <source>profil(s) de room ont été créée(s).</source>
+        <target>room's setting(s) have been created</target>
+      </trans-unit>
+      <trans-unit id="geHIPED" resname="room sont créées,">
+        <source>room sont créées,</source>
+        <target>rooms have been created</target>
+      </trans-unit>
+      <trans-unit id="en5QArT" resname="sont en cours de partie.">
+        <source>sont en cours de partie.</source>
+        <target>are in game right now.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

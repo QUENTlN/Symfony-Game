@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Réinitialiser votre mot de passe{% endtrans %}{% endblock %}
+
+{% block body %}
+    <div class="login-dark">
+        {{ form_start(resetForm,{'attr':{'class':'gradient','style': 'margin-top: 5vh;'}}) }}
+        {{ form_row(resetForm._token) }}
+        <h2 class="sr-only">Login Form</h2>
+        <div class="illustration"><i class="icon ion-android-mail"></i></div>
+        {% for error in resetForm.vars['errors'] %}
+            <div class="alert alert-danger" role="alert">
+                <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                {{ error.message | striptags }}
+            </div>
+        {% endfor %}
+        {{ form_row(resetForm.plainPassword.first, {'attr':{'class':'form-control form-sign', 'placeholder':'Mot de passe' | trans}}) }}
+        {{ form_row(resetForm.plainPassword.second, {'attr':{'class':'form-control form-sign', 'placeholder':' Répéter le mot de passe' | trans}}) }}
+
+        <div class="form-group"><button class="btn btn-primary btn-block">{% trans %}Réinitialiser le mot de passe{% endtrans %}</button></div></form>
+    </div>
+    {{ form_end(resetForm) }}
+{% endblock %}

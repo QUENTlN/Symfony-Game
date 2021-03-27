@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=RoomRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Room
 {
@@ -20,14 +21,9 @@ class Room
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $idRoom;
-
-    /**
      * @ORM\Column(type="string", length=400)
      */
-    private $linkRoom;
+    private $name;
 
     /**
      * @ORM\Column(type="datetime")
@@ -35,14 +31,14 @@ class Room
     private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $finishedAt;
+    private $startedAt;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $idHostedPlayer;
+    private $finishedAt;
 
     /**
      * @ORM\Column(type="boolean")
@@ -50,34 +46,32 @@ class Room
     private $isPrivate;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="Room")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $player;
-
-
-
-    /**
-     * @ORM\ManyToOne(targetEntity=RoomSettings::class, inversedBy="Room")
+     * @ORM\ManyToOne(targetEntity=RoomSettings::class, inversedBy="Room",cascade={"persist"})
      */
     private $roomSettings;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Guest::class, inversedBy="rooms")
+     * @ORM\OneToMany(targetEntity=Score::class, mappedBy="room", orphanRemoval=true)
      */
-    private $Guest;
+    private $scores;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Question::class, inversedBy="rooms")
+     * @ORM\OneToMany(targetEntity=Round::class, mappedBy="room", orphanRemoval=true,cascade={"persist"})
      */
-    private $Question;
+    private $rounds;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="hostedRooms")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $host;
 
 
 
     public function __construct()
     {
-        $this->Guest = new ArrayCollection();
-        $this->Question = new ArrayCollection();
+        $this->scores = new ArrayCollection();
+        $this->rounds = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -85,26 +79,15 @@ class Room
         return $this->id;
     }
 
-    public function getIdRoom(): ?int
+
+    public function getName(): ?string
     {
-        return $this->idRoom;
+        return $this->name;
     }
 
-    public function setIdRoom(int $idRoom): self
+    public function setName(string $name): self
     {
-        $this->idRoom = $idRoom;
-
-        return $this;
-    }
-
-    public function getLinkRoom(): ?string
-    {
-        return $this->linkRoom;
-    }
-
-    public function setLinkRoom(string $linkRoom): self
-    {
-        $this->linkRoom = $linkRoom;
+        $this->name = $name;
 
         return $this;
     }
@@ -121,6 +104,18 @@ class Room
         return $this;
     }
 
+    public function getStartedAt(): ?\DateTimeInterface
+    {
+        return $this->startedAt;
+    }
+
+    public function setStartedAt(\DateTimeInterface $startedAt): self
+    {
+        $this->startedAt = $startedAt;
+
+        return $this;
+    }
+
     public function getFinishedAt(): ?\DateTimeInterface
     {
         return $this->finishedAt;
@@ -129,18 +124,6 @@ class Room
     public function setFinishedAt(\DateTimeInterface $finishedAt): self
     {
         $this->finishedAt = $finishedAt;
-
-        return $this;
-    }
-
-    public function getIdHostedPlayer(): ?int
-    {
-        return $this->idHostedPlayer;
-    }
-
-    public function setIdHostedPlayer(int $idHostedPlayer): self
-    {
-        $this->idHostedPlayer = $idHostedPlayer;
 
         return $this;
     }
@@ -157,22 +140,6 @@ class Room
         return $this;
     }
 
-    public function getPlayer(): ?Player
-    {
-        return $this->player;
-    }
-
-    public function setPlayer(?Player $player): self
-    {
-        $this->player = $player;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Guest[]
-     */
-
     public function getRoomSettings(): ?RoomSettings
     {
         return $this->roomSettings;
@@ -186,52 +153,85 @@ class Room
     }
 
     /**
-     * @return Collection|Guest[]
+     * @return Collection|Score[]
      */
-    public function getGuest(): Collection
+    public function getScores(): Collection
     {
-        return $this->Guest;
+        return $this->scores;
     }
 
-    public function addGuest(Guest $guest): self
+    public function addScore(Score $score): self
     {
-        if (!$this->Guest->contains($guest)) {
-            $this->Guest[] = $guest;
+        if (!$this->scores->contains($score)) {
+            $this->scores[] = $score;
+            $score->setRoom($this);
         }
 
         return $this;
     }
 
-    public function removeGuest(Guest $guest): self
+    public function removeScore(Score $score): self
     {
-        $this->Guest->removeElement($guest);
+        if ($this->scores->removeElement($score)) {
+            // set the owning side to null (unless already changed)
+            if ($score->getRoom() === $this) {
+                $score->setRoom(null);
+            }
+        }
 
         return $this;
     }
 
     /**
-     * @return Collection|Question[]
+     * @return Collection|Round[]
      */
-    public function getQuestion(): Collection
+    public function getRounds(): Collection
     {
-        return $this->Question;
+        return $this->rounds;
     }
 
-    public function addQuestion(Question $question): self
+    public function addRound(Round $round): self
     {
-        if (!$this->Question->contains($question)) {
-            $this->Question[] = $question;
+        if (!$this->rounds->contains($round)) {
+            $this->rounds[] = $round;
+            $round->setRoom($this);
         }
 
         return $this;
     }
 
-    public function removeQuestion(Question $question): self
+    public function removeRound(Round $round): self
     {
-        $this->Question->removeElement($question);
+        if ($this->rounds->removeElement($round)) {
+            if ($round->getRoom() === $this) {
+                $round->setRoom(null);
+            }
+        }
 
         return $this;
     }
 
+    public function getHost(): ?Player
+    {
+        return $this->host;
+    }
 
+    public function setHost(?Player $host): self
+    {
+        $this->host = $host;
+
+        return $this;
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    public function __toString(): string
+    {
+        return 'Id de la room  : '.$this->getId();
+    }
 }
