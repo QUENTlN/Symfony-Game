@@ -30,7 +30,7 @@ class PlayerCrudController extends AbstractCrudController
                 ->setTextAlign('center'),
             ArrayField::new('Roles', 'Rôle(s)')
                 ->onlyOnIndex(),
-            AssociationField::new('hostedRooms', 'Nombre de room(s) hostée(s)')
+            AssociationField::new('hostedRooms', 'Room(s) hostée(s)')
                 ->setTextAlign('center')
                 ->setFormTypeOption('disabled', 'disabled'),
             AssociationField::new('roomSettings', 'Paramètres de room')
