@@ -333,7 +333,7 @@
       </trans-unit>
       <trans-unit id="_1_eksG" resname="Déconnexion">
         <source>Déconnexion</source>
-        <target>Deconnection</target>
+        <target>Log out</target>
       </trans-unit>
       <trans-unit id="NepZ.7B" resname="Mes Paramètres de salons enregistrés">
         <source>Mes Paramètres de salons enregistrés</source>
@@ -346,6 +346,54 @@
       <trans-unit id="APnFM0V" resname="Ajouter">
         <source>Ajouter</source>
         <target>Add</target>
+      </trans-unit>
+      <trans-unit id="Envoyer" resname="Pseudo">
+        <source>Pseudo</source>
+        <target>Username</target>
+      </trans-unit>
+      <trans-unit id="Edition des paramètres" resname="Edition des paramètres">
+        <source>Edition des paramètres</source>
+        <target>Edit settings</target>
+      </trans-unit>
+      <trans-unit id="Créer" resname="Créer">
+        <source>Créer</source>
+        <target>Create</target>
+      </trans-unit>
+      <trans-unit id="Modification des paramètres" resname="Modification des paramètres">
+        <source>Modification des paramètres</source>
+        <target>Modify settings</target>
+      </trans-unit>
+      <trans-unit id="Êtes vous sûr de vouloir supprimer ?" resname="Êtes vous sûr de vouloir supprimer ?">
+        <source>Êtes vous sûr de vouloir supprimer ?</source>
+        <target>You're about to delete a room settings, are you sure to delete it ?</target>
+      </trans-unit>
+      <trans-unit id="joueurs" resname="joueurs">
+        <source>joueurs</source>
+        <target>players</target>
+      </trans-unit>
+      <trans-unit id="tours" resname="tours">
+        <source>tours</source>
+        <target>rounds</target>
+      </trans-unit>
+      <trans-unit id="Oui" resname="Oui">
+        <source>Oui</source>
+        <target>Yes</target>
+      </trans-unit>
+      <trans-unit id="Non" resname="Non">
+        <source>Non</source>
+        <target>No</target>
+      </trans-unit>
+      <trans-unit id="Mes Paramètres de salon enregistrés" resname="Mes Paramètres de salon enregistrés">
+        <source>Mes Paramètres de salon enregistrés</source>
+        <target>My room settings</target>
+      </trans-unit>
+      <trans-unit id="Nom du profil :" resname="Nom du profil :">
+        <source>Nom du profil :</source>
+        <target>Profile's name</target>
+      </trans-unit>
+      <trans-unit id="Sauvegarder" resname="Sauvegarder">
+        <source>Sauvegarder</source>
+        <target>Save</target>
       </trans-unit>
     </body>
   </file>

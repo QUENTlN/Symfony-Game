@@ -85,9 +85,8 @@ https://github.com/QUENTlN/game/projects/1
 - Serveur SMTP : pour l'envoi de mail nous utilisons un faux serveur SMTP fourni par mailtrap.io, pour visualiser les différents mails envoyés, veuillez suivre ces étapes :
   - Dirigez vous vers le site : https://mailtrap.io
   - Cliquez sur "Log in" situé en haut à droite
-  - "Use Google account"
-  - @mail : symfonytest69@gmail.com
-  - mot de passe : KeFg7JfPOneffc9E
+  - @mail : daniela.suteu92@gmail.com
+  - mot de passe : MeilleureFormationEver
   - Vous voilà connecté ! Vous pouvez visualiser vos mails dans la section "Inboxes" puis dans "My inbox"
 
 ## Fonctionnalités: ##

@@ -3,6 +3,7 @@ namespace App\EventSubscriber;
 
 
 use App\Entity\Player;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,11 +20,21 @@ class BackOfficeSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return[
-            BeforeEntityPersistedEvent::class => ['addPlayer']
+            BeforeEntityPersistedEvent::class => ['addPlayer'],
+            BeforeEntityUpdatedEvent::class => ['updatePlayer']
             ];
     }
 
     public function addPlayer(BeforeEntityPersistedEvent $event)
+    {
+        $entity = $event->getEntityInstance();
+        if (!($entity instanceof Player)) {
+            return;
+        }
+        $this->setPassword($entity);
+    }
+
+    public function updatePlayer(BeforeEntityUpdatedEvent $event)
     {
         $entity = $event->getEntityInstance();
         if (!($entity instanceof Player)) {
