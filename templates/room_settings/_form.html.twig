@@ -1,7 +1,7 @@
 {{ form_start(form) }}
 
 <div class="form-group">
-    {{ form_row(form.nameProfil,{'label':'Nom du profil :', 'attr':{'class':'form-control '}}) }}
+    {{ form_row(form.nameProfil,{'label':'Nom du profil :'|trans, 'attr':{'class':'form-control '}}) }}
 </div>
 <div class="form-group">
     {{ form_row(form.nbMaxPlayer,{'label':'Nombre de joueurs maximum :', 'attr':{'class':'form-control '}}) }}
@@ -57,8 +57,8 @@
 </div>
 
 
-<div class="modal-footer"><a href="{{ path('account') }}" class="btn btn-light" type="reset" data-dismiss="modal">Annuler</a>
-    <button class="btn btn-primary btn-success" type="submit">{{ button|default('Créer') }}</button>
+<div class="modal-footer"><a href="{{ path('account') }}" class="btn btn-light" type="reset" data-dismiss="modal">{% trans %}Annuler{% endtrans %}</a>
+    <button class="btn btn-primary btn-success" type="submit">{{ button|default('Créer')|trans }}</button>
 </div>
 
 {{ form_end(form) }}
