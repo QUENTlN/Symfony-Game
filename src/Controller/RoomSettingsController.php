@@ -56,7 +56,7 @@ class RoomSettingsController extends AbstractController
      * @Route("/{id}/edit", name="room_settings_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
-    public function edit(Request $request, RoomSettings $roomSetting, FormFactoryInterface $factory, EntityManager $manager): Response
+    public function edit(Request $request, RoomSettings $roomSetting, FormFactoryInterface $factory, EntityManagerInterface $manager): Response
     {
         $form = $factory->create(RoomSettingsType::class, $roomSetting);
         $form->handleRequest($request);

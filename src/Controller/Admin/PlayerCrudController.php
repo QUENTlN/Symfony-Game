@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 
 class PlayerCrudController extends AbstractCrudController
@@ -22,7 +23,9 @@ class PlayerCrudController extends AbstractCrudController
         return [
             TextField::new('pseudo', 'Pseudo'),
             TextField::new('login','Email',),
-            TextField::new('password', 'Mot de passe'),
+            TextField::new('password', 'Mot de passe')
+            ->setFormType(PasswordType::class)
+            ->onlyOnForms(),
             Field::new('isAdmin', 'Modérateur ?')
                 ->setTextAlign('center'),
             ArrayField::new('Roles', 'Rôle(s)')
