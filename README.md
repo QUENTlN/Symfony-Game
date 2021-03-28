@@ -71,7 +71,7 @@ https://github.com/QUENTlN/game/projects/1
 ## Compte: ##
 - Rôle d'utilisateur :
   Vous pouvez en créer un propre à vous en choisissant de vous inscrire, sinon voici des identifiants déja disponibles !
-  - Nom d’utilisateur :
+  - Nom d’utilisateur : oroux@club-internet.fr
   - Mot de passe : azerty
 
 - Rôle de modérateur :
