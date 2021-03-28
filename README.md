@@ -17,7 +17,7 @@ NodeJS
 
     yarn
 
-    yarn dev
+    yarn build
 
 Setup de mercure:
 
